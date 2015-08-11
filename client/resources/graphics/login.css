@@ -1,0 +1,57 @@
+#root {
+    -fx-background-color:  linear-gradient(#cdfff7, #cdfff7);
+    -fx-border-color: white;
+    -fx-border-radius: 8;
+    -fx-padding: 4 4 4 4;
+    -fx-background-radius: 8;
+    -fx-opacity: 0.8;
+
+}
+
+#bp {
+    -fx-background-image: url(background.png);
+
+}
+
+#btnLogin,#btnRegister {
+    -fx-background-radius: 30, 30, 0, 28;
+    -fx-padding: 3px 10px 3px 10px;
+    -fx-background-color: linear-gradient(#009cff, #0251ff);
+
+}
+
+#text {
+    -fx-fill:  linear-gradient(orange , orangered);
+}
+
+#btnNew {
+    -fx-padding: 3px 10px 3px 10px;
+    -fx-background-color: linear-gradient(#cdfff7, #cdfff7);
+    -fx-opacity: 0.8;
+}
+
+#btnSave {
+    -fx-padding: 3px 10px 3px 10px;
+    -fx-background-color: linear-gradient(#cdfff7, #cdfff7);
+}
+
+#btnNew:hover {
+    -fx-padding: 3px 10px 3px 10px;
+    -fx-background-color: linear-gradient(#ff6300, #ff924d);
+}
+
+#btnSave:hover {
+    -fx-padding: 3px 10px 3px 10px;
+    -fx-background-color: linear-gradient(#ff6300, #ff924d);
+}
+
+/*#To edit later for character selection screen (added this as a CSS comment)*/
+
+#rootChar {
+    -fx-background-color:  linear-gradient(lightgray, #cdfff7);
+    -fx-border-color: white;
+    -fx-border-radius: 10;
+    -fx-padding: 20 20 20 20;
+    -fx-background-radius: 10;
+    -fx-opacity: 0.8;
+}
