@@ -1,5 +1,5 @@
 #root {
-    -fx-background-color:  linear-gradient(#cdfff7, #cdfff7);
+    -fx-background-color: linear-gradient(#cdfff7, #cdfff7);
     -fx-border-color: white;
     -fx-border-radius: 8;
     -fx-padding: 4 4 4 4;
@@ -13,7 +13,7 @@
 
 }
 
-#btnLogin,#btnRegister {
+#btnLogin, #btnRegister {
     -fx-background-radius: 30, 30, 0, 28;
     -fx-padding: 3px 10px 3px 10px;
     -fx-background-color: linear-gradient(#009cff, #0251ff);
@@ -21,7 +21,7 @@
 }
 
 #text {
-    -fx-fill:  linear-gradient(orange , orangered);
+    -fx-fill: linear-gradient(orange, orangered);
 }
 
 #btnNew {
@@ -48,7 +48,7 @@
 /*#To edit later for character selection screen (added this as a CSS comment)*/
 
 #rootChar {
-    -fx-background-color:  linear-gradient(lightgray, #cdfff7);
+    -fx-background-color: linear-gradient(lightgray, #cdfff7);
     -fx-border-color: white;
     -fx-border-radius: 10;
     -fx-padding: 20 20 20 20;

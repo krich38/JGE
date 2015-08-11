@@ -97,10 +97,12 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
 
-                try {client = new GameClient();
+                try {
+                    client = new GameClient();
                     User user = new User(txtUserName.getText(), pf.getText());
                     client.connect(user);
                 } catch (IOException e) {
+                    e.printStackTrace();
                     Platform.runLater(() -> loginStatus.setText("Network error!"));
                 }
             }

@@ -12,5 +12,6 @@
     <orderEntry type="library" name="com.esotericsoftware:kryonet:2.22.0-RC1" level="project" />
     <orderEntry type="module" module-name="model" />
     <orderEntry type="library" name="com.typesafe.akka:akka-actor_2.10:2.3.1" level="project" />
+    <orderEntry type="module" module-name="protocol" />
   </component>
 </module>

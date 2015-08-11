@@ -11,7 +11,9 @@ public class Id<T> {
 
     public final String id;
 
-    /** Required for Kryonet deserialisation */
+    /**
+     * Required for Kryonet deserialisation
+     */
     public Id() {
         this(UUID.randomUUID().toString());
     }
@@ -25,15 +27,18 @@ public class Id<T> {
 
     }
 
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
         return id.hashCode();
     }
 
-    @Override public boolean equals(Object other) {
+    @Override
+    public boolean equals(Object other) {
         return (other instanceof Id && Objects.equals(this.id, ((Id) other).id));
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return "Id(" + id + ")";
     }
 

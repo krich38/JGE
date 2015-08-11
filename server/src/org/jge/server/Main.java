@@ -11,7 +11,8 @@ public class Main {
     public static void main(String[] args) {
 
         try {
-            Server server = Server.getInstance();server.open();
+            Server server = Server.getInstance();
+            server.open();
         } catch (IOException e) {
             e.printStackTrace();
         }
