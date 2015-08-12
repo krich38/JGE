@@ -1,6 +1,7 @@
 package org.jge.client.jfx.screen;
 
 import javafx.scene.Scene;
+import org.jge.client.jfx.Game;
 
 /**
  * @author Kyle Richards
@@ -8,9 +9,11 @@ import javafx.scene.Scene;
  */
 public abstract class Screen {
     private final Scene scene;
+    private final Game game;
 
     public Screen() {
         scene = buildScreen();
+        game = Game.getGame();
 
     }
 
@@ -18,5 +21,9 @@ public abstract class Screen {
 
     public Scene getScene() {
         return scene;
+    }
+
+    public void changeScreen(Screen screen) {
+        game.updateScene(screen.getScene());
     }
 }

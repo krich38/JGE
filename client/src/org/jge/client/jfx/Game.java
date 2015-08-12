@@ -28,13 +28,19 @@ import java.io.IOException;
  * @author Kyle Richards
  * @version 1.0
  */
-public class Main extends Application {
+public class Game extends Application {
+    private static Game INSTANCE;
     private Stage stage;
     private GameClient client;
     private Screen currentScreen;
 
+    public static Game getGame() {
+        return INSTANCE;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
+
         this.stage = stage;
         stage.setResizable(false);
         client = new GameClient();
@@ -43,13 +49,27 @@ public class Main extends Application {
     }
 
     private void loginScreen() {
-        currentScreen = new LoginScreen(client);
+        currentScreen = new LoginScreen(this, client);
+updateScene(currentScreen.buildScreen());
 
-        stage.setScene(currentScreen.getScene());
+    }
+
+    public void updateScene(Scene scene) {
+Platform.runLater(() -> {
+    stage.setScene(scene);
+    stage.centerOnScreen();
+});
 
     }
 
     public static void main(String[] args) {
-        launch(args);
+       launch(args);
+
     }
+
+    public Game() {
+        INSTANCE = this;
+    }
+
+
 }

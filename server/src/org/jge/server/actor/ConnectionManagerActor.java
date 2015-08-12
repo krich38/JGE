@@ -29,9 +29,9 @@ public class ConnectionManagerActor extends UntypedActor {
                 if(server.isOpen()) {
 
                     User user = connect.getUser();
-                    //response = new Connect(Connect.ConnectResponse.OK);
-                    response = new Connect(Connect.ConnectResponse.INCORRECT_DETAILS);
-                    packet.getConnection().close();
+                    response = new Connect(Connect.ConnectResponse.OK);
+                    //response = new Connect(Connect.ConnectResponse.INCORRECT_DETAILS);
+                   // packet.getConnection().close();
 
                 } else {
                     response = new Connect(Connect.ConnectResponse.SERVER_CLOSED);

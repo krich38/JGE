@@ -1,6 +1,9 @@
 package org.jge.client.listener;
 
 import com.esotericsoftware.kryonet.Connection;
+import org.jge.client.jfx.Game;
+
+import org.jge.client.jfx.screen.GameOptionScreen;
 import org.jge.client.jfx.screen.LoginScreen;
 import org.jge.protocol.packet.Connect;
 import org.jge.protocol.packet.Packet;
@@ -12,7 +15,7 @@ import org.jge.protocol.packet.Packet;
 public class LoginScreenListener extends NetworkListener {
     private LoginScreen screen;
 
-    public LoginScreenListener(LoginScreen screen) {
+    public LoginScreenListener(Game main, LoginScreen screen) {
 
         this.screen = screen;
     }
@@ -25,6 +28,8 @@ public class LoginScreenListener extends NetworkListener {
             switch((Connect.ConnectResponse) response.getAttachment()) {
 
                 case OK:
+                    System.out.println("lal");
+                    screen.changeScreen(new GameOptionScreen());
                     break;
                 case INCORRECT_DETAILS:
                     screen.updateStatus("Incorrect details. Please try again!");
