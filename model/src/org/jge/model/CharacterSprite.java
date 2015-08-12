@@ -35,22 +35,24 @@ public class CharacterSprite {
     /**
      * Constructor that will allow use of character movement.
      */
-    public CharacterSprite(){
+    public CharacterSprite() {
         stepCounter = 0;
         lastDirection = 0.00;
     }
+
     /**
      * Will change the sprite to the direction they are moving.
+     *
      * @param direction The direction they are facing now
      */
-    public void updateCharacterSprite(double direction){
+    public void updateCharacterSprite(double direction) {
         stepCounter++;//increment the timer.
 
-        if(stepCounter >= PAUSE_SPACING) {
+        if (stepCounter >= PAUSE_SPACING) {
             stepCounter = 0; //reset the counter
 
             //This changes the sprite with movement.
-            switch ((int)direction) {
+            switch ((int) direction) {
                 case 180:
                     if (leftFoot) { //This is the left foot
                         imageView.setViewport(spriteArray[2]);
@@ -85,7 +87,7 @@ public class CharacterSprite {
                     }
                 case -1: {
                     //Changes sprite to standing
-                    switch ((int)lastDirection) {
+                    switch ((int) lastDirection) {
                         case 180:
                             imageView.setViewport(spriteArray[1]);
                             break;
@@ -110,11 +112,12 @@ public class CharacterSprite {
      * This method loads sprites from the list of characters
      * within the character list. For now it only supports one
      * kind of sprite image.
+     *
      * @param i The number of the character selected to play.
      */
-    public void selectCharSprite(int i){
+    public void selectCharSprite(int i) {
         //Get the image from the resources folder
-        Image img = new Image("Characters/"+characterList[i]+".png");
+        Image img = new Image("Characters/" + characterList[i] + ".png");
         imageView.setImage(img);
 
         //Get the dimensions of the image
@@ -127,8 +130,8 @@ public class CharacterSprite {
 
         int arrayPosition = 0;
 
-        while(currentY < height){
-            while(currentX < width){
+        while (currentY < height) {
+            while (currentX < width) {
                 spriteArray[arrayPosition] = new Rectangle2D(currentX, currentY, SPRITE_SIZE, SPRITE_SIZE);
                 arrayPosition++;
                 currentX += SPRITE_SIZE;
@@ -146,11 +149,12 @@ public class CharacterSprite {
      * within the enemy list.
      * This is mostly duplicate code from previous method,need to tidy
      * up later.
+     *
      * @param i The number of the enemy selected to display.
      */
-    public void selectEnemySprite(int i){
+    public void selectEnemySprite(int i) {
         //Get the image from the resources folder
-        Image img = new Image("Enemies/"+enemyList[i]+".png");
+        Image img = new Image("Enemies/" + enemyList[i] + ".png");
         imageView.setImage(img);
 
         //Get the dimensions of the image
@@ -163,8 +167,8 @@ public class CharacterSprite {
 
         int arrayPosition = 0;
 
-        while(currentY < height){
-            while(currentX < width){
+        while (currentY < height) {
+            while (currentX < width) {
                 spriteArray[arrayPosition] = new Rectangle2D(currentX, currentY, SPRITE_SIZE, SPRITE_SIZE);
                 arrayPosition++;
                 currentX += SPRITE_SIZE;
@@ -181,21 +185,24 @@ public class CharacterSprite {
     /**
      * Current usage is for adding the ImageView to the stack
      * for player display.
+     *
      * @return A reference to the imageView.
      */
-    public ImageView getIView(){
+    public ImageView getIView() {
         return imageView;
     }
+
     /**
      * Get the list of characters
+     *
      * @return A String array of characters.
      */
-    public String[] getCharacterList(){
+    public String[] getCharacterList() {
         return characterList;
     }
 
-    public ImageView getStandaloneCharImage(int i){
-        Image img = new Image("Characters/"+characterList[i]+".png");
+    public ImageView getStandaloneCharImage(int i) {
+        Image img = new Image("Characters/" + characterList[i] + ".png");
         ImageView tempIView = new ImageView();
         tempIView.setImage(img);
         //Set the image

@@ -23,9 +23,9 @@ public class LoginScreenListener extends NetworkListener {
     @Override
     public void received(Connection connection, Object object) {
         super.received(connection, object);
-        if(object instanceof Connect) {
+        if (object instanceof Connect) {
             Connect response = (Connect) object;
-            switch((Connect.ConnectResponse) response.getAttachment()) {
+            switch ((Connect.ConnectResponse) response.getAttachment()) {
 
                 case OK:
                     System.out.println("lal");

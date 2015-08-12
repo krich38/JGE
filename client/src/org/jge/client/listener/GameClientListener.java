@@ -8,9 +8,9 @@ import com.esotericsoftware.kryonet.Connection;
  */
 public class GameClientListener extends NetworkListener {
 
-        public void received(Connection connection, Object object) {
-            super.received(connection, object);
-            System.out.println(object);
-        }
+    public void received(Connection connection, Object object) {
+        super.received(connection, object);
+        System.out.println(object);
+    }
 
 }

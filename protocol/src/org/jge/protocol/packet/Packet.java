@@ -20,6 +20,7 @@ public abstract class Packet {
     public void setUser(User user) {
         this.user = user;
     }
+
     public PacketType getPacketType() {
         return PacketType;
     }

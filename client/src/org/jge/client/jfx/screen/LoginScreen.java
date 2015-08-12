@@ -42,6 +42,7 @@ public class LoginScreen extends Screen {
         this.client = client;
         client.setListener(new LoginScreenListener(game, this));
     }
+
     @Override
     public Scene buildScreen() {
         BorderPane bp = new BorderPane();
@@ -106,7 +107,8 @@ public class LoginScreen extends Screen {
 
     private void onRegisterPress(String username, String password) {
 
-        try {User user = new User(username, password);
+        try {
+            User user = new User(username, password);
             client.register(user);
         } catch (IOException e) {
             e.printStackTrace();

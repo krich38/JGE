@@ -52,7 +52,7 @@ public class GameClient {
     public void setListener(NetworkListener listener) {
         // registering a new listener?
 
-        if(this.listener != null) {
+        if (this.listener != null) {
             client.removeListener(this.listener);
         }
         client.addListener(listener);

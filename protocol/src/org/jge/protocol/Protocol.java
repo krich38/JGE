@@ -25,7 +25,7 @@ public class Protocol {
         kryo.register(Connect.class);
         kryo.register(Packet.class);
         kryo.register(org.jge.protocol.packet.Packet.PacketType.class);
-kryo.register(Register.class);
+        kryo.register(Register.class);
         kryo.register(Connect.ConnectResponse.class);
 
     }

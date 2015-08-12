@@ -26,4 +26,8 @@ public abstract class Screen {
     public void changeScreen(Screen screen) {
         game.updateScene(screen.getScene());
     }
+
+    protected Game getGame() {
+        return game;
+    }
 }

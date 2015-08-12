@@ -38,7 +38,8 @@ public class Server {
         INBOX = Inbox.create(system);
         CONMANAGER = system.actorOf(Props.create(ConnectionManagerActor.class));
         try {
-            kryoServer.bind(3744, 3476);kryoServer.addListener(new ServerListener());
+            kryoServer.bind(3744, 3476);
+            kryoServer.addListener(new ServerListener());
         } catch (IOException e) {
             e.printStackTrace();
         }

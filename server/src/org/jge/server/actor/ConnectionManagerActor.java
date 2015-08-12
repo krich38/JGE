@@ -17,21 +17,23 @@ public class ConnectionManagerActor extends UntypedActor {
     public ConnectionManagerActor() {
         server = Server.getInstance();
     }
+
     @Override
     public void onReceive(Object message) throws Exception {
         Packet packet = (Packet) message;
         switch (packet.getPacketType()) {
             case DISCONNECT:
                 break;
-            case CONNECT:Connect connect = (Connect) packet;
+            case CONNECT:
+                Connect connect = (Connect) packet;
                 Packet response;
 
-                if(server.isOpen()) {
+                if (server.isOpen()) {
 
                     User user = connect.getUser();
                     response = new Connect(Connect.ConnectResponse.OK);
                     //response = new Connect(Connect.ConnectResponse.INCORRECT_DETAILS);
-                   // packet.getConnection().close();
+                    // packet.getConnection().close();
 
                 } else {
                     response = new Connect(Connect.ConnectResponse.SERVER_CLOSED);

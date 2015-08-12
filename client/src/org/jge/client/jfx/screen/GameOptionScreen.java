@@ -47,8 +47,8 @@ public class GameOptionScreen extends Screen {
         login.setHgap(0);
         login.setVgap(0);
         Image loadbuttongraphic = new Image("graphics/load.png");
-        Image startNewGameBtnGraphic = new Image("graphics/newgame.png");
-        Image loadscreen = new Image("graphics/LoadScreen.png");
+        Image startNewGameBtnGraphic = new Image("graphics/new_game.png");
+        Image loadscreen = new Image("graphics/load_screen.png");
 
 
         ImageView loadgraphicview = new ImageView(loadbuttongraphic);
