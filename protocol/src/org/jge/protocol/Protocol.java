@@ -5,6 +5,7 @@ import org.jge.model.Id;
 import org.jge.model.User;
 import org.jge.protocol.packet.Connect;
 import org.jge.protocol.packet.Packet;
+import org.jge.protocol.packet.Register;
 
 import java.io.File;
 import java.net.URL;
@@ -24,7 +25,8 @@ public class Protocol {
         kryo.register(Connect.class);
         kryo.register(Packet.class);
         kryo.register(org.jge.protocol.packet.Packet.PacketType.class);
-
+kryo.register(Register.class);
+        kryo.register(Connect.ConnectResponse.class);
 
     }
 

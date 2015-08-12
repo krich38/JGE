@@ -19,30 +19,45 @@ import java.io.IOException;
  */
 public class Server {
     private static Server INSTANCE;
-    private final Inbox INBOX;
-    private final ActorRef CONMANAGER;
+    private Inbox INBOX;
+    private ActorRef CONMANAGER;
+    private boolean open;
 
-    public Server() throws IOException {
-        com.esotericsoftware.kryonet.Server kryoServer = new com.esotericsoftware.kryonet.Server();
-        kryoServer.start();
-        Protocol.register(kryoServer.getKryo());
-        ActorSystem system = ActorSystem.create("decoworld");
-        INBOX = Inbox.create(system);
-        CONMANAGER = system.actorOf(Props.create(ConnectionManagerActor.class));
-        kryoServer.bind(3744, 3476);
-        kryoServer.addListener(new ServerListener());
-    }
-
-    public static Server getInstance() throws IOException {
+    public static Server getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new Server();
         }
         return INSTANCE;
     }
 
+    public void init() {
+        com.esotericsoftware.kryonet.Server kryoServer = new com.esotericsoftware.kryonet.Server();
+        kryoServer.start();
+        Protocol.register(kryoServer.getKryo());
+        ActorSystem system = ActorSystem.create("decoworld");
+        INBOX = Inbox.create(system);
+        CONMANAGER = system.actorOf(Props.create(ConnectionManagerActor.class));
+        try {
+            kryoServer.bind(3744, 3476);kryoServer.addListener(new ServerListener());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-    public void open() {
 
+    public void send(Connection connection, Packet packet) {
+
+
+        connection.sendTCP(packet);
+
+    }
+
+    public void setOpen(boolean open) {
+        this.open = open;
+    }
+
+    public boolean isOpen() {
+        return open;
     }
 
     private class ServerListener extends Listener {
@@ -52,6 +67,7 @@ public class Server {
             System.out.println(o);
             if (o instanceof Packet) {
                 Packet p = (Packet) o;
+                p.setConnection(conn);
                 switch (p.getPacketType()) {
 
                     case CONNECT:

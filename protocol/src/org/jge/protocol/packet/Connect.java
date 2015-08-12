@@ -11,13 +11,15 @@ public class Connect extends Packet {
         super(Packet.PacketType.CONNECT);
     }
 
-    private User user;
-
-    public User getUser() {
-        return user;
+    public Connect(ConnectResponse response) {
+        this();
+        super.setAttachment(response);
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public enum ConnectResponse {
+        OK,
+        INCORRECT_DETAILS,
+        SERVER_CLOSED, BANNED, REGISTER_SUCCESS, REGISTER_FAIL
     }
+
 }

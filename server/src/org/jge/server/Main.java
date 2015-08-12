@@ -10,12 +10,11 @@ public class Main {
 
     public static void main(String[] args) {
 
-        try {
+
             Server server = Server.getInstance();
-            server.open();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            server.setOpen(true);
+        server.init();
+
 
     }
 }
