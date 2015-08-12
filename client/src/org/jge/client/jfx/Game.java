@@ -50,7 +50,7 @@ public class Game extends Application {
     }
 
     private void loginScreen() {
-        currentScreen = new LoginScreen(this, client);
+        currentScreen = new LoginScreen();
         updateScene(currentScreen.buildScreen());
 
     }
@@ -73,4 +73,7 @@ public class Game extends Application {
     }
 
 
+    public GameClient getClient() {
+        return client;
+    }
 }

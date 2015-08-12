@@ -3,16 +3,21 @@ package org.jge.client.jfx.screen;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
+import org.jge.client.GameClient;
 import org.jge.client.jfx.Game;
 import org.jge.client.GameEngine;
+import org.jge.model.world.Player;
+import org.jge.model.world.RenderableEntity;
+import org.jge.model.world.World;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Kyle Richards
@@ -21,18 +26,24 @@ import java.util.Set;
 public class GameScreen extends Screen {
     private final Game game;
     private final GameEngine engine;
-    private int character;
+    private final List<RenderableEntity> renderable;
+    private final GameClient client;
+    private final World world;
     private Set<KeyCode> keys;
     private Group chatGroup;
     private GridPane gp;
     private boolean chatFlag;
+    private Canvas canvas;
 
     public GameScreen(int character) {
 
-        this.character = character;
         this.game = getGame();
         engine = new GameEngine(this);
+        world = engine.getWorld();
         keys = new HashSet<>(5);
+        renderable = new CopyOnWriteArrayList<>();
+        client = game.getClient();
+        renderable.add(new Player(character));
     }
 
     @Override
@@ -49,13 +60,6 @@ public class GameScreen extends Screen {
         cc.setPrefWidth(530.0);
         gp.getColumnConstraints().add(cc);
 
-//        ColumnConstraints cc1 = new ColumnConstraints();
-//        cc1.setHgrow(Priority.SOMETIMES);
-//        cc1.setMaxWidth(328.0);
-//        cc1.setMinWidth(0.0);
-//        cc1.setPrefWidth(70.0);
-//        gp.getColumnConstraints().add(cc1);
-
 
         RowConstraints rc = new RowConstraints();
         rc.setMaxHeight(371);
@@ -63,20 +67,6 @@ public class GameScreen extends Screen {
         rc.setPrefHeight(371.0);
         rc.setVgrow(Priority.SOMETIMES);
         gp.getRowConstraints().add(rc);
-
-//        RowConstraints rc1 = new RowConstraints();
-//        rc1.setMaxHeight(373);
-//        rc1.setMinHeight(0.0);
-//        rc1.setPrefHeight(0.0);
-//        rc1.setVgrow(Priority.SOMETIMES);
-//        gp.getRowConstraints().add(rc1);
-
-//        RowConstraints rc2 = new RowConstraints();
-//        rc1.setMaxHeight(220);
-//        rc1.setMinHeight(10.0);
-//        rc1.setPrefHeight(29.0);
-//        rc1.setVgrow(Priority.SOMETIMES);
-//        gp.getRowConstraints().add(rc1);
 
 
         TextField chatField = new TextField();
@@ -87,7 +77,7 @@ public class GameScreen extends Screen {
         sendButton.setPrefWidth(70.0);
 
 
-        Canvas canvas = new Canvas();
+        canvas = new Canvas();
 
         canvas.setHeight(400);
         canvas.setWidth(600);
@@ -100,11 +90,11 @@ public class GameScreen extends Screen {
         vb.getChildren().add(gp);
 
         Group g = new Group(vb, canvas);
-Scene scene = new Scene(g, 600,400);
+        Scene scene = new Scene(g, 600, 400);
         scene.addEventFilter(KeyEvent.KEY_PRESSED, (event) -> {
             KeyCode code = event.getCode();
 
-            if(code == KeyCode.ENTER) {
+            if (code == KeyCode.ENTER) {
                 if (chatFlag) {
                     // process chat text here
                     gp.getChildren().remove(chatField);
@@ -117,7 +107,8 @@ Scene scene = new Scene(g, 600,400);
 
 
             } else {
-                code = parseKey(code);if (code != null) {
+                code = parseKey(code);
+                if (code != null) {
                     keys.add(code);
                 }
             }
@@ -127,7 +118,7 @@ Scene scene = new Scene(g, 600,400);
             KeyCode code = parseKey(event.getCode());
 
 
-            if(code != null) {
+            if (code != null) {
                 keys.remove(code);
             }
         });
@@ -137,7 +128,7 @@ Scene scene = new Scene(g, 600,400);
 
     private KeyCode parseKey(KeyCode code) {
         KeyCode toReturn = null;
-        switch(code) {
+        switch (code) {
             case W:
                 toReturn = KeyCode.UP;
                 break;
@@ -145,7 +136,7 @@ Scene scene = new Scene(g, 600,400);
                 toReturn = KeyCode.DOWN;
                 break;
             case A:
-                toReturn= KeyCode.LEFT;
+                toReturn = KeyCode.LEFT;
                 break;
             case D:
                 toReturn = KeyCode.RIGHT;
@@ -162,5 +153,16 @@ Scene scene = new Scene(g, 600,400);
 
     public Set<KeyCode> getKeys() {
         return keys;
+    }
+
+    public void repaint() {
+        if(!renderable.isEmpty()) {
+            GraphicsContext g = canvas.getGraphicsContext2D();
+            for(RenderableEntity e : renderable) {
+e.render(g);
+            }
+
+        }
+
     }
 }

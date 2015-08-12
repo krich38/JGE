@@ -9,12 +9,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import org.jge.client.GameClient;
 
 /**
  * @author Kyle Richards
  * @version 1.0
  */
 public class GameOptionScreen extends Screen {
+
+
+
     @Override
     public Scene buildScreen() {
         BorderPane bp = new BorderPane();

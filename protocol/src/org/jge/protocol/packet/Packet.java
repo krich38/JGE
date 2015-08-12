@@ -49,6 +49,6 @@ public abstract class Packet {
     public enum PacketType {
         CONNECT,
         DISCONNECT,
-        REGISTER
+        REGISTER, UPDATE
     }
 }

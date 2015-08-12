@@ -1,6 +1,7 @@
 package org.jge.client.listener;
 
 import com.esotericsoftware.kryonet.Connection;
+import org.jge.client.GameClient;
 import org.jge.client.jfx.Game;
 
 import org.jge.client.jfx.screen.GameOptionScreen;
@@ -13,9 +14,12 @@ import org.jge.protocol.packet.Packet;
  * @version 1.0
  */
 public class LoginScreenListener extends NetworkListener {
+    private final Game main;
     private LoginScreen screen;
 
+
     public LoginScreenListener(Game main, LoginScreen screen) {
+        this.main = main;
 
         this.screen = screen;
     }

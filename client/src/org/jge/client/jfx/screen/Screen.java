@@ -1,6 +1,7 @@
 package org.jge.client.jfx.screen;
 
 import javafx.scene.Scene;
+import org.jge.client.GameClient;
 import org.jge.client.jfx.Game;
 
 /**
@@ -10,10 +11,12 @@ import org.jge.client.jfx.Game;
 public abstract class Screen {
     private final Scene scene;
     private final Game game;
+    private final GameClient client;
 
     public Screen() {
         scene = buildScreen();
         game = Game.getGame();
+        client = game.getClient();
 
     }
 
@@ -29,5 +32,9 @@ public abstract class Screen {
 
     protected Game getGame() {
         return game;
+    }
+
+    public GameClient getClient() {
+        return client;
     }
 }
