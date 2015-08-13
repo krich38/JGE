@@ -10,7 +10,9 @@ import com.esotericsoftware.kryonet.Listener;
 import org.jge.protocol.Protocol;
 import org.jge.protocol.packet.ChatMessage;
 import org.jge.protocol.packet.Packet;
+import org.jge.protocol.packet.PlayerLoad;
 import org.jge.server.actor.ConnectionManagerActor;
+import org.jge.server.io.PlayerLoader;
 
 import java.io.IOException;
 
@@ -23,6 +25,7 @@ public class Server {
     private Inbox INBOX;
     private ActorRef CONMANAGER;
     private boolean open;
+    private PlayerLoader playerLoader;
 
     public static Server getInstance() {
         if (INSTANCE == null) {
@@ -56,10 +59,17 @@ public class Server {
 
     public void setOpen(boolean open) {
         this.open = open;
+        if(open) {
+            playerLoader = new PlayerLoader();
+        }
     }
 
     public boolean isOpen() {
         return open;
+    }
+
+    public PlayerLoader getPlayerLoader() {
+        return playerLoader;
     }
 
     private class ServerListener extends Listener {
@@ -85,6 +95,10 @@ public class Server {
                         System.out.println(msg.getMessage());
                         break;
                     case UPDATE:
+                        break;
+                    case PLAYER_LOAD:
+                        PlayerLoad loadRequest = (PlayerLoad) p;
+                        playerLoader.load(loadRequest);
                         break;
                 }
             }

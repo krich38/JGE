@@ -19,13 +19,17 @@ public class PlayerLoader {
 //        player.setTile(World.tileOf(60, 30));
 //        player.setUser(user);
         PlayerLoad load = new PlayerLoad();
-        load.setId(Id.generate());
-        load.setPlayerType(1);
-        load.setWaypoint(new Waypoint(30, 60));
+
         return load;
     }
 
     public Id<Entity> loadId(User user) {
         return Id.generate();
+    }
+
+    public void load(PlayerLoad load) {
+
+        load.setPlayerType(1);
+        load.setWaypoint(new Waypoint(30, 60));
     }
 }

@@ -63,6 +63,7 @@ public class LoginScreenListener extends NetworkListener {
             player.loadSprites(load.getPlayerType());
             player.setWaypoint(load.getWaypoint());
             client.setListener(new GameClientListener());
+            System.out.println("loaddd");
         }
     }
 }

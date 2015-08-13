@@ -19,7 +19,7 @@ public class ConnectionManagerActor extends UntypedActor {
 
     public ConnectionManagerActor() {
         server = Server.getInstance();
-        loader = new PlayerLoader();
+        loader = server.getPlayerLoader();
     }
 
     @Override
