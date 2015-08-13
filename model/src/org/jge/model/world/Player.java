@@ -4,6 +4,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.jge.model.Id;
 import org.jge.model.User;
 
 /**
@@ -11,11 +12,17 @@ import org.jge.model.User;
  * @version 1.0
  */
 public class Player extends RenderableEntity {
-    private  Rectangle2D[] spriteArray;
+    private  Rectangle2D[] spriteArray= new Rectangle2D[12];
     private User user;
     private String[] characterList = {"male_1", "male_2", "female_1", "mage_1",
             "mage_2", "mage_3"};private ImageView imageView = new ImageView();
-    public Player(int i) {
+    public Player(Id<Entity> id) {
+        super.id = id;
+    }
+
+    public Player(int i,  Waypoint waypoint) {
+
+        setWaypoint(waypoint);
         Image img = new Image("Characters/" + characterList[i] + ".png");
         imageView.setImage(img);
 
@@ -48,4 +55,5 @@ public class Player extends RenderableEntity {
     public void render(GraphicsContext g) {
 
     }
+
 }

@@ -4,6 +4,7 @@ import akka.actor.UntypedActor;
 import com.esotericsoftware.kryonet.Connection;
 import org.jge.model.User;
 import org.jge.protocol.packet.Connect;
+import org.jge.protocol.packet.ConnectResponse;
 import org.jge.protocol.packet.Packet;
 import org.jge.server.Server;
 import org.jge.server.io.PlayerLoader;
@@ -29,18 +30,18 @@ public class ConnectionManagerActor extends UntypedActor {
                 break;
             case CONNECT:
                 Connect connect = (Connect) packet;
-                Packet response;
+                ConnectResponse response = new ConnectResponse();
 
                 if (server.isOpen()) {
 
                     User user = connect.getUser();
-                    response = new Connect(Connect.ConnectResponse.OK);
-                    loader.loadPlayer(user);
+                    response.setResponse(ConnectResponse.Response.OK);
+                    response.setAttachment(loader.loadId(user));
                     //response = new Connect(Connect.ConnectResponse.INCORRECT_DETAILS);
                     // packet.getConnection().close();
 
                 } else {
-                    response = new Connect(Connect.ConnectResponse.SERVER_CLOSED);
+                    response.setResponse(ConnectResponse.Response.SERVER_CLOSED);
 
                 }
                 server.send(connect.getConnection(), response);

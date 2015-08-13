@@ -1,5 +1,7 @@
 package org.jge.model.world;
 
+import javafx.scene.canvas.GraphicsContext;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +17,9 @@ public class Tile extends RenderableEntity {
         this(new Waypoint(x,y));
     }
 
-    public Tile(Waypoint location) {
+    public Tile(Waypoint waypoint) {
 
-        super.location = location;
+        super.waypoint = waypoint;
         super.tile = this;
         entities = new ArrayList<>(5); // 5 init capacity?
     }
@@ -27,5 +29,8 @@ public class Tile extends RenderableEntity {
     }
 
 
+    @Override
+    public void render(GraphicsContext g) {
 
+    }
 }

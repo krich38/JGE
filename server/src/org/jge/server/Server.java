@@ -8,6 +8,7 @@ import akka.actor.Props;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import org.jge.protocol.Protocol;
+import org.jge.protocol.packet.ChatMessage;
 import org.jge.protocol.packet.Packet;
 import org.jge.server.actor.ConnectionManagerActor;
 
@@ -48,7 +49,7 @@ public class Server {
 
     public void send(Connection connection, Packet packet) {
 
-
+System.out.println(packet);
         connection.sendTCP(packet);
 
     }
@@ -78,6 +79,12 @@ public class Server {
 
                     case REGISTER:
                         INBOX.send(CONMANAGER, p);
+                        break;
+                    case CHAT:
+                        ChatMessage msg = (ChatMessage) p;
+                        System.out.println(msg.getMessage());
+                        break;
+                    case UPDATE:
                         break;
                 }
             }

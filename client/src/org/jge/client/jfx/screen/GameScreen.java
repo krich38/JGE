@@ -9,9 +9,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import org.jge.client.GameClient;
 import org.jge.client.jfx.Game;
 import org.jge.client.GameEngine;
+import org.jge.client.listener.GameClientListener;
 import org.jge.model.world.Player;
 import org.jge.model.world.RenderableEntity;
 import org.jge.model.world.World;
@@ -35,7 +37,7 @@ public class GameScreen extends Screen {
     private boolean chatFlag;
     private Canvas canvas;
 
-    public GameScreen(int character) {
+    public GameScreen() {
 
         this.game = getGame();
         engine = new GameEngine(this);
@@ -43,7 +45,7 @@ public class GameScreen extends Screen {
         keys = new HashSet<>(5);
         renderable = new CopyOnWriteArrayList<>();
         client = game.getClient();
-        renderable.add(new Player(character));
+
     }
 
     @Override
@@ -51,11 +53,11 @@ public class GameScreen extends Screen {
 
         VBox vb = new VBox();
         gp = new GridPane();
-        gp.setPrefHeight(400.0);
-        gp.setPrefWidth(600.0);
+        gp.setPrefHeight(650.0);
+        gp.setPrefWidth(900.0);
         ColumnConstraints cc = new ColumnConstraints();
         cc.setHgrow(Priority.SOMETIMES);
-        cc.setMaxWidth(600.0);
+        cc.setMaxWidth(900.0);
         cc.setMinWidth(10.0);
         cc.setPrefWidth(530.0);
         gp.getColumnConstraints().add(cc);
@@ -69,39 +71,57 @@ public class GameScreen extends Screen {
         gp.getRowConstraints().add(rc);
 
 
-        TextField chatField = new TextField();
 
 
-        Button sendButton = new Button("Send");
-        sendButton.setPrefHeight(25.0);
-        sendButton.setPrefWidth(70.0);
 
 
         canvas = new Canvas();
 
-        canvas.setHeight(400);
-        canvas.setWidth(600);
+        canvas.setHeight(650);
+        canvas.setWidth(900);
+        canvas.getGraphicsContext2D().setFill(Color.GREEN);
+        canvas.getGraphicsContext2D().fillRect(0, 0, 900, 650);
+        Button sendButton = new Button("Send");
+        sendButton.setPrefHeight(25.0);
+        sendButton.setPrefWidth(70.0);
+        TextField chatField = new TextField();
+        chatField.setPrefHeight(25);
+        chatField.setPrefWidth(canvas.getWidth() - sendButton.getPrefWidth());
         sendButton.setOnAction(event -> {
 
 
         });
 
 
+
+        sendButton.setLayoutX(canvas.getWidth() - sendButton.getPrefWidth());
+        sendButton.setLayoutY(canvas.getHeight()-sendButton.getPrefHeight());
+        chatField.setLayoutX(0);
+        chatField.setLayoutY(canvas.getHeight()-chatField.getPrefHeight());
+        Group chatGroup = new Group(sendButton, chatField);
         vb.getChildren().add(gp);
 
         Group g = new Group(vb, canvas);
-        Scene scene = new Scene(g, 600, 400);
+        Scene scene = new Scene(g, 900, 650);
         scene.addEventFilter(KeyEvent.KEY_PRESSED, (event) -> {
             KeyCode code = event.getCode();
 
             if (code == KeyCode.ENTER) {
                 if (chatFlag) {
                     // process chat text here
-                    gp.getChildren().remove(chatField);
-                    gp.getChildren().remove(sendButton);
+                    String chatMessage = chatField.getText();
+
+                    g.getChildren().remove(chatGroup);
+                    chatField.clear();
+                    client.sendChatMessage(chatMessage);
+
                 } else {
-                    gp.add(sendButton, 1, 2);
-                    gp.add(chatField, 0, 2);
+
+
+
+                    g.getChildren().add(chatGroup);
+
+
                 }
                 chatFlag = !chatFlag;
 

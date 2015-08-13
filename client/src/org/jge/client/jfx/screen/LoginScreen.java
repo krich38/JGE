@@ -37,7 +37,7 @@ public class LoginScreen extends Screen {
 
 
 
-        getClient().setListener(new LoginScreenListener(getGame(), this));
+        getClient().setListener(new LoginScreenListener(this));
     }
 
     @Override

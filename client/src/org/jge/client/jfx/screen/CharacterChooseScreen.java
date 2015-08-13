@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import org.jge.client.listener.GameClientListener;
 import org.jge.model.CharacterSprite;
 
 /**
@@ -61,7 +62,8 @@ public class CharacterChooseScreen extends Screen {
         // Still working on this, when a character is selected it will pass the
         // character selection onto Player class to set sprite to load
         character1.setOnAction(event -> {
-            changeScreen(new GameScreen(1));
+            getClient().setListener(new GameClientListener());
+            changeScreen(new GameScreen());
         });
 //
 //        character2.setOnAction(event -> {

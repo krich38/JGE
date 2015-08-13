@@ -1,6 +1,7 @@
 package org.jge.model.world;
 
 import javafx.scene.image.Image;
+import org.jge.model.Id;
 
 /**
  * @author Kyle Richards
@@ -8,11 +9,12 @@ import javafx.scene.image.Image;
  */
 public abstract class Entity {
 
-    public Waypoint location;
+    public Waypoint waypoint;
     public Tile tile;
+    protected Id<Entity> id;
 
-    public Waypoint getLocation() {
-        return location;
+    public Waypoint getWaypoint() {
+        return waypoint;
     }
 
     public Tile getTile() {
@@ -23,4 +25,11 @@ public abstract class Entity {
         this.tile = tile;
     }
 
+    public Id<Entity> getId() {
+        return id;
+    }
+
+    public void setWaypoint(Waypoint waypoint) {
+        this.waypoint = waypoint;
+    }
 }

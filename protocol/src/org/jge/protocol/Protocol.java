@@ -3,9 +3,8 @@ package org.jge.protocol;
 import com.esotericsoftware.kryo.Kryo;
 import org.jge.model.Id;
 import org.jge.model.User;
-import org.jge.protocol.packet.Connect;
-import org.jge.protocol.packet.Packet;
-import org.jge.protocol.packet.Register;
+import org.jge.model.world.Waypoint;
+import org.jge.protocol.packet.*;
 
 import java.io.File;
 import java.net.URL;
@@ -26,7 +25,12 @@ public class Protocol {
         kryo.register(Packet.class);
         kryo.register(org.jge.protocol.packet.Packet.PacketType.class);
         kryo.register(Register.class);
-        kryo.register(Connect.ConnectResponse.class);
+        kryo.register(ConnectResponse.class);
+        kryo.register(ConnectResponse.Response.class);
+        kryo.register(PlayerLoad.class);
+        kryo.register(Waypoint.class);
+        kryo.register(Id.class);
+        kryo.register(ChatMessage.class);
 
     }
 
