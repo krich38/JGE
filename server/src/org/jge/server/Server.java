@@ -49,7 +49,7 @@ public class Server {
 
     public void send(Connection connection, Packet packet) {
 
-System.out.println(packet);
+        System.out.println(packet);
         connection.sendTCP(packet);
 
     }

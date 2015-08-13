@@ -36,7 +36,6 @@ public class LoginScreen extends Screen {
     public LoginScreen() {
 
 
-
         getClient().setListener(new LoginScreenListener(this));
     }
 

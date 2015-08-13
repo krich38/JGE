@@ -14,7 +14,7 @@ public class Tile extends RenderableEntity {
 
 
     public Tile(int x, int y) {
-        this(new Waypoint(x,y));
+        this(new Waypoint(x, y));
     }
 
     public Tile(Waypoint waypoint) {

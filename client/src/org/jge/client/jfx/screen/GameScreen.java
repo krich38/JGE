@@ -17,6 +17,7 @@ import org.jge.client.listener.GameClientListener;
 import org.jge.model.world.Player;
 import org.jge.model.world.RenderableEntity;
 import org.jge.model.world.World;
+import org.jge.protocol.packet.PlayerLoad;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -32,7 +33,6 @@ public class GameScreen extends Screen {
     private final GameClient client;
     private final World world;
     private Set<KeyCode> keys;
-    private Group chatGroup;
     private GridPane gp;
     private boolean chatFlag;
     private Canvas canvas;
@@ -46,6 +46,9 @@ public class GameScreen extends Screen {
         renderable = new CopyOnWriteArrayList<>();
         client = game.getClient();
 
+        PlayerLoad request = new PlayerLoad();
+        request.setId(client.getPlayer().getId());
+        client.send(request);
     }
 
     @Override
@@ -71,10 +74,6 @@ public class GameScreen extends Screen {
         gp.getRowConstraints().add(rc);
 
 
-
-
-
-
         canvas = new Canvas();
 
         canvas.setHeight(650);
@@ -84,24 +83,26 @@ public class GameScreen extends Screen {
         Button sendButton = new Button("Send");
         sendButton.setPrefHeight(25.0);
         sendButton.setPrefWidth(70.0);
+        vb.getChildren().add(gp);
         TextField chatField = new TextField();
         chatField.setPrefHeight(25);
         chatField.setPrefWidth(canvas.getWidth() - sendButton.getPrefWidth());
+        sendButton.setLayoutX(canvas.getWidth() - sendButton.getPrefWidth());
+        sendButton.setLayoutY(canvas.getHeight() - sendButton.getPrefHeight());
+        chatField.setLayoutX(0);
+        chatField.setLayoutY(canvas.getHeight() - chatField.getPrefHeight());
+        Group chatGroup = new Group(sendButton, chatField);
+        Group g = new Group(vb, canvas);
         sendButton.setOnAction(event -> {
+            String chatMessage = chatField.getText();
 
+            g.getChildren().remove(chatGroup);
+            chatField.clear();
+            client.sendChatMessage(chatMessage);
 
         });
 
 
-
-        sendButton.setLayoutX(canvas.getWidth() - sendButton.getPrefWidth());
-        sendButton.setLayoutY(canvas.getHeight()-sendButton.getPrefHeight());
-        chatField.setLayoutX(0);
-        chatField.setLayoutY(canvas.getHeight()-chatField.getPrefHeight());
-        Group chatGroup = new Group(sendButton, chatField);
-        vb.getChildren().add(gp);
-
-        Group g = new Group(vb, canvas);
         Scene scene = new Scene(g, 900, 650);
         scene.addEventFilter(KeyEvent.KEY_PRESSED, (event) -> {
             KeyCode code = event.getCode();
@@ -116,7 +117,6 @@ public class GameScreen extends Screen {
                     client.sendChatMessage(chatMessage);
 
                 } else {
-
 
 
                     g.getChildren().add(chatGroup);
@@ -176,10 +176,10 @@ public class GameScreen extends Screen {
     }
 
     public void repaint() {
-        if(!renderable.isEmpty()) {
+        if (!renderable.isEmpty()) {
             GraphicsContext g = canvas.getGraphicsContext2D();
-            for(RenderableEntity e : renderable) {
-e.render(g);
+            for (RenderableEntity e : renderable) {
+                e.render(g);
             }
 
         }

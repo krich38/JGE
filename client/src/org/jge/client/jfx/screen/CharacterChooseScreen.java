@@ -8,14 +8,22 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import org.jge.client.GameClient;
 import org.jge.client.listener.GameClientListener;
 import org.jge.model.CharacterSprite;
+import org.jge.protocol.packet.PlayerLoad;
 
 /**
  * @author Kyle Richards
  * @version 1.0
  */
 public class CharacterChooseScreen extends Screen {
+    private final GameClient client;
+
+    public CharacterChooseScreen() {
+        this.client = getClient();
+    }
+
     @Override
     public Scene buildScreen() {
         BorderPane bp = new BorderPane();
@@ -62,7 +70,7 @@ public class CharacterChooseScreen extends Screen {
         // Still working on this, when a character is selected it will pass the
         // character selection onto Player class to set sprite to load
         character1.setOnAction(event -> {
-            getClient().setListener(new GameClientListener());
+
             changeScreen(new GameScreen());
         });
 //

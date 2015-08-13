@@ -6,6 +6,7 @@ package org.jge.protocol.packet;
  */
 public class ConnectResponse extends Packet {
     private Response response;
+
     public ConnectResponse() {
         super(Packet.PacketType.CONNECT);
     }

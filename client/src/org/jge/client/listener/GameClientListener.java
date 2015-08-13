@@ -24,17 +24,15 @@ public class GameClientListener extends NetworkListener {
 
     public void received(Connection connection, Object object) {
         super.received(connection, object);
-        if(object instanceof Packet) {
-            Packet p = (Packet)object;
-            switch(p.getPacketType()) {
+        if (object instanceof Packet) {
+            Packet p = (Packet) object;
+            switch (p.getPacketType()) {
 
 
                 case UPDATE:
                     List<Player> playerList = (List<Player>) p.getAttachment();
 
                     break;
-                case PLAYER_LOAD:
-                    PlayerLoad load = (PlayerLoad) p;
 
             }
         }

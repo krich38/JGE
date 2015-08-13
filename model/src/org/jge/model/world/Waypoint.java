@@ -6,7 +6,7 @@ package org.jge.model.world;
  */
 public class Waypoint {
     private long key;
-    private  int x;
+    private int x;
     private int y;
 
     public Waypoint(int x, int y) {

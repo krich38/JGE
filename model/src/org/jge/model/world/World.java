@@ -13,7 +13,7 @@ import java.util.Set;
 public class World {
     public static final int TILES_X = 100;
     public static final int TILES_Y = 100;
-    private static final Map<Long, Tile> tiles= new HashMap<>(TILES_X*TILES_Y);
+    private static final Map<Long, Tile> tiles = new HashMap<>(TILES_X * TILES_Y);
 
     public void tick(Set<KeyCode> keys, long delta) {
 
@@ -22,8 +22,8 @@ public class World {
     public static Tile tileOf(int x, int y) {
         long key = x << 16 | y;
         Tile tile = tiles.get(key);
-        if(tile == null) {
-            tile = new Tile(x,y);
+        if (tile == null) {
+            tile = new Tile(x, y);
             tiles.put(key, tile);
         }
         return tile;

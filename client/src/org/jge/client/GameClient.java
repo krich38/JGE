@@ -65,10 +65,14 @@ public class GameClient {
 
 
     public void sendChatMessage(String chatMessage) {
-       ChatMessage msg = new ChatMessage();
+        ChatMessage msg = new ChatMessage();
         msg.setMessage(chatMessage);
         msg.setAttachment(player.getId());
         client.sendTCP(msg);
+    }
+
+    public void send(Object packet) {
+        client.sendTCP(packet);
     }
 
     public Player getPlayer() {

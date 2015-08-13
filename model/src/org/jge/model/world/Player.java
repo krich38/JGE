@@ -12,17 +12,27 @@ import org.jge.model.User;
  * @version 1.0
  */
 public class Player extends RenderableEntity {
-    private  Rectangle2D[] spriteArray= new Rectangle2D[12];
+    private Rectangle2D[] spriteArray = new Rectangle2D[12];
     private User user;
     private String[] characterList = {"male_1", "male_2", "female_1", "mage_1",
-            "mage_2", "mage_3"};private ImageView imageView = new ImageView();
+            "mage_2", "mage_3"};
+    private ImageView imageView = new ImageView();
+
     public Player(Id<Entity> id) {
         super.id = id;
     }
 
-    public Player(int i,  Waypoint waypoint) {
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-        setWaypoint(waypoint);
+    @Override
+    public void render(GraphicsContext g) {
+
+    }
+
+
+    public void loadSprites(int i) {
         Image img = new Image("Characters/" + characterList[i] + ".png");
         imageView.setImage(img);
 
@@ -46,14 +56,4 @@ public class Player extends RenderableEntity {
             currentY += 32;
         }//end height loop
     }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    @Override
-    public void render(GraphicsContext g) {
-
-    }
-
 }

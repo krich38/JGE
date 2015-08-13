@@ -6,6 +6,7 @@ package org.jge.protocol.packet;
  */
 public class ChatMessage extends Packet {
     private String message;
+
     public ChatMessage() {
         super(PacketType.CHAT);
     }

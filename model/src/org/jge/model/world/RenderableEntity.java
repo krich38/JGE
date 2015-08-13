@@ -18,7 +18,9 @@ public abstract class RenderableEntity extends Entity {
 
     public Image getSprite() {
         return sprite;
-    }    public void setSprite(Image sprite) {
+    }
+
+    public void setSprite(Image sprite) {
         this.sprite = sprite;
     }
 

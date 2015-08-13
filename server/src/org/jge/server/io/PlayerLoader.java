@@ -14,7 +14,7 @@ public class PlayerLoader {
         return newPlayer(user);
     }
 
-    public PlayerLoad newPlayer(User user){
+    public PlayerLoad newPlayer(User user) {
 //        Player player = new Player();
 //        player.setTile(World.tileOf(60, 30));
 //        player.setUser(user);

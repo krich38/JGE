@@ -18,7 +18,6 @@ import org.jge.client.GameClient;
 public class GameOptionScreen extends Screen {
 
 
-
     @Override
     public Scene buildScreen() {
         BorderPane bp = new BorderPane();
