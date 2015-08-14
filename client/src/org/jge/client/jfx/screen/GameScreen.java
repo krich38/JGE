@@ -27,9 +27,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @version 1.0
  */
 public class GameScreen extends Screen {
+    public static final double SCREEN_HEIGHT = 650;
+    public static final double SCREEN_WIDTH=900;
     private final Game game;
     private final List<RenderableEntity> renderable;
     private final GameClient client;
+    private final Player player;
 
     private Set<KeyCode> keys;
     private GridPane gp;
@@ -43,6 +46,7 @@ public class GameScreen extends Screen {
         keys = new HashSet<>(5);
         renderable = new CopyOnWriteArrayList<>();
         client = game.getClient();
+        player = Game.getGame().getPlayer();
 
         PlayerLoad request = new PlayerLoad();
         request.setId(game.getPlayer().getId());
@@ -90,7 +94,7 @@ public class GameScreen extends Screen {
         chatField.setLayoutX(0);
         chatField.setLayoutY(canvas.getHeight() - chatField.getPrefHeight());
         Group chatGroup = new Group(sendButton, chatField);
-        Group g = new Group(vb, canvas);
+        Group g = new Group(vb, canvas, player.getNode());
         sendButton.setOnAction(event -> {
             String chatMessage = chatField.getText();
 
@@ -101,7 +105,7 @@ public class GameScreen extends Screen {
         });
 
 
-        Scene scene = new Scene(g, 900, 650);
+        Scene scene = new Scene(g, SCREEN_WIDTH, SCREEN_HEIGHT);
         scene.addEventFilter(KeyEvent.KEY_PRESSED, (event) -> {
             KeyCode code = event.getCode();
 
@@ -182,5 +186,9 @@ public class GameScreen extends Screen {
 
         }
 
+    }
+
+    public List<RenderableEntity> getRenderable() {
+        return renderable;
     }
 }

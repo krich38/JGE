@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
  * @version 1.0
  */
 public abstract class RenderableEntity extends Entity {
-    private Node node;
+    protected Node node;
     private Image sprite;
 
     public Node getNode() {
@@ -25,4 +25,6 @@ public abstract class RenderableEntity extends Entity {
     }
 
     public abstract void render(GraphicsContext g);
+
+
 }

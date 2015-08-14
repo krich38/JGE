@@ -23,7 +23,7 @@ public abstract class Screen {
     public abstract Scene buildScreen();
 
     public void changeScreen(Screen screen) {
-        game.updateScene(screen);
+        game.updateScreen(screen);
     }
 
     protected Game getGame() {

@@ -33,4 +33,9 @@ public class Tile extends RenderableEntity {
     public void render(GraphicsContext g) {
 
     }
+
+    @Override
+    public void process(long delta) {
+
+    }
 }

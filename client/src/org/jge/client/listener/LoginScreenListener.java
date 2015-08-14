@@ -5,6 +5,7 @@ import org.jge.client.GameClient;
 import org.jge.client.jfx.Game;
 
 import org.jge.client.jfx.screen.GameOptionScreen;
+import org.jge.client.jfx.screen.GameScreen;
 import org.jge.client.jfx.screen.LoginScreen;
 import org.jge.model.Id;
 import org.jge.model.world.Entity;
@@ -59,11 +60,14 @@ public class LoginScreenListener extends NetworkListener {
             }
 
         } else if (object instanceof PlayerLoad) {
+
+            //todo: clean this up
             PlayerLoad load = (PlayerLoad) object;
             Player player = Game.getGame().getPlayer();
-            player.loadSprites(load.getPlayerType());
+            player.loadSprites(load.getPlayerType(), GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
             player.setWaypoint(load.getWaypoint());
             client.setListener(new GameClientListener());
+            Game.getGame().getEngine().getWorld().setPlayer(player);
         }
     }
 }

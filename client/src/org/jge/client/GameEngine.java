@@ -24,7 +24,7 @@ public class GameEngine {
 
     public GameEngine(GameScreen screen) {
         world = new World();
-        view = new GameView();
+        view = new GameView(screen.getRenderable());
         this.screen = screen;
         Timer ticker = new Timer();
         ticker.schedule(new TimerTask() {

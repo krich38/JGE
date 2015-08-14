@@ -47,24 +47,20 @@ public class Game extends Application {
     public void start(Stage stage) throws Exception {
 
         this.stage = stage;
-        //stage.setResizable(false);
+        stage.setResizable(false);
         stage.setOnCloseRequest((event) -> System.exit(0));
         client = new GameClient();
-        loginScreen();
+        currentScreen = new LoginScreen();
+        stage.setScene(currentScreen.buildScreen());
+        stage.centerOnScreen();
         stage.show();
     }
 
-    private void loginScreen() {
-        currentScreen = new LoginScreen();
-        updateScene(currentScreen);
 
-    }
-
-    public void updateScene(Screen screen) {
+    public void updateScreen(Screen screen) {
         Platform.runLater(() -> {
             currentScreen = screen;
             stage.setScene(screen.buildScreen());
-            stage.centerOnScreen();
         });
 
     }
