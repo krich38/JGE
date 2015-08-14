@@ -30,4 +30,8 @@ public class PlayerEncap  {
     public boolean getPonged() {
         return ponged;
     }
+
+    public Id<Entity> getId() {
+        return id;
+    }
 }

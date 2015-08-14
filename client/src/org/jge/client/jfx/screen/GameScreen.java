@@ -14,6 +14,7 @@ import org.jge.client.GameClient;
 import org.jge.client.jfx.Game;
 import org.jge.client.GameEngine;
 import org.jge.client.listener.GameClientListener;
+import org.jge.model.world.Ground;
 import org.jge.model.world.Player;
 import org.jge.model.world.RenderableEntity;
 import org.jge.model.world.World;
@@ -37,7 +38,7 @@ public class GameScreen extends Screen {
     private Set<KeyCode> keys;
     private GridPane gp;
     private boolean chatFlag;
-    private Canvas canvas;
+    private GraphicsContext g;
 
     public GameScreen() {
 
@@ -75,13 +76,9 @@ public class GameScreen extends Screen {
         rc.setVgrow(Priority.SOMETIMES);
         gp.getRowConstraints().add(rc);
 
-
-        canvas = new Canvas();
-
-        canvas.setHeight(650);
-        canvas.setWidth(900);
-        canvas.getGraphicsContext2D().setFill(Color.GREEN);
-        canvas.getGraphicsContext2D().fillRect(0, 0, 900, 650);
+            Ground ground = new Ground(player);
+Canvas canvas = ground.getCanvas();
+        g=canvas.getGraphicsContext2D();
         Button sendButton = new Button("Send");
         sendButton.setPrefHeight(25.0);
         sendButton.setPrefWidth(70.0);
@@ -103,7 +100,7 @@ public class GameScreen extends Screen {
             client.sendChatMessage(chatMessage);
 
         });
-
+renderable.add(ground);
 
         Scene scene = new Scene(g, SCREEN_WIDTH, SCREEN_HEIGHT);
         scene.addEventFilter(KeyEvent.KEY_PRESSED, (event) -> {
@@ -179,8 +176,9 @@ public class GameScreen extends Screen {
 
     public void repaint() {
         if (!renderable.isEmpty()) {
-            GraphicsContext g = canvas.getGraphicsContext2D();
+
             for (RenderableEntity e : renderable) {
+
                 e.render(g);
             }
 

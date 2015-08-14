@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 public abstract class RenderableEntity extends Entity {
     protected Node node;
     private Image sprite;
+    private double translateY, translateX;
 
     public Node getNode() {
         return node;
@@ -27,4 +28,19 @@ public abstract class RenderableEntity extends Entity {
     public abstract void render(GraphicsContext g);
 
 
+    public double getTranslateX() {
+        return translateX;
+    }
+
+    public void setTranslateX(double translateX) {
+        this.translateX = translateX;
+    }
+
+    public double getTranslateY() {
+        return translateY;
+    }
+
+    public void setTranslateY(double translateY) {
+        this.translateY = translateY;
+    }
 }

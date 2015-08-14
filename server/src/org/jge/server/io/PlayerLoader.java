@@ -30,6 +30,6 @@ public class PlayerLoader {
     public void load(PlayerLoad load) {
 
         load.setPlayerType(1);
-        load.setWaypoint(new Waypoint(30, 60));
+        load.setWaypoint(new Waypoint(10, 15));
     }
 }

@@ -19,6 +19,7 @@ public class Player extends RenderableEntity {
     private ImageView imageView = new ImageView();
     private int stepCounter;
     private boolean spriteFlag;
+    private double translateY;
 
     public Player(Id<Entity> id) {
 
@@ -84,6 +85,7 @@ public class Player extends RenderableEntity {
                         imageView.setViewport(spriteArray[9]);
 
                     }
+                    setTranslateY(getTranslateY()-(delta*MOV_PER_MILLI));
                     break;
                 case MOVEMENT_LEFT:
                     if (spriteFlag) { //This is the left foot
@@ -120,7 +122,7 @@ public class Player extends RenderableEntity {
 
 }
 
-    private void stoppedMoving(EntityStatus status) {System.out.println(getStatus());
+    private void stoppedMoving(EntityStatus status) {
         switch(status) {
             case MOVEMENT_UP:
                 imageView.setViewport(spriteArray[10]);

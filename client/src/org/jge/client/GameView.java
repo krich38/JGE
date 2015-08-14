@@ -3,6 +3,7 @@ package org.jge.client;
 import org.jge.client.jfx.Game;
 import org.jge.model.world.Player;
 import org.jge.model.world.RenderableEntity;
+import org.jge.model.world.WorldMap;
 
 import java.util.List;
 
@@ -12,12 +13,13 @@ import java.util.List;
  */
 public class GameView {
     private final Player player;
+
     private List<RenderableEntity> renderable;
+
 
     public GameView(List<RenderableEntity> renderable) {
         this.renderable = renderable;
-
-        player = Game.getGame().getPlayer();
+player = Game.getGame().getPlayer();
 
 
     }

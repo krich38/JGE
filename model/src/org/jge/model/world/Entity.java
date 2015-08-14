@@ -10,6 +10,7 @@ import org.jge.model.Id;
 public abstract class Entity {
     private EntityStatus status;
     private EntityStatus lastStatus = EntityStatus.FACING_DOWN;
+    public static final double MOV_PER_MILLI = 0.2;
 
     public void setLastStatus(EntityStatus lastStatus) {
         this.lastStatus = lastStatus;
