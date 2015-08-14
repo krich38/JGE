@@ -5,6 +5,7 @@ import org.jge.client.GameClient;
 import org.jge.client.jfx.Game;
 import org.jge.model.world.Player;
 import org.jge.protocol.packet.Packet;
+import org.jge.protocol.packet.Ping;
 import org.jge.protocol.packet.PlayerLoad;
 import org.jge.protocol.packet.Update;
 
@@ -24,7 +25,6 @@ public class GameClientListener extends NetworkListener {
 
     public void received(Connection connection, Object object) {
         super.received(connection, object);
-        System.out.println(object);
         if (object instanceof Packet) {
             Packet p = (Packet) object;
             switch (p.getPacketType()) {
@@ -34,6 +34,12 @@ public class GameClientListener extends NetworkListener {
                     List<Player> playerList = (List<Player>) p.getAttachment();
 
                     break;
+                case PING:
+                    Ping ping = (Ping) p;
+                    Packet reply = new Ping.Pong();
+                    reply.setAttachment(ping.getAttachment());
+                    client.send(reply);
+                    System.out.println("Pinged, ponged with: " + ping.getAttachment());
 
             }
         }

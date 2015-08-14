@@ -13,13 +13,18 @@ import org.jge.model.world.Entity;
 import org.jge.protocol.Protocol;
 import org.jge.protocol.packet.ChatMessage;
 import org.jge.protocol.packet.Packet;
+import org.jge.protocol.packet.Ping;
 import org.jge.protocol.packet.PlayerLoad;
 import org.jge.server.actor.ConnectionManagerActor;
 import org.jge.server.io.PlayerLoader;
+import org.jge.server.net.ServerListener;
+import org.jge.server.util.PingTimer;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Kyle Richards
@@ -32,6 +37,9 @@ public class Server {
     private boolean open;
     private PlayerLoader playerLoader;
     private Map<Id<Entity>, PlayerEncap> players;
+    private ServerEngine engine;
+    private Map<Id<Entity>, Connection> connectionsEntityMap;
+    private Map<Connection, Id<Entity>> connectionIdMap;
 
 
     public static Server getInstance() {
@@ -41,15 +49,16 @@ public class Server {
         return INSTANCE;
     }
 
-    public void init() {players = new HashMap<>();
+    public void init() {
+        players = new ConcurrentHashMap<>();
+        connectionsEntityMap = new ConcurrentHashMap<>();
+        connectionIdMap = new ConcurrentHashMap<>();
         playerLoader = new PlayerLoader();
         com.esotericsoftware.kryonet.Server kryoServer = new com.esotericsoftware.kryonet.Server();
         kryoServer.start();
         Protocol.register(kryoServer.getKryo());
-        ActorSystem system = ActorSystem.create("decoworld");
-        INBOX = Inbox.create(system);
-        CONMANAGER = system.actorOf(Props.create(ConnectionManagerActor.class));playerLoader = new PlayerLoader();
 
+        engine = new ServerEngine();
         try {
             kryoServer.bind(3744, 3476);
             kryoServer.addListener(new ServerListener());
@@ -61,7 +70,7 @@ public class Server {
 
     public void send(Connection connection, Packet packet) {
 
-        System.out.println(packet);
+        //System.out.println(packet);
         connection.sendTCP(packet);
 
     }
@@ -82,51 +91,42 @@ public class Server {
         return playerLoader;
     }
 
-    private class ServerListener extends Listener {
-        @Override
-        public void received(Connection conn, Object o) {
-            super.received(conn, o);
-            System.out.println(o);
-            if (o instanceof Packet) {
-                Packet p = (Packet) o;
-                p.setConnection(conn);
-                switch (p.getPacketType()) {
-
-                    case CONNECT:
-
-                    case DISCONNECT:
+    public Map<Id<Entity>, PlayerEncap> getPlayers() {
+        return players;
+    }
 
 
-                    case REGISTER:
-                        INBOX.send(CONMANAGER, p);
-                        break;
-                    case CHAT:
-                        ChatMessage msg = (ChatMessage) p;
-                        System.out.println(msg.getAttachment() + ": " +msg.getMessage());
-                        break;
-                    case UPDATE:
-                        break;
-                    case PLAYER_LOAD:
-                        PlayerLoad loadRequest = (PlayerLoad) p;
-                        PlayerLoad loadSend = new PlayerLoad();
-                        playerLoader.load(loadSend);
-                        PlayerEncap player = new PlayerEncap(loadRequest.getId(), loadSend.getPlayerType(), loadSend.getWaypoint(), loadRequest.getUser());
-                        players.put(loadSend.getId(), player);
-                        send(loadRequest.getConnection(), loadSend);
-                        System.out.println("Player connected: " + player.getId());
-                        break;
-                }
-            }
-        }
 
-        @Override
-        public void disconnected(Connection c) {
-            super.disconnected(c);
-        }
 
-        @Override
-        public void connected(Connection c) {
-            super.connected(c);
-        }
+    public Connection getConnectionById(Id<Entity> id) {
+        return connectionsEntityMap.get(id);
+    }
+
+    public void ping(Connection connection, long time) {
+        Ping ping = new Ping();
+        ping.setAttachment(time);
+        send(connection, ping);
+    }
+
+    public Id<Entity> getIdByConnection(Connection connection) {
+        return connectionIdMap.get(connection);
+    }
+
+    public void onConnect(Id<Entity> id, Connection connection) {
+        connectionIdMap.put(connection, id);
+        connectionsEntityMap.put(id, connection);
+    }
+
+    public void disconnect(Id<Entity> id, String reason) {
+        connectionsEntityMap.get(id).close();
+
+        connectionIdMap.remove(connectionsEntityMap.get(id));
+        connectionsEntityMap.remove(id);
+        players.remove(id);
+        System.out.println("Disconnected " + id + ": " + reason);
+    }
+
+    public ServerEngine getEngine() {
+        return engine;
     }
 }

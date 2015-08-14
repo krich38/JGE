@@ -33,6 +33,8 @@ public class Protocol {
         kryo.register(Id.class);
         kryo.register(ChatMessage.class);
         kryo.register(Connection.class);
+        kryo.register(Ping.class);
+        kryo.register(Ping.Pong.class);
 
     }
 

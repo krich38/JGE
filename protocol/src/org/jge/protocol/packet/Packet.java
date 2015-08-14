@@ -49,6 +49,6 @@ public abstract class Packet {
     public enum PacketType {
         CONNECT,
         DISCONNECT,
-        REGISTER, CHAT, UPDATE, PLAYER_LOAD
+        REGISTER, CHAT, UPDATE, PING, PLAYER_LOAD
     }
 }
