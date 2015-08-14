@@ -40,6 +40,7 @@ public class LoginScreenListener extends NetworkListener {
                 case OK:
                     screen.changeScreen(new GameOptionScreen());
                     Player player = new Player((Id<Entity>) response.getAttachment());
+
                     client.setPlayer(player);
 
                     break;
@@ -63,7 +64,6 @@ public class LoginScreenListener extends NetworkListener {
             player.loadSprites(load.getPlayerType());
             player.setWaypoint(load.getWaypoint());
             client.setListener(new GameClientListener());
-            System.out.println("loaddd");
         }
     }
 }

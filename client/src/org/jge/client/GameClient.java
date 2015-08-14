@@ -66,6 +66,7 @@ public class GameClient {
 
     public void sendChatMessage(String chatMessage) {
         ChatMessage msg = new ChatMessage();
+
         msg.setMessage(chatMessage);
         msg.setAttachment(player.getId());
         client.sendTCP(msg);

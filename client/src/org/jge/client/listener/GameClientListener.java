@@ -24,6 +24,7 @@ public class GameClientListener extends NetworkListener {
 
     public void received(Connection connection, Object object) {
         super.received(connection, object);
+        System.out.println(object);
         if (object instanceof Packet) {
             Packet p = (Packet) object;
             switch (p.getPacketType()) {

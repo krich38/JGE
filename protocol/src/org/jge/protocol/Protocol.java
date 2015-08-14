@@ -1,6 +1,7 @@
 package org.jge.protocol;
 
 import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryonet.Connection;
 import org.jge.model.Id;
 import org.jge.model.User;
 import org.jge.model.world.Waypoint;
@@ -31,6 +32,7 @@ public class Protocol {
         kryo.register(Waypoint.class);
         kryo.register(Id.class);
         kryo.register(ChatMessage.class);
+        kryo.register(Connection.class);
 
     }
 
