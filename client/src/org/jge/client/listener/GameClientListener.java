@@ -17,10 +17,12 @@ import java.util.List;
  */
 public class GameClientListener extends NetworkListener {
 
+
     private final GameClient client;
 
     public GameClientListener() {
-        client = Game.getGame().getClient();
+        Game.getGame().connected();
+client = Game.getGame().getClient();
     }
 
     public void received(Connection connection, Object object) {

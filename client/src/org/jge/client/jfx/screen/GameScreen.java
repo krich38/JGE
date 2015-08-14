@@ -28,10 +28,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class GameScreen extends Screen {
     private final Game game;
-    private final GameEngine engine;
     private final List<RenderableEntity> renderable;
     private final GameClient client;
-    private final World world;
+
     private Set<KeyCode> keys;
     private GridPane gp;
     private boolean chatFlag;
@@ -40,14 +39,13 @@ public class GameScreen extends Screen {
     public GameScreen() {
 
         this.game = getGame();
-        engine = new GameEngine(this);
-        world = engine.getWorld();
+
         keys = new HashSet<>(5);
         renderable = new CopyOnWriteArrayList<>();
         client = game.getClient();
 
         PlayerLoad request = new PlayerLoad();
-        request.setId(client.getPlayer().getId());
+        request.setId(game.getPlayer().getId());
         client.send(request);
     }
 
@@ -120,7 +118,7 @@ public class GameScreen extends Screen {
 
 
                     g.getChildren().add(chatGroup);
-
+                    chatField.requestFocus();
 
                 }
                 chatFlag = !chatFlag;

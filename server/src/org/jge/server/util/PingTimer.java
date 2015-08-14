@@ -69,6 +69,5 @@ public class PingTimer {
 
     public void addReply(Ping.Pong pong) {
         replies.add(pong);
-        System.out.println("Ponged with " + pong.getAttachment());
     }
 }

@@ -41,7 +41,7 @@ public class LoginScreenListener extends NetworkListener {
                     screen.changeScreen(new GameOptionScreen());
                     Player player = new Player((Id<Entity>) response.getAttachment());
 
-                    client.setPlayer(player);
+                    Game.getGame().setPlayer(player);
 
                     break;
 
@@ -60,7 +60,7 @@ public class LoginScreenListener extends NetworkListener {
 
         } else if (object instanceof PlayerLoad) {
             PlayerLoad load = (PlayerLoad) object;
-            Player player = client.getPlayer();
+            Player player = Game.getGame().getPlayer();
             player.loadSprites(load.getPlayerType());
             player.setWaypoint(load.getWaypoint());
             client.setListener(new GameClientListener());

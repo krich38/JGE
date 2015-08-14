@@ -9,12 +9,12 @@ import org.jge.client.jfx.Game;
  * @version 1.0
  */
 public abstract class Screen {
-    private final Scene scene;
+
     private final Game game;
     private final GameClient client;
 
     public Screen() {
-        scene = buildScreen();
+
         game = Game.getGame();
         client = game.getClient();
 
@@ -22,12 +22,8 @@ public abstract class Screen {
 
     public abstract Scene buildScreen();
 
-    public Scene getScene() {
-        return scene;
-    }
-
     public void changeScreen(Screen screen) {
-        game.updateScene(screen.getScene());
+        game.updateScene(screen);
     }
 
     protected Game getGame() {

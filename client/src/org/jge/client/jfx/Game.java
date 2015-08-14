@@ -18,9 +18,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.jge.client.GameClient;
+import org.jge.client.GameEngine;
+import org.jge.client.jfx.screen.GameScreen;
 import org.jge.client.jfx.screen.LoginScreen;
 import org.jge.client.jfx.screen.Screen;
 import org.jge.model.User;
+import org.jge.model.world.Player;
 
 import java.io.IOException;
 
@@ -33,6 +36,8 @@ public class Game extends Application {
     private Stage stage;
     private GameClient client;
     private Screen currentScreen;
+    private Player player;
+    private GameEngine engine;
 
     public static Game getGame() {
         return INSTANCE;
@@ -51,13 +56,14 @@ public class Game extends Application {
 
     private void loginScreen() {
         currentScreen = new LoginScreen();
-        updateScene(currentScreen.buildScreen());
+        updateScene(currentScreen);
 
     }
 
-    public void updateScene(Scene scene) {
+    public void updateScene(Screen screen) {
         Platform.runLater(() -> {
-            stage.setScene(scene);
+            currentScreen = screen;
+            stage.setScene(screen.buildScreen());
             stage.centerOnScreen();
         });
 
@@ -75,5 +81,22 @@ public class Game extends Application {
 
     public GameClient getClient() {
         return client;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public void connected() {
+        engine = new GameEngine((GameScreen) currentScreen);
+        engine.setPlayer(player);
+    }
+
+    public GameEngine getEngine() {
+        return engine;
     }
 }

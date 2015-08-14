@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 import org.jge.client.jfx.screen.GameScreen;
+import org.jge.model.world.Player;
 import org.jge.model.world.World;
 
 import java.util.Timer;
@@ -16,11 +17,14 @@ import java.util.TimerTask;
 public class GameEngine {
 
     private final World world;
+    private final GameView view;
     private GameScreen screen;
+    private Player player;
 
 
     public GameEngine(GameScreen screen) {
         world = new World();
+        view = new GameView();
         this.screen = screen;
         Timer ticker = new Timer();
         ticker.schedule(new TimerTask() {
@@ -32,6 +36,8 @@ public class GameEngine {
                 long delta = time - lastrun;
                 world.tick(screen.getKeys(), delta);
                 lastrun = time;
+                view.tick();
+
             }
         }, 500, 20);
 
@@ -45,5 +51,9 @@ public class GameEngine {
 
     public World getWorld() {
         return world;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }

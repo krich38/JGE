@@ -1,6 +1,7 @@
 package org.jge.client;
 
 import com.esotericsoftware.kryonet.Client;
+import org.jge.client.jfx.Game;
 import org.jge.client.listener.LoginScreenListener;
 import org.jge.client.listener.NetworkListener;
 import org.jge.model.User;
@@ -76,11 +77,4 @@ public class GameClient {
         client.sendTCP(packet);
     }
 
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
 }
