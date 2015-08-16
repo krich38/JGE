@@ -18,11 +18,6 @@ import org.jge.protocol.packet.PlayerLoad;
  * @version 1.0
  */
 public class CharacterChooseScreen extends Screen {
-    private final GameClient client;
-
-    public CharacterChooseScreen() {
-        this.client = getClient();
-    }
 
     @Override
     public Scene buildScreen() {

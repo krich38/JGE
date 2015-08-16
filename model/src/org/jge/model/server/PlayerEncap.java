@@ -40,4 +40,12 @@ public class PlayerEncap {
     public User getUser() {
         return user;
     }
+
+    public Waypoint getWaypoint() {
+        return waypoint;
+    }
+
+    public int getPlayerType() {
+        return playerType;
+    }
 }

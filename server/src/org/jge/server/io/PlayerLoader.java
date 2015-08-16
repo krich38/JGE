@@ -2,6 +2,7 @@ package org.jge.server.io;
 
 import org.jge.model.Id;
 import org.jge.model.User;
+import org.jge.model.server.PlayerEncap;
 import org.jge.model.world.*;
 import org.jge.protocol.packet.PlayerLoad;
 
@@ -27,9 +28,10 @@ public class PlayerLoader {
         return Id.generate();
     }
 
-    public void load(PlayerLoad load) {
+    public PlayerEncap load(PlayerLoad loadRequest) {
 
 
-        load.setWaypoint(new Waypoint(10, 15));
+
+        return new PlayerEncap(loadRequest.getId(), loadRequest.getPlayerType(), new Waypoint(10, 15), loadRequest.getUser());
     }
 }

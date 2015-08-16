@@ -8,6 +8,7 @@ import org.jge.client.jfx.screen.GameOptionScreen;
 import org.jge.client.jfx.screen.GameScreen;
 import org.jge.client.jfx.screen.LoginScreen;
 import org.jge.model.Id;
+import org.jge.model.server.PlayerEncap;
 import org.jge.model.world.Entity;
 import org.jge.model.world.Player;
 import org.jge.protocol.packet.Connect;
@@ -64,9 +65,9 @@ public class LoginScreenListener extends NetworkListener {
             //todo: clean this up
             PlayerLoad load = (PlayerLoad) object;
             Player player = game.getPlayer();
-            System.out.println(load.getPlayerType() + " :::");
-            player.loadSprites(load.getPlayerType(), GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
-            player.setWaypoint(load.getWaypoint());
+            PlayerEncap pe = (PlayerEncap) load.getAttachment();
+            player.loadSprites(pe.getPlayerType(), GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
+            player.setWaypoint(pe.getWaypoint());
             client.setListener(new GameClientListener());
             game.getEngine().getWorld().setPlayer(player);
         }

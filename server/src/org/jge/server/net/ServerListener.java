@@ -70,10 +70,9 @@ public class ServerListener extends Listener {
                 case PLAYER_LOAD:
                     PlayerLoad loadRequest = (PlayerLoad) p;
                     PlayerLoad loadSend = new PlayerLoad();
-                    loadSend.setPlayerType(loadRequest.getPlayerType());
-                    System.out.println(loadRequest.getPlayerType());
-                    playerLoader.load(loadSend);
-                    PlayerEncap player = new PlayerEncap(loadRequest.getId(), loadRequest.getPlayerType(), loadSend.getWaypoint(), loadRequest.getUser());
+
+                    PlayerEncap player = playerLoader.load(loadSend);
+                    loadSend.setAttachment(player);
                     server.getPlayers().put(loadRequest.getId(), player);
                     server.onConnect(loadRequest.getId(), loadRequest.getConnection());
                     server.send(loadRequest.getConnection(), loadSend);

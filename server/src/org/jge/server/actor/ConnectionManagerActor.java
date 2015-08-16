@@ -37,6 +37,7 @@ public class ConnectionManagerActor extends UntypedActor {
                     User user = connect.getUser();
                     response.setResponse(ConnectResponse.Response.OK);
                     response.setAttachment(loader.loadId(user));
+                    System.out.println(user.getPassword());
                     //response = new Connect(Connect.ConnectResponse.INCORRECT_DETAILS);
                     // packet.getConnection().close();
 
