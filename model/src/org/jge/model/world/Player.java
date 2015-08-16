@@ -22,10 +22,11 @@ public class Player extends RenderableEntity {
     private double translateY;
     private boolean footFlag;
     private double distFlag;
+    private int playerType;
 
     public Player(Id<Entity> id) {
 
-        super.id = id;
+        super.id = id;node = imageView;
     }
 
     public void setUser(User user) {
@@ -38,8 +39,10 @@ public class Player extends RenderableEntity {
     }
 
 
-    public void loadSprites(int i, double w, double h) {
-        Image img = new Image("Characters/" + characterList[i] + ".png");
+    public void loadSprites(int playerType, double w, double h) {
+        System.out.println("LOL" + playerType);
+        this.playerType = playerType;
+        Image img = new Image("Characters/" + characterList[playerType] + ".png");
         imageView.setImage(img);
         imageView.setLayoutX(((w - imageView.getFitWidth()) / 2) - 32);
         imageView.setLayoutY(((h - imageView.getFitHeight()) / 2) - 64);
@@ -64,7 +67,7 @@ public class Player extends RenderableEntity {
             currentY += 32;
         }//end height loop
         imageView.setViewport(spriteArray[1]);
-        node = imageView;
+
     }
 
     @Override
@@ -195,6 +198,13 @@ public class Player extends RenderableEntity {
         }
     }
 
+    public int getPlayerType() {
+        return playerType;
+    }
+
+    public User getUser() {
+        return user;
+    }
 }
 
 

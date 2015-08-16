@@ -15,10 +15,12 @@ import org.jge.client.GameClient;
 import org.jge.client.jfx.Game;
 import org.jge.client.GameEngine;
 import org.jge.client.listener.GameClientListener;
+import org.jge.model.server.PlayerEncap;
 import org.jge.model.world.Ground;
 import org.jge.model.world.Player;
 import org.jge.model.world.RenderableEntity;
 import org.jge.model.world.World;
+import org.jge.protocol.packet.Logout;
 import org.jge.protocol.packet.PlayerLoad;
 
 import java.awt.*;
@@ -48,7 +50,7 @@ public class GameScreen extends Screen {
     private Canvas canvas;
     private Ground ground;
 
-    public GameScreen() {
+    public GameScreen(int characterType) {
 
         this.game = getGame();
 
@@ -59,6 +61,7 @@ public class GameScreen extends Screen {
         ground = new Ground(player);
         PlayerLoad request = new PlayerLoad();
         request.setId(game.getPlayer().getId());
+        request.setPlayerType(characterType);
         client.send(request);
     }
 
@@ -107,9 +110,15 @@ public class GameScreen extends Screen {
                     canvas.requestFocus();
                 }
             } else {
-                code = parseKey(code);
-                if (code != null) {
-                    keys.add(code);
+                if(event.isControlDown() && code.equals(KeyCode.L)) {
+
+                    client.logout();
+                    changeScreen(new LoginScreen());
+                } else {
+                    code = parseKey(code);
+                    if (code != null) {
+                        keys.add(code);
+                    }
                 }
             }
 

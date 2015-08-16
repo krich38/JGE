@@ -5,12 +5,10 @@ import org.jge.client.jfx.Game;
 import org.jge.client.listener.LoginScreenListener;
 import org.jge.client.listener.NetworkListener;
 import org.jge.model.User;
+import org.jge.model.server.PlayerEncap;
 import org.jge.model.world.Player;
 import org.jge.protocol.Protocol;
-import org.jge.protocol.packet.ChatMessage;
-import org.jge.protocol.packet.Connect;
-import org.jge.protocol.packet.Packet;
-import org.jge.protocol.packet.Register;
+import org.jge.protocol.packet.*;
 
 import java.io.IOException;
 
@@ -79,5 +77,12 @@ public class GameClient {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public void logout() {
+        Logout logout = new Logout();
+        //(Id<Entity> id, int playerType, Waypoint waypoint, User user)
+        PlayerEncap pe = new PlayerEncap(player.getId(), player.getPlayerType(), player.getWaypoint(), player.getUser());
+        logout.setEncap(pe);
     }
 }

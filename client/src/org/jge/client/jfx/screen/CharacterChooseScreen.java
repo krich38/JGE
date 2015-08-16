@@ -71,28 +71,28 @@ public class CharacterChooseScreen extends Screen {
         // character selection onto Player class to set sprite to load
         character1.setOnAction(event -> {
 
-            changeScreen(new GameScreen());
+            changeScreen(new GameScreen(0));
         });
-//
-//        character2.setOnAction(event -> {
-//            Platform.runLater(() -> initGameScreen(primaryStage, 1));
-//        });
-//
-//        character3.setOnAction(event -> {
-//            Platform.runLater(() -> initGameScreen(primaryStage, 2));
-//        });
-//
-//        character4.setOnAction(event -> {
-//            Platform.runLater(() -> initGameScreen(primaryStage, 3));
-//        });
-//
-//        character5.setOnAction(event -> {
-//            Platform.runLater(() -> initGameScreen(primaryStage, 4));
-//        });
-//
-//        character6.setOnAction(event -> {
-//            Platform.runLater(() -> initGameScreen(primaryStage, 5));
-//        });
+
+        character2.setOnAction(event -> {
+            changeScreen(new GameScreen(1));
+        });
+
+        character3.setOnAction(event -> {
+            changeScreen(new GameScreen(2));
+        });
+
+        character4.setOnAction(event -> {
+            changeScreen(new GameScreen(3));
+        });
+
+        character5.setOnAction(event -> {
+            changeScreen(new GameScreen(4));
+        });
+
+        character6.setOnAction(event -> {
+            changeScreen(new GameScreen(5));
+        });
 
         //  hb.getChildren().add(text);
         bp.setId("bp");

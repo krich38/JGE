@@ -40,7 +40,7 @@ public class Tile extends RenderableEntity {
 
     @Override
     public void render(GraphicsContext g) {
-        System.out.println(getWaypoint().getX());
+        //System.out.println(getWaypoint().getX());
         g.drawImage(getSprite(), getWaypoint().getX() * 32, getWaypoint().getY() * 32);
         setRendered(true);
     }
