@@ -1,5 +1,6 @@
 package org.jge.client.jfx.screen;
 
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -20,7 +21,9 @@ import org.jge.model.world.RenderableEntity;
 import org.jge.model.world.World;
 import org.jge.protocol.packet.PlayerLoad;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -28,7 +31,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @version 1.0
  */
 public class GameScreen extends Screen {
-    public static final double SCREEN_HEIGHT = 650;
+    public static final double SCREEN_HEIGHT = 775;
     public static final double SCREEN_WIDTH=900;
     private final Game game;
     private final List<RenderableEntity> renderable;
@@ -39,6 +42,10 @@ public class GameScreen extends Screen {
     private GridPane gp;
     private boolean chatFlag;
     private GraphicsContext g;
+    private ChatWindow chatWindow;
+    private Scene scene;
+    private Group group;
+    private Canvas canvas;
 
     public GameScreen() {
 
@@ -59,7 +66,7 @@ public class GameScreen extends Screen {
 
         VBox vb = new VBox();
         gp = new GridPane();
-        gp.setPrefHeight(650.0);
+        gp.setPrefHeight(775.0);
         gp.setPrefWidth(900.0);
         ColumnConstraints cc = new ColumnConstraints();
         cc.setHgrow(Priority.SOMETIMES);
@@ -77,60 +84,33 @@ public class GameScreen extends Screen {
         gp.getRowConstraints().add(rc);
 
             Ground ground = new Ground(player);
-Canvas canvas = ground.getCanvas();
-        g=canvas.getGraphicsContext2D();
-        Button sendButton = new Button("Send");
-        sendButton.setPrefHeight(25.0);
-        sendButton.setPrefWidth(70.0);
-        vb.getChildren().add(gp);
-        TextField chatField = new TextField();
-        chatField.setPrefHeight(25);
-        chatField.setPrefWidth(canvas.getWidth() - sendButton.getPrefWidth());
-        sendButton.setLayoutX(canvas.getWidth() - sendButton.getPrefWidth());
-        sendButton.setLayoutY(canvas.getHeight() - sendButton.getPrefHeight());
-        chatField.setLayoutX(0);
-        chatField.setLayoutY(canvas.getHeight() - chatField.getPrefHeight());
-        Group chatGroup = new Group(sendButton, chatField);
-        Group g = new Group(vb, canvas, player.getNode());
-        sendButton.setOnAction(event -> {
-            String chatMessage = chatField.getText();
+canvas = ground.getCanvas();
 
-            g.getChildren().remove(chatGroup);
-            chatField.clear();
-            client.sendChatMessage(chatMessage);
+        g=canvas.getGraphicsContext2D();vb.getChildren().add(gp);
+        chatWindow = new ChatWindow(canvas.getWidth(), canvas.getHeight(), this);
+       group = new Group(vb, canvas, player.getNode(), chatWindow.getWindow());
 
-        });
 renderable.add(ground);
 
-        Scene scene = new Scene(g, SCREEN_WIDTH, SCREEN_HEIGHT);
+        scene = new Scene(group, SCREEN_WIDTH, SCREEN_HEIGHT);
+        scene.setOnMouseClicked((event1 -> {
+            canvas.requestFocus();
+        }));
         scene.addEventFilter(KeyEvent.KEY_PRESSED, (event) -> {
             KeyCode code = event.getCode();
-
-            if (code == KeyCode.ENTER) {
-                if (chatFlag) {
-                    // process chat text here
-                    String chatMessage = chatField.getText();
-
-                    g.getChildren().remove(chatGroup);
-                    chatField.clear();
-                    client.sendChatMessage(chatMessage);
-
-                } else {
-
-
-                    g.getChildren().add(chatGroup);
-                    chatField.requestFocus();
-
+            if (chatWindow.isFocused()) {
+                if (code.equals(KeyCode.ENTER)) {
+                    chatWindow.onSend();
+                } else if (code.equals(KeyCode.ESCAPE)) {
+                    canvas.requestFocus();
                 }
-                chatFlag = !chatFlag;
-
-
             } else {
                 code = parseKey(code);
                 if (code != null) {
                     keys.add(code);
                 }
             }
+
         });
 
         scene.addEventFilter(KeyEvent.KEY_RELEASED, (event) -> {
@@ -141,9 +121,11 @@ renderable.add(ground);
                 keys.remove(code);
             }
         });
-
+        canvas.requestFocus();
+        scene.getStylesheets().add(getClass().getResource("/graphics/game.css").toExternalForm());
         return scene;
     }
+
 
     private KeyCode parseKey(KeyCode code) {
         KeyCode toReturn = null;
@@ -178,8 +160,8 @@ renderable.add(ground);
         if (!renderable.isEmpty()) {
 
             for (RenderableEntity e : renderable) {
-
-                e.render(g);
+if(e.requiresRendering()){
+                e.render(g);}
             }
 
         }
@@ -188,5 +170,14 @@ renderable.add(ground);
 
     public List<RenderableEntity> getRenderable() {
         return renderable;
+    }
+
+
+    public ChatWindow getChatWindow() {
+        return chatWindow;
+    }
+
+    public Canvas getCanvas() {
+        return canvas;
     }
 }

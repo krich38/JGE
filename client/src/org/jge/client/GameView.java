@@ -1,11 +1,16 @@
 package org.jge.client;
 
 import org.jge.client.jfx.Game;
+import org.jge.client.jfx.screen.ChatWindow;
+import org.jge.client.jfx.screen.GameScreen;
 import org.jge.model.world.Player;
 import org.jge.model.world.RenderableEntity;
 import org.jge.model.world.WorldMap;
+import org.jge.protocol.packet.ChatMessage;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * @author Kyle Richards
@@ -13,18 +18,35 @@ import java.util.List;
  */
 public class GameView {
     private final Player player;
+    private final Game game;
+
 
     private List<RenderableEntity> renderable;
+    private GameScreen screen;
 
 
-    public GameView(List<RenderableEntity> renderable) {
-        this.renderable = renderable;
-player = Game.getGame().getPlayer();
+    public GameView(GameScreen screen) {
+        this.screen = screen;
+        this.renderable = screen.getRenderable();
+        game = Game.getGame();
+player = game.getPlayer();
+
 
 
     }
     // todo: load tiles, player, etc all that is viewable, into the renderable of game screen
-    public void tick() {
+    public void tick(long delta) {
 
+        Queue<ChatMessage> msgs = game.getMessageQueue();
+        if(!msgs.isEmpty()) {
+
+            screen.getChatWindow().process(msgs);
+            //msgs.clear();
+
+        }
+
+        for(RenderableEntity e : renderable) {
+            e.process(delta);
+        }
     }
 }

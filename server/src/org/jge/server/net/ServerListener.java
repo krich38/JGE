@@ -6,7 +6,9 @@ import akka.actor.Inbox;
 import akka.actor.Props;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import org.jge.model.Id;
 import org.jge.model.server.PlayerEncap;
+import org.jge.model.world.Entity;
 import org.jge.protocol.packet.ChatMessage;
 import org.jge.protocol.packet.Packet;
 import org.jge.protocol.packet.Ping;
@@ -52,7 +54,15 @@ public class ServerListener extends Listener {
                     break;
                 case CHAT:
                     ChatMessage msg = (ChatMessage) p;
-                    System.out.println(msg.getAttachment() + ": " +msg.getMessage());
+                    System.out.println(msg.getUser());
+                    // todo process chat here
+                    String text = msg.getMessage();
+                    ChatMessage msgProcessed = new ChatMessage();
+                    msgProcessed.setMessage(text);
+                    msgProcessed.setUser(msg.getUser());
+
+
+                    server.send(msg.getConnection(), msgProcessed);
                     break;
                 case UPDATE:
                     break;

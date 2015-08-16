@@ -28,7 +28,7 @@ public class LoginScreenListener extends NetworkListener {
 
 
         this.screen = screen;
-        client = Game.getGame().getClient();
+        client = game.getClient();
     }
 
     @Override
@@ -41,8 +41,8 @@ public class LoginScreenListener extends NetworkListener {
                 case OK:
                     screen.changeScreen(new GameOptionScreen());
                     Player player = new Player((Id<Entity>) response.getAttachment());
-
-                    Game.getGame().setPlayer(player);
+                    game.setPlayer(player);
+                    game.getClient().setPlayer(player);
 
                     break;
 
@@ -63,11 +63,11 @@ public class LoginScreenListener extends NetworkListener {
 
             //todo: clean this up
             PlayerLoad load = (PlayerLoad) object;
-            Player player = Game.getGame().getPlayer();
+            Player player = game.getPlayer();
             player.loadSprites(load.getPlayerType(), GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
             player.setWaypoint(load.getWaypoint());
             client.setListener(new GameClientListener());
-            Game.getGame().getEngine().getWorld().setPlayer(player);
+            game.getEngine().getWorld().setPlayer(player);
         }
     }
 }

@@ -18,23 +18,27 @@ public class Ground extends RenderableEntity {
 
         canvas.setHeight(650);
         canvas.setWidth(900);
-        canvas.getGraphicsContext2D().setFill(Color.GREEN);
-        canvas.getGraphicsContext2D().fillRect(0, 0, 900, 650);
+
+
 
     }
     @Override
     public void render(GraphicsContext g) {
-
+        System.out.println("rendering");
+        setLastTranslateY(getTranslateY());
+        setLastTranslateX(getTranslateX());
     }
 
     @Override
     public void process(long delta) {
-        canvas.setTranslateX(getTranslateX());
-        canvas.setTranslateY(getTranslateY());
-        System.out.println(player.getTranslateY());
+        setTranslateX(player.getTranslateX());
+        setTranslateY(player.getTranslateY());
+
+
     }
 
     public Canvas getCanvas() {
         return canvas;
     }
+
 }

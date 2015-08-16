@@ -23,6 +23,7 @@ public class GameClient {
     private final Client client;
     private NetworkListener listener;
     private Player player;
+    private User user;
 
     public GameClient() {
         client = new Client();
@@ -33,7 +34,7 @@ public class GameClient {
     public void connect(User user) throws IOException {
         if (!client.isConnected()) {
             // are we reconnecting?
-
+this.user = user;
 
             client.connect(TIMEOUT, "127.0.0.1", 3744, 3476);
 
@@ -46,7 +47,7 @@ public class GameClient {
 
     public void register(User user) throws IOException {
         if (!client.isConnected()) {
-
+            this.user = user;
             client.connect(TIMEOUT, "127.0.0.1", 3744, 3476);
             Register register = new Register();
             register.setUser(user);
@@ -67,14 +68,16 @@ public class GameClient {
 
     public void sendChatMessage(String chatMessage) {
         ChatMessage msg = new ChatMessage();
-
         msg.setMessage(chatMessage);
-        msg.setAttachment(player.getId());
-        client.sendTCP(msg);
+        send(msg);
     }
 
-    public void send(Object packet) {
+    public void send(Packet packet) {
+        packet.setUser(user);
         client.sendTCP(packet);
     }
 
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
 }

@@ -44,4 +44,8 @@ public class User {
         String salt = BCrypt.gensalt();
         return BCrypt.hashpw(pw, salt);
     }
+
+    public String getUsername() {
+        return username;
+    }
 }

@@ -8,6 +8,7 @@ import akka.actor.Props;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import org.jge.model.Id;
+import org.jge.model.User;
 import org.jge.model.server.PlayerEncap;
 import org.jge.model.world.Entity;
 import org.jge.protocol.Protocol;
@@ -128,5 +129,10 @@ public class Server {
 
     public ServerEngine getEngine() {
         return engine;
+    }
+
+
+    public User getUserById(Id<Entity> id) {
+        return players.get(id).getUser();
     }
 }

@@ -24,8 +24,11 @@ import org.jge.client.jfx.screen.LoginScreen;
 import org.jge.client.jfx.screen.Screen;
 import org.jge.model.User;
 import org.jge.model.world.Player;
+import org.jge.protocol.packet.ChatMessage;
 
 import java.io.IOException;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * @author Kyle Richards
@@ -38,6 +41,7 @@ public class Game extends Application {
     private Screen currentScreen;
     private Player player;
     private GameEngine engine;
+    private Queue<ChatMessage> messageQueue;
 
     public static Game getGame() {
         return INSTANCE;
@@ -47,12 +51,12 @@ public class Game extends Application {
     public void start(Stage stage) throws Exception {
 
         this.stage = stage;
-        stage.setResizable(false);
+        //stage.setResizable(false);
         stage.setOnCloseRequest((event) -> System.exit(0));
         client = new GameClient();
         currentScreen = new LoginScreen();
         stage.setScene(currentScreen.buildScreen());
-        stage.centerOnScreen();
+
         stage.show();
     }
 
@@ -60,7 +64,8 @@ public class Game extends Application {
     public void updateScreen(Screen screen) {
         Platform.runLater(() -> {
             currentScreen = screen;
-            stage.setScene(screen.buildScreen());
+
+            stage.setScene(screen.buildScreen());stage.centerOnScreen();
         });
 
     }
@@ -71,7 +76,9 @@ public class Game extends Application {
     }
 
     public Game() {
-        INSTANCE = this;
+        INSTANCE = this
+        ;
+
     }
 
 
@@ -89,10 +96,22 @@ public class Game extends Application {
 
     public void connected() {
         engine = new GameEngine((GameScreen) currentScreen);
-        engine.setPlayer(player);
+        engine.setPlayer(player);messageQueue = new ConcurrentLinkedQueue<>();
     }
 
     public GameEngine getEngine() {
         return engine;
+    }
+
+    public void addChatMessage(ChatMessage msg) {
+        messageQueue.add(msg);
+    }
+
+    public Queue<ChatMessage> getMessageQueue() {
+        return messageQueue;
+    }
+
+    public Screen getScreen() {
+        return currentScreen;
     }
 }

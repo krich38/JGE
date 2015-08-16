@@ -14,6 +14,7 @@ public class PlayerEncap  {
     private final int playerType;
     private final Waypoint waypoint;
     private final Id<Entity> id;
+    private User user;
     private boolean ponged;
 
     public PlayerEncap(Id<Entity> id, int playerType, Waypoint waypoint, User user) {
@@ -21,6 +22,7 @@ public class PlayerEncap  {
         this.waypoint = waypoint;
         this.id = id;
 
+        this.user = user;
     }
 
     public void setPonged(boolean ponged) {
@@ -33,5 +35,9 @@ public class PlayerEncap  {
 
     public Id<Entity> getId() {
         return id;
+    }
+
+    public User getUser() {
+        return user;
     }
 }

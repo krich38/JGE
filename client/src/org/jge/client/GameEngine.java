@@ -24,7 +24,7 @@ public class GameEngine {
 
     public GameEngine(GameScreen screen) {
         world = new World();
-        view = new GameView(screen.getRenderable());
+        view = new GameView(screen);
         this.screen = screen;
         Timer ticker = new Timer();
         ticker.schedule(new TimerTask() {
@@ -36,7 +36,7 @@ public class GameEngine {
                 long delta = time - lastrun;
                 world.tick(screen.getKeys(), delta);
                 lastrun = time;
-                view.tick();
+                view.tick(delta);
 
             }
         }, 500, 20);

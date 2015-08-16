@@ -19,4 +19,9 @@ public class ChatMessage extends Packet {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    @Override
+    public String toString() {
+        return getUser().getUsername() +": " + message;
+    }
 }

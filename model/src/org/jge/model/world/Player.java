@@ -39,8 +39,8 @@ public class Player extends RenderableEntity {
     public void loadSprites(int i, double w, double h) {
         Image img = new Image("Characters/" + characterList[i] + ".png");
         imageView.setImage(img);
-        imageView.setLayoutX((w - imageView.getFitWidth()) / 2);
-        imageView.setLayoutY((h-imageView.getFitHeight())/2);
+        imageView.setLayoutX(((w - imageView.getFitWidth()) / 2) - 32);
+        imageView.setLayoutY(((h - imageView.getFitHeight()) / 2) - 64);
 
         //Get the dimensions of the image
         double width = img.getWidth();
@@ -85,32 +85,39 @@ public class Player extends RenderableEntity {
                         imageView.setViewport(spriteArray[9]);
 
                     }
-                    setTranslateY(getTranslateY()-(delta*MOV_PER_MILLI));
+                    setTranslateY(getTranslateY() - (delta * MOV_PER_MILLI));
                     break;
                 case MOVEMENT_LEFT:
                     if (spriteFlag) { //This is the left foot
                         imageView.setViewport(spriteArray[5]);
-                        break;
+
                     } else {      //This is the right foot
                         imageView.setViewport(spriteArray[3]);
-                        break;
+
                     }
-                case MOVEMENT_RIGHT:if (spriteFlag) {
-                    imageView.setViewport(spriteArray[6]);
+                    setTranslateX(getTranslateX() - (delta * MOV_PER_MILLI));
                     break;
-                } else {
-                    imageView.setViewport(spriteArray[8]);
+                case MOVEMENT_RIGHT:
+                    if (spriteFlag) {
+                        imageView.setViewport(spriteArray[6]);
+
+                    } else {
+                        imageView.setViewport(spriteArray[8]);
+
+                    }
+                    setTranslateX(getTranslateX() + (delta * MOV_PER_MILLI));
                     break;
-                }
 
                 case MOVEMENT_DOWN:
                     if (spriteFlag) {
                         imageView.setViewport(spriteArray[2]);
-                        break;
+
                     } else {
                         imageView.setViewport(spriteArray[0]);
-                        break;
+
                     }
+                    setTranslateY(getTranslateY() + (delta * MOV_PER_MILLI));
+                    break;
                 // flag to stop movement
                 case STATIONARY:
                     stoppedMoving(getLastStatus());
@@ -118,12 +125,12 @@ public class Player extends RenderableEntity {
             }
             setLastStatus(status); //Track the last direction
             spriteFlag = !spriteFlag; //Alternate feet.
+        }
+
     }
 
-}
-
     private void stoppedMoving(EntityStatus status) {
-        switch(status) {
+        switch (status) {
             case MOVEMENT_UP:
                 imageView.setViewport(spriteArray[10]);
                 setStatus(EntityStatus.FACING_UP);

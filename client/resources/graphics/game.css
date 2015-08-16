@@ -1,0 +1,16 @@
+#btnSend {
+    -fx-padding: 3px 10px 3px 10px;
+    -fx-background-color: linear-gradient(#009cff, #0251ff);
+    -fx-text-fill: bisque;
+
+}
+
+#chatArea {
+    -fx-display-caret: false;
+}
+
+#text {
+    -fx-fill: linear-gradient(orange, orangered);
+}
+
+
