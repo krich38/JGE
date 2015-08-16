@@ -13,11 +13,15 @@ import java.util.List;
 public class Tile extends RenderableEntity {
     private List<Entity> entities;
     private int tileId;
-    private static final Image image = new Image("Assets/1.png");
+    //private static final Image image = new Image("Assets/1.png");
+    private static final Image[] tiles = new Image[]{
+            new Image("/Assets/Tiles/1.png"), new Image("/Assets/Tiles/2.png"), new Image("/Assets/Tiles/3.png"),
+    };
+    private boolean rendered;
 
     public Tile(int tileId, Waypoint waypoint) {
         this.tileId = tileId;
-        setSprite(Tile.image);
+        setSprite(tiles[tileId - 1]);
         super.waypoint = waypoint;
         super.tile = this;
         entities = new ArrayList<>(5); // 5 init capacity?
@@ -25,6 +29,9 @@ public class Tile extends RenderableEntity {
     }
 
 
+    public boolean requiresRendering() {
+        return !rendered;
+    }
 
     public boolean isOccupied() {
         return !entities.isEmpty();
@@ -33,11 +40,17 @@ public class Tile extends RenderableEntity {
 
     @Override
     public void render(GraphicsContext g) {
-
+        System.out.println(getWaypoint().getX());
+        g.drawImage(getSprite(), getWaypoint().getX() * 32, getWaypoint().getY() * 32);
+        setRendered(true);
     }
 
     @Override
     public void process(long delta) {
 
+    }
+
+    public void setRendered(boolean rendered) {
+        this.rendered = rendered;
     }
 }

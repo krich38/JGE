@@ -35,6 +35,7 @@ public class ServerListener extends Listener {
         playerLoader = new PlayerLoader();
 
     }
+
     @Override
     public void received(Connection conn, Object o) {
         super.received(conn, o);
@@ -78,7 +79,7 @@ public class ServerListener extends Listener {
                     break;
                 case PING:
 
-                    server.getEngine().getPinger().addReply((Ping.Pong)p);
+                    server.getEngine().getPinger().addReply((Ping.Pong) p);
             }
         }
     }

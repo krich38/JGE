@@ -22,6 +22,6 @@ public class ChatMessage extends Packet {
 
     @Override
     public String toString() {
-        return getUser().getUsername() +": " + message;
+        return getUser().getUsername() + ": " + message;
     }
 }

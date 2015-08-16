@@ -14,6 +14,7 @@ public abstract class NetworkListener extends Listener {
     public NetworkListener() {
         game = Game.getGame();
     }
+
     public void received(Connection connection, Object object) {
         super.received(connection, object);
         //System.out.println(object);

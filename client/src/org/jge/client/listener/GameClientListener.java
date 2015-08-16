@@ -11,8 +11,8 @@ import java.util.List;
 /**
  * @author Kyle James Richards
  * @version 1.0
- * Department of Computer Science and Electrical Engineering
- * Google Inc.
+ *          Department of Computer Science and Electrical Engineering
+ *          Google Inc.
  */
 public class GameClientListener extends NetworkListener {
 
@@ -21,7 +21,7 @@ public class GameClientListener extends NetworkListener {
 
     public GameClientListener() {
         game.connected();
-client = game.getClient();
+        client = game.getClient();
     }
 
     public void received(Connection connection, Object object) {

@@ -29,24 +29,25 @@ public class GameView {
         this.screen = screen;
         this.renderable = screen.getRenderable();
         game = Game.getGame();
-player = game.getPlayer();
-
+        player = game.getPlayer();
 
 
     }
+
     // todo: load tiles, player, etc all that is viewable, into the renderable of game screen
     public void tick(long delta) {
 
         Queue<ChatMessage> msgs = game.getMessageQueue();
-        if(!msgs.isEmpty()) {
+        if (!msgs.isEmpty()) {
 
             screen.getChatWindow().process(msgs);
             //msgs.clear();
 
         }
-
-        for(RenderableEntity e : renderable) {
+        //game.getEngine().getWorld().getMap().fillTiles(renderable);
+        for (RenderableEntity e : renderable) {
             e.process(delta);
+
         }
     }
 }

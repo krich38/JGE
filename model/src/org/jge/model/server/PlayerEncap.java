@@ -10,7 +10,7 @@ import org.jge.model.world.Waypoint;
  * @author Kyle Richards
  * @version 1.0
  */
-public class PlayerEncap  {
+public class PlayerEncap {
     private final int playerType;
     private final Waypoint waypoint;
     private final Id<Entity> id;

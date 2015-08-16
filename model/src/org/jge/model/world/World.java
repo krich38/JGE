@@ -16,13 +16,15 @@ public class World {
 
     private Player player;
     private WorldMap map;
+    private Ground ground;
 
-    public World() {
+    public World(Ground ground) {
 
+        this.ground = ground;
     }
 
     public void tick(Set<KeyCode> keys, long delta) {
-        if(!keys.isEmpty()) {
+        if (!keys.isEmpty()) {
             for (KeyCode k : keys) {
                 switch (k) {
                     case UP:
@@ -48,13 +50,16 @@ public class World {
             player.setStatus(Entity.EntityStatus.STATIONARY);
         }
         player.process(delta);
+        map.process();
     }
 
 
     public void setPlayer(Player player) {
 
         this.player = player;
-        map = WorldMap.load();
+        map = WorldMap.load(player);
+        ground.setMap(map);
+
     }
 
     public WorldMap getMap() {

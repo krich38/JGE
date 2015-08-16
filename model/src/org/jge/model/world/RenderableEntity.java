@@ -12,6 +12,7 @@ public abstract class RenderableEntity extends Entity {
     protected Node node;
     private Image sprite;
     private double translateY, translateX, lastTranslateY, lastTranslateX;
+    private boolean rendered;
 
     public Node getNode() {
         return node;
@@ -45,7 +46,7 @@ public abstract class RenderableEntity extends Entity {
     }
 
     public boolean requiresRendering() {
-        return translateX != lastTranslateX || translateY != lastTranslateY;
+        return translateX != lastTranslateX || translateY != lastTranslateY || !rendered;
     }
 
     public void setLastTranslateY(double lastTranslateY) {
@@ -57,5 +58,9 @@ public abstract class RenderableEntity extends Entity {
 
         this.lastTranslateX = lastTranslateX;
 
+    }
+
+    public void setRendered(boolean rendered) {
+        this.rendered = rendered;
     }
 }

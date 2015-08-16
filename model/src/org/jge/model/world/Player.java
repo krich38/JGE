@@ -20,6 +20,8 @@ public class Player extends RenderableEntity {
     private int stepCounter;
     private boolean spriteFlag;
     private double translateY;
+    private boolean footFlag;
+    private double distFlag;
 
     public Player(Id<Entity> id) {
 
@@ -68,64 +70,107 @@ public class Player extends RenderableEntity {
     @Override
     public void process(long delta) {
         stepCounter++;//increment the timer.
-
         if (stepCounter >= 4) {
+            spriteFlag = true;
             stepCounter = 0; //reset the counter
-            //This changes the sprite with movement.
-            EntityStatus status = getStatus();
 
-            switch (status) {
+        }
+        //if (stepCounter >= 4) {
 
-                case MOVEMENT_UP:
+        //This changes the sprite with movement.
+        EntityStatus status = getStatus();
+        double distMoved = (delta * MOV_PER_MILLI);
+        System.out.println(getWaypoint());
+        switch (status) {
 
-                    if (spriteFlag) {
+            case MOVEMENT_UP:
+                if (spriteFlag) {
+
+                    if (footFlag) {
                         imageView.setViewport(spriteArray[11]);
 
                     } else {
                         imageView.setViewport(spriteArray[9]);
 
                     }
-                    setTranslateY(getTranslateY() - (delta * MOV_PER_MILLI));
-                    break;
-                case MOVEMENT_LEFT:
-                    if (spriteFlag) { //This is the left foot
+                }
+                setTranslateY(getTranslateY() + distMoved);
+                distFlag += distMoved;
+                if (distFlag > 32) {
+                    getWaypoint().setY(getWaypoint().getY() + 1);
+                    distFlag -= 32;
+                }
+                break;
+            case MOVEMENT_LEFT:
+                if (spriteFlag) {
+                    if (footFlag) { //This is the left foot
                         imageView.setViewport(spriteArray[5]);
 
                     } else {      //This is the right foot
                         imageView.setViewport(spriteArray[3]);
 
                     }
-                    setTranslateX(getTranslateX() - (delta * MOV_PER_MILLI));
-                    break;
-                case MOVEMENT_RIGHT:
-                    if (spriteFlag) {
+                }
+                setTranslateX(getTranslateX() + (delta * MOV_PER_MILLI));
+                distFlag += distMoved;
+                if (distFlag > 32) {
+                    getWaypoint().setX(getWaypoint().getX() - 1);
+                    distFlag -= 32;
+                }
+                break;
+            case MOVEMENT_RIGHT:
+                if (spriteFlag) {
+                    if (footFlag) {
                         imageView.setViewport(spriteArray[6]);
 
                     } else {
                         imageView.setViewport(spriteArray[8]);
 
                     }
-                    setTranslateX(getTranslateX() + (delta * MOV_PER_MILLI));
-                    break;
+                }
+                setTranslateX(getTranslateX() - (delta * MOV_PER_MILLI));
+                distFlag += distMoved;
 
-                case MOVEMENT_DOWN:
-                    if (spriteFlag) {
+                if (distFlag > 32) {
+                    getWaypoint().setX(getWaypoint().getX() + 1);
+                    distFlag -= 32;
+                }
+                break;
+
+            case MOVEMENT_DOWN:
+                if (spriteFlag) {
+                    if (footFlag) {
                         imageView.setViewport(spriteArray[2]);
 
                     } else {
                         imageView.setViewport(spriteArray[0]);
 
                     }
-                    setTranslateY(getTranslateY() + (delta * MOV_PER_MILLI));
-                    break;
-                // flag to stop movement
-                case STATIONARY:
-                    stoppedMoving(getLastStatus());
+                }
+                setTranslateY(getTranslateY() - (delta * MOV_PER_MILLI));
+                distFlag += distMoved;
 
-            }
-            setLastStatus(status); //Track the last direction
-            spriteFlag = !spriteFlag; //Alternate feet.
+                if (distFlag > 32) {
+                    getWaypoint().setY(getWaypoint().getY() - 1);
+                    distFlag -= 32;
+                }
+                break;
+            // flag to stop movement
+            case STATIONARY:
+                stoppedMoving(getLastStatus());
+
+
         }
+        //System.out.println(spriteFlag);
+        if (spriteFlag) {
+            spriteFlag = false;
+            footFlag = !footFlag; //Alternate feet.
+        }
+
+        setLastStatus(status); //Track the last direction
+
+
+        //}
 
     }
 

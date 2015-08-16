@@ -78,7 +78,7 @@ public class Server {
 
     public void setOpen(boolean open) {
         this.open = open;
-        if(open) {
+        if (open) {
 
 
         }
@@ -95,8 +95,6 @@ public class Server {
     public Map<Id<Entity>, PlayerEncap> getPlayers() {
         return players;
     }
-
-
 
 
     public Connection getConnectionById(Id<Entity> id) {

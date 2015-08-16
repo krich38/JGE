@@ -15,6 +15,7 @@ public abstract class Entity {
     public void setLastStatus(EntityStatus lastStatus) {
         this.lastStatus = lastStatus;
     }
+
     public void setStatus(EntityStatus status) {
         this.status = status;
     }
@@ -32,7 +33,8 @@ public abstract class Entity {
     public enum EntityStatus {
         FACING_UP, STATIONARY, FACING_DOWN, MOVEMENT_DOWN, MOVEMENT_RIGHT, MOVEMENT_LEFT, FACING_LEFT, FACING_RIGHT, MOVEMENT_UP
 
-}
+    }
+
     public Waypoint waypoint;
     public Tile tile;
     protected Id<Entity> id;

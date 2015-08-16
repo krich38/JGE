@@ -32,7 +32,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class GameScreen extends Screen {
     public static final double SCREEN_HEIGHT = 775;
-    public static final double SCREEN_WIDTH=900;
+    public static final double SCREEN_WIDTH = 900;
     private final Game game;
     private final List<RenderableEntity> renderable;
     private final GameClient client;
@@ -46,6 +46,7 @@ public class GameScreen extends Screen {
     private Scene scene;
     private Group group;
     private Canvas canvas;
+    private Ground ground;
 
     public GameScreen() {
 
@@ -55,7 +56,7 @@ public class GameScreen extends Screen {
         renderable = new CopyOnWriteArrayList<>();
         client = game.getClient();
         player = Game.getGame().getPlayer();
-
+        ground = new Ground(player);
         PlayerLoad request = new PlayerLoad();
         request.setId(game.getPlayer().getId());
         client.send(request);
@@ -83,14 +84,15 @@ public class GameScreen extends Screen {
         rc.setVgrow(Priority.SOMETIMES);
         gp.getRowConstraints().add(rc);
 
-            Ground ground = new Ground(player);
-canvas = ground.getCanvas();
 
-        g=canvas.getGraphicsContext2D();vb.getChildren().add(gp);
+        canvas = ground.getCanvas();
+
+        g = canvas.getGraphicsContext2D();
+        vb.getChildren().add(gp);
         chatWindow = new ChatWindow(canvas.getWidth(), canvas.getHeight(), this);
-       group = new Group(vb, canvas, player.getNode(), chatWindow.getWindow());
+        group = new Group(vb, canvas, player.getNode(), chatWindow.getWindow());
 
-renderable.add(ground);
+        renderable.add(ground);
 
         scene = new Scene(group, SCREEN_WIDTH, SCREEN_HEIGHT);
         scene.setOnMouseClicked((event1 -> {
@@ -157,11 +159,15 @@ renderable.add(ground);
     }
 
     public void repaint() {
+        // System.out.println(player.getWaypoint());
+        // System.out.println(renderable.size());
         if (!renderable.isEmpty()) {
 
             for (RenderableEntity e : renderable) {
-if(e.requiresRendering()){
-                e.render(g);}
+
+                if (e.requiresRendering()) {
+                    e.render(g);
+                }
             }
 
         }
@@ -179,5 +185,9 @@ if(e.requiresRendering()){
 
     public Canvas getCanvas() {
         return canvas;
+    }
+
+    public Ground getGround() {
+        return ground;
     }
 }

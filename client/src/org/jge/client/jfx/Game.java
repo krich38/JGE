@@ -65,7 +65,8 @@ public class Game extends Application {
         Platform.runLater(() -> {
             currentScreen = screen;
 
-            stage.setScene(screen.buildScreen());stage.centerOnScreen();
+            stage.setScene(screen.buildScreen());
+            stage.centerOnScreen();
         });
 
     }
@@ -96,7 +97,8 @@ public class Game extends Application {
 
     public void connected() {
         engine = new GameEngine((GameScreen) currentScreen);
-        engine.setPlayer(player);messageQueue = new ConcurrentLinkedQueue<>();
+        engine.setPlayer(player);
+        messageQueue = new ConcurrentLinkedQueue<>();
     }
 
     public GameEngine getEngine() {

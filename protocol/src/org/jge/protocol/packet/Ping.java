@@ -9,8 +9,10 @@ public class Ping extends Packet {
         super(PacketType.PING);
     }
 
-public static class Pong extends Packet {
-    public Pong(){super (PacketType.PING);}
+    public static class Pong extends Packet {
+        public Pong() {
+            super(PacketType.PING);
+        }
 
-}
+    }
 }

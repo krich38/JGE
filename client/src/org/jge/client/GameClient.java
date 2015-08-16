@@ -34,7 +34,7 @@ public class GameClient {
     public void connect(User user) throws IOException {
         if (!client.isConnected()) {
             // are we reconnecting?
-this.user = user;
+            this.user = user;
 
             client.connect(TIMEOUT, "127.0.0.1", 3744, 3476);
 

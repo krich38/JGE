@@ -23,7 +23,7 @@ public class GameEngine {
 
 
     public GameEngine(GameScreen screen) {
-        world = new World();
+        world = new World(screen.getGround());
         view = new GameView(screen);
         this.screen = screen;
         Timer ticker = new Timer();

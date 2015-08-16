@@ -40,7 +40,6 @@ public class ChatWindow {
         sendButton.setPrefWidth(70.0);
 
 
-
         chatArea = new TextArea();
         chatArea.setPrefRowCount(5);
 
@@ -74,7 +73,7 @@ public class ChatWindow {
 
     public void onSend() {
         String chatMessage = chatField.getText();
-        if(chatMessage.length() > 0) {
+        if (chatMessage.length() > 0) {
             chatField.clear();
             client.sendChatMessage(chatMessage);
         }
@@ -85,7 +84,6 @@ public class ChatWindow {
     }
 
 
-
     public boolean isVisible() {
         return visible;
     }
@@ -94,7 +92,7 @@ public class ChatWindow {
 
         Platform.runLater(() -> {
 
-            for(ChatMessage msg : msgs) {
+            for (ChatMessage msg : msgs) {
                 System.out.println(msg);
                 User user = msg.getUser();
                 chatArea.appendText(user.getUsername() + ": " + msg.getMessage() + "\n");
