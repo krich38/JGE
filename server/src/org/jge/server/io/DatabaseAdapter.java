@@ -1,6 +1,7 @@
 package org.jge.server.io;
 
 import org.jge.model.Id;
+import org.jge.model.User;
 import org.jge.model.server.PlayerEncap;
 import org.jge.model.world.Entity;
 import org.jge.model.world.Waypoint;
@@ -32,15 +33,19 @@ statement = connection.createStatement();
 
     }
 
-    public static Id<Entity> getId(String username) {
-        String result = "select id from players where players.username=\""+username+"\"";
+    public static Id<Entity> getId(User user) {
+        String result = "select id,password from players where players.username=\""+user.getUsername()+"\"";
         Id<Entity> id = null;
         try {
             statement.execute(result);
 ResultSet rs = statement.getResultSet();
-            if(rs.next())
+            if(rs.next()) {
 
-                id = Id.asOf(rs.getString("id"));
+                if(rs.getString("password").equals(user.getPassword())) {
+                    id = Id.asOf(rs.getString("id"));
+                }
+            }
+
 
 
         } catch (SQLException e) {

@@ -2,6 +2,10 @@ package org.jge.model;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 /**
  * @author Kyle Richards
  * @version 1.0
@@ -23,6 +27,7 @@ public class User {
         this.id = id;
         this.username = username;
         this.password = User.encrypt(password);
+        //System.out.println(User.encrypt("lol"));
     }
 
     @Override
@@ -41,8 +46,10 @@ public class User {
     }
 
     public static String encrypt(String pw) {
-        String salt = BCrypt.gensalt();
-        return BCrypt.hashpw(pw, salt);
+        md.reset();
+        md.update(pw.getBytes(), 0, pw.length());
+        String md5 = new BigInteger(1, md.digest()).toString(16);
+        return md5;
     }
 
     public String getUsername() {
@@ -51,5 +58,15 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    private static MessageDigest md;
+
+    static {
+        try {
+            User.md  = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -25,7 +25,7 @@ public class PlayerLoader {
     }
 
     public Id<Entity> loadId(User user) {
-        Id<Entity> id = DatabaseAdapter.getId(user.getUsername());
+        Id<Entity> id = DatabaseAdapter.getId(user);
         return id;
     }
 
