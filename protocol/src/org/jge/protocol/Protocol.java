@@ -4,6 +4,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
 import org.jge.model.Id;
 import org.jge.model.User;
+import org.jge.model.server.PlayerEncap;
 import org.jge.model.world.Waypoint;
 import org.jge.protocol.packet.*;
 
@@ -35,6 +36,8 @@ public class Protocol {
         kryo.register(Connection.class);
         kryo.register(Ping.class);
         kryo.register(Ping.Pong.class);
+        kryo.register(PlayerEncap.class);
+        kryo.register(Logout.class);
 
     }
 

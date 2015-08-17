@@ -40,7 +40,7 @@ public class Player extends RenderableEntity {
 
 
     public void loadSprites(int playerType, double w, double h) {
-        System.out.println("LOL" + playerType);
+
         this.playerType = playerType;
         Image img = new Image("Characters/" + characterList[playerType] + ".png");
         imageView.setImage(img);
@@ -83,7 +83,7 @@ public class Player extends RenderableEntity {
         //This changes the sprite with movement.
         EntityStatus status = getStatus();
         double distMoved = (delta * MOV_PER_MILLI);
-        System.out.println(getWaypoint());
+        //System.out.println(getWaypoint());
         switch (status) {
 
             case MOVEMENT_UP:

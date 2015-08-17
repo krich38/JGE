@@ -25,13 +25,22 @@ public class PlayerLoader {
     }
 
     public Id<Entity> loadId(User user) {
-        return Id.generate();
+        Id<Entity> id = DatabaseAdapter.getId(user.getUsername());
+        return id;
     }
 
-    public PlayerEncap load(PlayerLoad loadRequest) {
+    public PlayerEncap load(Id<Entity> id, PlayerLoad loadRequest) {
+        PlayerEncap pe = new PlayerEncap();
+        pe.setId(id);
+        pe.setPlayerType(loadRequest.getPlayerType());
+        pe.setUser(loadRequest.getUser());
+        DatabaseAdapter.fillPlayerEncap(pe);
 
 
+        return pe;
+    }
 
-        return new PlayerEncap(loadRequest.getId(), loadRequest.getPlayerType(), new Waypoint(10, 15), loadRequest.getUser());
+    public boolean savePlayer(PlayerEncap pe) {
+        return false;
     }
 }

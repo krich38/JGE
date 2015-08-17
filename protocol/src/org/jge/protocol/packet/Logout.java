@@ -11,13 +11,5 @@ public class Logout extends Packet {
         super(PacketType.LOGOUT);
     }
 
-    private PlayerEncap encap;
 
-    public PlayerEncap getEncap() {
-        return encap;
-    }
-
-    public void setEncap(PlayerEncap encap) {
-        this.encap = encap;
-    }
 }

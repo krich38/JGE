@@ -2,7 +2,9 @@ package org.jge.server.actor;
 
 import akka.actor.UntypedActor;
 import com.esotericsoftware.kryonet.Connection;
+import org.jge.model.Id;
 import org.jge.model.User;
+import org.jge.model.world.Entity;
 import org.jge.protocol.packet.Connect;
 import org.jge.protocol.packet.ConnectResponse;
 import org.jge.protocol.packet.Packet;
@@ -35,11 +37,17 @@ public class ConnectionManagerActor extends UntypedActor {
                 if (server.isOpen()) {
 
                     User user = connect.getUser();
-                    response.setResponse(ConnectResponse.Response.OK);
-                    response.setAttachment(loader.loadId(user));
-                    System.out.println(user.getPassword());
-                    //response = new Connect(Connect.ConnectResponse.INCORRECT_DETAILS);
-                    // packet.getConnection().close();
+
+                    Id<Entity> id = loader.loadId(user);
+                    if(id != null) {
+                        response.setResponse(ConnectResponse.Response.OK);
+                        response.setAttachment(loader.loadId(user));server.send(packet.getConnection(), response);
+                    } else {
+                        response.setResponse(ConnectResponse.Response.INCORRECT_DETAILS);
+                        server.send(packet.getConnection(), response);
+                        connect.getConnection().close();
+                    }
+
 
                 } else {
                     response.setResponse(ConnectResponse.Response.SERVER_CLOSED);

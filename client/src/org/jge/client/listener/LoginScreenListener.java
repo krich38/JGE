@@ -65,8 +65,10 @@ public class LoginScreenListener extends NetworkListener {
             //todo: clean this up
             PlayerLoad load = (PlayerLoad) object;
             Player player = game.getPlayer();
+            System.out.println("loll: " + player.getId());
             PlayerEncap pe = (PlayerEncap) load.getAttachment();
             player.loadSprites(pe.getPlayerType(), GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
+            System.out.println("HMM: " + pe.getWaypoint());
             player.setWaypoint(pe.getWaypoint());
             client.setListener(new GameClientListener());
             game.getEngine().getWorld().setPlayer(player);

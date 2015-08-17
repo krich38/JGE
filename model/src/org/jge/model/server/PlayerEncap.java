@@ -11,9 +11,9 @@ import org.jge.model.world.Waypoint;
  * @version 1.0
  */
 public class PlayerEncap {
-    private final int playerType;
-    private final Waypoint waypoint;
-    private final Id<Entity> id;
+    private int playerType;
+    private Waypoint waypoint;
+    private Id<Entity> id;
     private User user;
     private boolean ponged;
 
@@ -23,6 +23,10 @@ public class PlayerEncap {
         this.id = id;
 
         this.user = user;
+    }
+
+    public PlayerEncap() {
+
     }
 
     public void setPonged(boolean ponged) {
@@ -47,5 +51,21 @@ public class PlayerEncap {
 
     public int getPlayerType() {
         return playerType;
+    }
+
+    public void setId(Id<Entity> id) {
+        this.id = id;
+    }
+
+    public void setPlayerType(int playerType) {
+        this.playerType = playerType;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setWaypoint(Waypoint waypoint) {
+        this.waypoint = waypoint;
     }
 }

@@ -1,5 +1,7 @@
 package org.jge.model;
 
+import org.jge.model.world.Entity;
+
 import java.util.Objects;
 import java.util.UUID;
 
@@ -42,4 +44,11 @@ public class Id<T> {
         return "Id(" + id + ")";
     }
 
+    public static Id<Entity> asOf(String id) {
+        return new Id<>(id);
+    }
+
+    public String getValue() {
+        return id;
+    }
 }

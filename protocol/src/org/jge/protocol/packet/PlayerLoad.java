@@ -1,6 +1,7 @@
 package org.jge.protocol.packet;
 
 import org.jge.model.Id;
+import org.jge.model.server.PlayerEncap;
 import org.jge.model.world.Entity;
 import org.jge.model.world.Player;
 import org.jge.model.world.Waypoint;
@@ -11,6 +12,7 @@ import org.jge.model.world.Waypoint;
  */
 public class PlayerLoad extends Packet {
       private Id<Entity> id;
+    private int playerType;
 
     public PlayerLoad() {
         super(PacketType.PLAYER_LOAD);
@@ -30,5 +32,11 @@ public class PlayerLoad extends Packet {
     }
 
 
+    public void setPlayerType(int playerType) {
+        this.playerType = playerType;
+    }
 
+    public int getPlayerType() {
+        return playerType;
+    }
 }

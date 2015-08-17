@@ -70,17 +70,24 @@ public class ServerListener extends Listener {
                 case PLAYER_LOAD:
                     PlayerLoad loadRequest = (PlayerLoad) p;
                     PlayerLoad loadSend = new PlayerLoad();
+                    PlayerEncap player = playerLoader.load(loadRequest.getId(), loadSend);
 
-                    PlayerEncap player = playerLoader.load(loadSend);
                     loadSend.setAttachment(player);
                     server.getPlayers().put(loadRequest.getId(), player);
                     server.onConnect(loadRequest.getId(), loadRequest.getConnection());
                     server.send(loadRequest.getConnection(), loadSend);
-                    System.out.println("Player connected: " + player.getId());
+                    System.out.println("Player connected: " + loadRequest.getId());
                     break;
                 case PING:
 
                     server.getEngine().getPinger().addReply((Ping.Pong) p);
+                    break;
+                case LOGOUT:
+                    PlayerEncap pe = (PlayerEncap) p.getAttachment();
+                    if(playerLoader.savePlayer(pe)) {
+                        System.out.println("Player saved: " + pe.getUser().getUsername());
+                    }
+                    break;
             }
         }
     }

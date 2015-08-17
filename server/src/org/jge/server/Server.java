@@ -17,10 +17,12 @@ import org.jge.protocol.packet.Packet;
 import org.jge.protocol.packet.Ping;
 import org.jge.protocol.packet.PlayerLoad;
 import org.jge.server.actor.ConnectionManagerActor;
+import org.jge.server.io.DatabaseAdapter;
 import org.jge.server.io.PlayerLoader;
 import org.jge.server.net.ServerListener;
 import org.jge.server.util.PingTimer;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -51,10 +53,12 @@ public class Server {
     }
 
     public void init() {
+        if(DatabaseAdapter.establishConnect()) {
         players = new ConcurrentHashMap<>();
         connectionsEntityMap = new ConcurrentHashMap<>();
         connectionIdMap = new ConcurrentHashMap<>();
         playerLoader = new PlayerLoader();
+
         com.esotericsoftware.kryonet.Server kryoServer = new com.esotericsoftware.kryonet.Server();
         kryoServer.start();
         Protocol.register(kryoServer.getKryo());
@@ -65,7 +69,7 @@ public class Server {
             kryoServer.addListener(new ServerListener());
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }}
     }
 
 
@@ -98,6 +102,7 @@ public class Server {
 
 
     public Connection getConnectionById(Id<Entity> id) {
+        //System.out.println("wassup" + id);
         return connectionsEntityMap.get(id);
     }
 
