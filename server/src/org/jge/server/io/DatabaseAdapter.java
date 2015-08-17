@@ -71,4 +71,10 @@ ResultSet rs = statement.getResultSet();
         }
 
     }
+
+    public static void updatePlayer(PlayerEncap pe) throws SQLException {
+        String query = "update players SET pos_x = " + pe.getWaypoint().getX() + ", pos_y = " + pe.getWaypoint().getY() + " WHERE id=\"" + pe.getId().getValue() + "\"";
+        statement.execute(query);
+
+    }
 }

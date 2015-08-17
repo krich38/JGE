@@ -6,6 +6,8 @@ import org.jge.model.server.PlayerEncap;
 import org.jge.model.world.*;
 import org.jge.protocol.packet.PlayerLoad;
 
+import java.sql.SQLException;
+
 /**
  * @author Kyle Richards
  * @version 1.0
@@ -41,6 +43,12 @@ public class PlayerLoader {
     }
 
     public boolean savePlayer(PlayerEncap pe) {
-        return false;
+        try {
+            DatabaseAdapter.updatePlayer(pe);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }

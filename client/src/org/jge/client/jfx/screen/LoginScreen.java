@@ -91,7 +91,8 @@ public class LoginScreen extends Screen {
 
         bp.setCenter(gridPane);
         bp.setTop(login);
-
+txtUserName.setText("blah");
+        pf.setText("lol");
 
         Scene scene = new Scene(bp, 405, 270);
 

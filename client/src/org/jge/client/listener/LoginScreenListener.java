@@ -11,6 +11,7 @@ import org.jge.model.Id;
 import org.jge.model.server.PlayerEncap;
 import org.jge.model.world.Entity;
 import org.jge.model.world.Player;
+import org.jge.model.world.Waypoint;
 import org.jge.protocol.packet.Connect;
 import org.jge.protocol.packet.ConnectResponse;
 import org.jge.protocol.packet.Packet;
@@ -42,6 +43,7 @@ public class LoginScreenListener extends NetworkListener {
                 case OK:
                     screen.changeScreen(new GameOptionScreen());
                     Player player = new Player((Id<Entity>) response.getAttachment());
+
                     game.setPlayer(player);
                     game.getClient().setPlayer(player);
 
@@ -66,10 +68,15 @@ public class LoginScreenListener extends NetworkListener {
             PlayerLoad load = (PlayerLoad) object;
             Player player = game.getPlayer();
             System.out.println("loll: " + player.getId());
-            PlayerEncap pe = (PlayerEncap) load.getAttachment();
+            PlayerEncap pe = (PlayerEncap) load.getAttachment();Waypoint waypoint = pe.getWaypoint();
+            //player.setTranslateX(waypoint.getX()* 32);
+            //player.setTranslateY(waypoint.getY() * 32);
             player.loadSprites(pe.getPlayerType(), GameScreen.SCREEN_WIDTH, GameScreen.SCREEN_HEIGHT);
+
             System.out.println("HMM: " + pe.getWaypoint());
-            player.setWaypoint(pe.getWaypoint());
+
+            player.setWaypoint(waypoint);
+
             client.setListener(new GameClientListener());
             game.getEngine().getWorld().setPlayer(player);
         }

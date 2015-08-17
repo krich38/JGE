@@ -76,12 +76,15 @@ public class GameClient {
     }
 
     public void setPlayer(Player player) {
-        this.player = player;
+        this.player = player
+        ;
+        player.setUser(user);
     }
 
     public void logout() {
         Logout logout = new Logout();
         //(Id<Entity> id, int playerType, Waypoint waypoint, User user)
+        System.out.println(player.getUser());
         PlayerEncap pe = new PlayerEncap(player.getId(), player.getPlayerType(), player.getWaypoint(), player.getUser());
         logout.setAttachment(pe);
         send(logout);
