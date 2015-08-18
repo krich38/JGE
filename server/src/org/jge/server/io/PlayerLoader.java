@@ -51,4 +51,8 @@ public class PlayerLoader {
         }
         return true;
     }
+
+    public User.AccessRights getRightsFor(Id<Entity> id) {
+        return DatabaseAdapter.getRightsById(id);
+    }
 }

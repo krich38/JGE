@@ -1,7 +1,5 @@
 package org.jge.server;
 
-import java.io.IOException;
-
 /**
  * @author Kyle Richards
  * @version 1.0
@@ -15,6 +13,8 @@ public class Main {
         server.setOpen(true);
         server.init();
 
+        StatusServer status = StatusServer.getInstance();
+        status.init();
 
     }
 }

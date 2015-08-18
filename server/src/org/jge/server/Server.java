@@ -2,33 +2,21 @@ package org.jge.server;
 
 
 import akka.actor.ActorRef;
-import akka.actor.ActorSystem;
 import akka.actor.Inbox;
-import akka.actor.Props;
 import com.esotericsoftware.kryonet.Connection;
-import com.esotericsoftware.kryonet.Listener;
 import org.jge.model.Id;
 import org.jge.model.User;
 import org.jge.model.server.PlayerEncap;
 import org.jge.model.world.Entity;
 import org.jge.protocol.Protocol;
-import org.jge.protocol.packet.ChatMessage;
 import org.jge.protocol.packet.Packet;
 import org.jge.protocol.packet.Ping;
-import org.jge.protocol.packet.PlayerLoad;
-import org.jge.server.actor.ConnectionManagerActor;
 import org.jge.server.io.DatabaseAdapter;
 import org.jge.server.io.PlayerLoader;
 import org.jge.server.net.ServerListener;
-import org.jge.server.net.StatusServer;
-import org.jge.server.util.PingTimer;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Timer;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -45,7 +33,6 @@ public class Server {
     private ServerEngine engine;
     private Map<Id<Entity>, Connection> connectionsEntityMap;
     private Map<Connection, Id<Entity>> connectionIdMap;
-    private StatusServer statusServ;
 
 
     public static Server getInstance() {
@@ -71,8 +58,7 @@ public class Server {
             try {
                 kryoServer.bind(3744, 3476);
                 kryoServer.addListener(new ServerListener());
-                statusServ = new StatusServer(3741);
-                new Thread(statusServ).run();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -145,4 +131,5 @@ public class Server {
     public User getUserById(Id<Entity> id) {
         return players.get(id).getUser();
     }
+
 }

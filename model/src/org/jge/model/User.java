@@ -14,7 +14,25 @@ public class User {
     private Id<User> id;
     private String username;
     private String password;
+    private AccessRights rights;
 
+    public AccessRights getRights() {
+        return rights;
+    }
+
+    public void setRights(AccessRights rights) {
+        this.rights = rights;
+    }
+
+    public enum AccessRights {
+    ADMINISTRATOR,
+    MODERATOR,
+    PLAYER;
+
+        public static boolean hasAccess(AccessRights rights, AccessRights required) {
+            return rights.ordinal() >= required.ordinal();
+        }
+    }
     public User(String username, String password) {
         this(null, username, password);
     }
@@ -27,6 +45,7 @@ public class User {
         this.id = id;
         this.username = username;
         this.password = User.encrypt(password);
+        this.rights = AccessRights.PLAYER;
         //System.out.println(User.encrypt("lol"));
     }
 

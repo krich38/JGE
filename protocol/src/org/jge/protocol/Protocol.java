@@ -38,6 +38,7 @@ public class Protocol {
         kryo.register(Ping.Pong.class);
         kryo.register(PlayerEncap.class);
         kryo.register(Logout.class);
+        kryo.register(User.AccessRights.class);
 
     }
 

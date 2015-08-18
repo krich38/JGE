@@ -76,4 +76,19 @@ public class DatabaseAdapter {
         statement.execute(query);
 
     }
+
+    public static User.AccessRights getRightsById(Id<Entity> id) {
+        String query = "select access from players where players.id=\"" +id.getValue() + "\"";
+        try {
+            statement.execute(query);
+            ResultSet rs = statement.getResultSet();
+            if (rs.next()) {
+                User.AccessRights rights = User.AccessRights.valueOf(rs.getString("access"));
+                return rights;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

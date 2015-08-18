@@ -46,7 +46,6 @@ public class ServerListener extends Listener {
             switch (p.getPacketType()) {
 
                 case CONNECT:
-                    System.out.println("connected");
 
                 case DISCONNECT:
 
