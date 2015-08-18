@@ -3,6 +3,7 @@ package org.jge.panel.event;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import org.jge.panel.Panel;
 
 /**
@@ -10,7 +11,7 @@ import org.jge.panel.Panel;
  * @version 1.0
  */
 public class PanelEventHandler {
-    @FXML public static Label loginStatus;
+@FXML private TextArea chat;
     @FXML
     public void refreshPanel(ActionEvent event) {
         Panel.getInstance().refresh();
@@ -53,4 +54,5 @@ public class PanelEventHandler {
     @FXML public void banPlayer(ActionEvent event) {
         
     }
+
 }

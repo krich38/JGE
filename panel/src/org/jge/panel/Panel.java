@@ -27,7 +27,7 @@ public class Panel extends Application {
         engine = new PanelEngine();
         engine.start();
         client = new PanelClient();
-        changeScreen(new LoginScreen());
+        primaryStage.setScene(new LoginScreen().getScene());
         primaryStage.show();
         primaryStage.setOnCloseRequest((event) -> System.exit(0));
 
