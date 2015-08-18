@@ -1,5 +1,8 @@
 package org.jge.client.jfx.screen;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,10 +14,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.jge.client.GameClient;
 import org.jge.client.jfx.Game;
 
@@ -32,6 +37,7 @@ public class LoginScreen extends Screen {
 
 
     private Label loginStatus;
+    private Timeline timeline;
 
     public LoginScreen() {
 
@@ -51,15 +57,31 @@ public class LoginScreen extends Screen {
         gridPane.setHgap(0);
         gridPane.setVgap(10);
         Label lblUserName = new Label("Username");
+        lblUserName.setFont(new Font("Bradley Hand ITC", 15));
         final TextField txtUserName = new TextField();
+        txtUserName.setPrefWidth(235);
         Label lblPassword = new Label("Password");
+        lblPassword.setFont(new Font("Bradley Hand ITC", 15));
+
         final PasswordField pf = new PasswordField();
-        loginStatus = new Label("Please login!");
-        loginStatus.setWrapText(true);
+        loginStatus = new Label();
+        loginStatus.setFont(new Font("Bradley Hand ITC", 15));
+
         Button btnLogin = new Button("Login");
         Button btnRego = new Button("Register");
         btnRego.setMinWidth(80);
+        Button serverStatus = new Button();
+        serverStatus.setMinWidth(65);
+        serverStatus.setId("serverStatus");
+        updateServerStatus(serverStatus);
+        serverStatus.setOnAction((event1 -> {
+            updateServerStatus(serverStatus);
+        }));
 
+        timeline = new Timeline(new KeyFrame(Duration.minutes(1), (event) -> {
+            updateServerStatus(serverStatus);
+        }));
+        timeline.play();
         gridPane.add(lblUserName, 0, 0);
         gridPane.add(txtUserName, 1, 0);
         gridPane.add(lblPassword, 0, 1);
@@ -67,6 +89,7 @@ public class LoginScreen extends Screen {
         gridPane.add(btnLogin, 2, 1);
         gridPane.add(btnRego, 2, 0);
         gridPane.add(loginStatus, 1, 2);
+        gridPane.add(serverStatus,0,2);
 
         DropShadow dropShadow = new DropShadow();
         dropShadow.setOffsetX(5);
@@ -94,12 +117,31 @@ public class LoginScreen extends Screen {
 txtUserName.setText("blah");
         pf.setText("lol");
 
-        Scene scene = new Scene(bp, 405, 270);
+        Scene scene = new Scene(bp, 500, 270);
 
         btnLogin.setOnAction(event -> onLoginPress(txtUserName.getText(), pf.getText()));
         btnRego.setOnAction(event -> onRegisterPress(txtUserName.getText(), pf.getText()));
         scene.getStylesheets().add(getClass().getResource("/graphics/login.css").toExternalForm());
         return scene;
+    }
+
+    @Override
+    public void destroy() {
+        timeline.stop();
+
+    }
+
+    private void updateServerStatus(Button status) {
+
+        if(getClient().serverOnline()) {
+            status.setText("ONLINE");
+            status.setTextFill(Color.GREEN);
+            updateStatus("Server is currently ONLINE");
+        } else {
+            status.setText("OFFLINE");
+            status.setTextFill(Color.RED);
+            updateStatus("Server is currently OFFLINE");
+        }
     }
 
     private void onRegisterPress(String username, String password) {
@@ -124,7 +166,7 @@ txtUserName.setText("blah");
     }
 
     public void updateStatus(String text) {
-        Platform.runLater(() -> loginStatus.setText(text));
+        Platform.runLater(() -> loginStatus.setText("\t" +text));
     }
 
 }

@@ -100,4 +100,9 @@ public class CharacterChooseScreen extends Screen {
         scene.getStylesheets().add(getClass().getResource("/graphics/login.css").toExternalForm());
         return scene;
     }
+
+    @Override
+    public void destroy() {
+
+    }
 }

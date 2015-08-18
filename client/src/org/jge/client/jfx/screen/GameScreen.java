@@ -112,7 +112,7 @@ public class GameScreen extends Screen {
             } else {
                 if(event.isControlDown() && code.equals(KeyCode.L)) {
 
-                    client.logout();
+
                     changeScreen(new LoginScreen());
                 } else {
                     code = parseKey(code);
@@ -135,6 +135,11 @@ public class GameScreen extends Screen {
         canvas.requestFocus();
         scene.getStylesheets().add(getClass().getResource("/graphics/game.css").toExternalForm());
         return scene;
+    }
+
+    @Override
+    public void destroy() {
+        client.logout();
     }
 
 

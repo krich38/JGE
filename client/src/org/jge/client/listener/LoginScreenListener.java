@@ -42,6 +42,7 @@ public class LoginScreenListener extends NetworkListener {
 
                 case OK:
                     screen.changeScreen(new GameOptionScreen());
+
                     Player player = new Player((Id<Entity>) response.getAttachment());
 
                     game.setPlayer(player);

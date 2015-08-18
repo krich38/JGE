@@ -35,6 +35,10 @@
     -fx-background-color: linear-gradient(#cdfff7, #cdfff7);
 }
 
+#loginStatus {
+    -fx-text-alignment: center;
+}
+
 #btnNew:hover {
     -fx-padding: 3px 10px 3px 10px;
     -fx-background-color: linear-gradient(#ff6300, #ff924d);

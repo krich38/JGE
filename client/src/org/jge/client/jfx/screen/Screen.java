@@ -23,6 +23,7 @@ public abstract class Screen {
     public abstract Scene buildScreen();
 
     public void changeScreen(Screen screen) {
+        destroy();
         game.updateScreen(screen);
     }
 
@@ -33,4 +34,6 @@ public abstract class Screen {
     public GameClient getClient() {
         return client;
     }
+
+    public abstract void destroy();
 }

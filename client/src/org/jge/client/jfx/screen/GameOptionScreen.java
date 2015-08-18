@@ -94,4 +94,9 @@ public class GameOptionScreen extends Screen {
         scene.getStylesheets().add(getClass().getResource("/graphics/login.css").toExternalForm());
         return scene;
     }
+
+    @Override
+    public void destroy() {
+
+    }
 }

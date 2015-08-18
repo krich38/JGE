@@ -2,6 +2,7 @@ package org.jge.client;
 
 import com.esotericsoftware.kryonet.Client;
 import org.jge.client.jfx.Game;
+import org.jge.client.jfx.screen.LoginScreen;
 import org.jge.client.listener.LoginScreenListener;
 import org.jge.client.listener.NetworkListener;
 import org.jge.model.User;
@@ -11,6 +12,7 @@ import org.jge.protocol.Protocol;
 import org.jge.protocol.packet.*;
 
 import java.io.IOException;
+import java.net.*;
 
 /**
  * @author Kyle Richards
@@ -18,27 +20,40 @@ import java.io.IOException;
  */
 public class GameClient {
     private static final int TIMEOUT = 5000;
+    private static final String IP_ADDRESS = "127.0.0.1";
     private final Client client;
     private NetworkListener listener;
     private Player player;
     private User user;
+    private InetAddress address;
 
     public GameClient() {
-        client = new Client();
+        try {
+            address = InetAddress.getByName(IP_ADDRESS);
+
+
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }client = new Client();
         Protocol.register(client.getKryo());
         client.start();
+
     }
 
     public void connect(User user) throws IOException {
         if (!client.isConnected()) {
             // are we reconnecting?
-            this.user = user;
+            if(address.isReachable(2000)) {
+                this.user = user;
 
-            client.connect(TIMEOUT, "127.0.0.1", 3744, 3476);
+                client.connect(TIMEOUT, "127.0.0.1", 3744, 3476);
 
-            Connect connect = new Connect();
-            connect.setUser(user);
-            client.sendTCP(connect);
+                Connect connect = new Connect();
+                connect.setUser(user);
+                client.sendTCP(connect);
+            }else {
+                ((LoginScreen)Game.getGame().getScreen()).updateStatus("Server is offline!");
+            }
         }
 
     }
@@ -46,7 +61,7 @@ public class GameClient {
     public void register(User user) throws IOException {
         if (!client.isConnected()) {
             this.user = user;
-            client.connect(TIMEOUT, "127.0.0.1", 3744, 3476);
+            client.connect(TIMEOUT, IP_ADDRESS, 3744, 3476);
             Register register = new Register();
             register.setUser(user);
             client.sendTCP(register);
@@ -88,5 +103,14 @@ public class GameClient {
         PlayerEncap pe = new PlayerEncap(player.getId(), player.getPlayerType(), player.getWaypoint(), player.getUser());
         logout.setAttachment(pe);
         send(logout);
+    }
+
+    public boolean serverOnline() {
+        try (Socket s = new Socket(IP_ADDRESS, 3744)) {
+            return true;
+        } catch (IOException ex) {
+        /* ignore */
+        }
+        return false;
     }
 }
