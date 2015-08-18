@@ -39,9 +39,10 @@ public class ConnectionManagerActor extends UntypedActor {
                     User user = connect.getUser();
 
                     Id<Entity> id = loader.loadId(user);
-                    if(id != null) {
+                    if (id != null) {
                         response.setResponse(ConnectResponse.Response.OK);
-                        response.setAttachment(loader.loadId(user));server.send(packet.getConnection(), response);
+                        response.setAttachment(loader.loadId(user));
+                        server.send(packet.getConnection(), response);
                     } else {
                         response.setResponse(ConnectResponse.Response.INCORRECT_DETAILS);
                         server.send(packet.getConnection(), response);

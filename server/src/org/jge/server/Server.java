@@ -20,10 +20,12 @@ import org.jge.server.actor.ConnectionManagerActor;
 import org.jge.server.io.DatabaseAdapter;
 import org.jge.server.io.PlayerLoader;
 import org.jge.server.net.ServerListener;
+import org.jge.server.net.StatusServer;
 import org.jge.server.util.PingTimer;
 
 import javax.xml.crypto.Data;
 import java.io.IOException;
+import java.net.ServerSocket;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -43,6 +45,7 @@ public class Server {
     private ServerEngine engine;
     private Map<Id<Entity>, Connection> connectionsEntityMap;
     private Map<Connection, Id<Entity>> connectionIdMap;
+    private StatusServer statusServ;
 
 
     public static Server getInstance() {
@@ -53,23 +56,27 @@ public class Server {
     }
 
     public void init() {
-        if(DatabaseAdapter.establishConnect()) {
-        players = new ConcurrentHashMap<>();
-        connectionsEntityMap = new ConcurrentHashMap<>();
-        connectionIdMap = new ConcurrentHashMap<>();
-        playerLoader = new PlayerLoader();
+        if (DatabaseAdapter.establishConnect()) {
+            players = new ConcurrentHashMap<>();
+            connectionsEntityMap = new ConcurrentHashMap<>();
+            connectionIdMap = new ConcurrentHashMap<>();
+            playerLoader = new PlayerLoader();
 
-        com.esotericsoftware.kryonet.Server kryoServer = new com.esotericsoftware.kryonet.Server();
-        kryoServer.start();
-        Protocol.register(kryoServer.getKryo());
+            com.esotericsoftware.kryonet.Server kryoServer = new com.esotericsoftware.kryonet.Server();
+            kryoServer.start();
+            Protocol.register(kryoServer.getKryo());
 
-        engine = new ServerEngine();
-        try {
-            kryoServer.bind(3744, 3476);
-            kryoServer.addListener(new ServerListener());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }}
+            engine = new ServerEngine();
+
+            try {
+                kryoServer.bind(3744, 3476);
+                kryoServer.addListener(new ServerListener());
+                statusServ = new StatusServer(3741);
+                new Thread(statusServ).run();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 

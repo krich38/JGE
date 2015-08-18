@@ -46,6 +46,7 @@ public class ServerListener extends Listener {
             switch (p.getPacketType()) {
 
                 case CONNECT:
+                    System.out.println("connected");
 
                 case DISCONNECT:
 
@@ -84,7 +85,7 @@ public class ServerListener extends Listener {
                     break;
                 case LOGOUT:
                     PlayerEncap pe = (PlayerEncap) p.getAttachment();
-                    if(playerLoader.savePlayer(pe)) {
+                    if (playerLoader.savePlayer(pe)) {
                         System.out.println("Player saved: " + pe.getUser().getUsername());
                     }
                     break;
@@ -94,11 +95,14 @@ public class ServerListener extends Listener {
 
     @Override
     public void disconnected(Connection c) {
-        super.disconnected(c);
+        //if(c.isConnected())
+
+        //super.disconnected(c);
     }
 
     @Override
     public void connected(Connection c) {
+
         super.connected(c);
     }
 }

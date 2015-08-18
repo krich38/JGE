@@ -22,7 +22,7 @@ public class DatabaseAdapter {
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:jge.db");
-statement = connection.createStatement();
+            statement = connection.createStatement();
 
             return true;
         } catch (ClassNotFoundException | SQLException e) {
@@ -34,18 +34,17 @@ statement = connection.createStatement();
     }
 
     public static Id<Entity> getId(User user) {
-        String result = "select id,password from players where players.username=\""+user.getUsername()+"\"";
+        String result = "select id,password from players where players.username=\"" + user.getUsername() + "\"";
         Id<Entity> id = null;
         try {
             statement.execute(result);
-ResultSet rs = statement.getResultSet();
-            if(rs.next()) {
+            ResultSet rs = statement.getResultSet();
+            if (rs.next()) {
 
-                if(rs.getString("password").equals(user.getPassword())) {
+                if (rs.getString("password").equals(user.getPassword())) {
                     id = Id.asOf(rs.getString("id"));
                 }
             }
-
 
 
         } catch (SQLException e) {
@@ -56,14 +55,14 @@ ResultSet rs = statement.getResultSet();
 
 
     public static void fillPlayerEncap(PlayerEncap pe) {
-        String query = "select * from players where players.id=\""+pe.getId().getValue()+"\"";
+        String query = "select * from players where players.id=\"" + pe.getId().getValue() + "\"";
         try {
             statement.execute(query);
             ResultSet rs = statement.getResultSet();
-            if(rs.next()) {
+            if (rs.next()) {
                 int x = rs.getInt("pos_x");
                 int y = rs.getInt("pos_y");
-                Waypoint w = new Waypoint(x,y);
+                Waypoint w = new Waypoint(x, y);
                 pe.setWaypoint(w);
             }
         } catch (SQLException e) {

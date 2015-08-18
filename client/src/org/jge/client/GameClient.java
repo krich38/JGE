@@ -11,7 +11,10 @@ import org.jge.model.world.Player;
 import org.jge.protocol.Protocol;
 import org.jge.protocol.packet.*;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.*;
 
 /**
@@ -105,12 +108,50 @@ public class GameClient {
         send(logout);
     }
 
-    public boolean serverOnline() {
-        try (Socket s = new Socket(IP_ADDRESS, 3744)) {
-            return true;
-        } catch (IOException ex) {
-        /* ignore */
+    public ResponseCode serverOnline() {int response = -1;
+        try {
+            Socket s = new Socket(IP_ADDRESS, 3741);
+
+            PrintWriter out = new PrintWriter(s.getOutputStream());
+            out.write(1);
+            out.flush();
+
+            InputStreamReader in = new InputStreamReader(s.getInputStream());
+
+            boolean awaiting = true;
+            while (awaiting) {
+                if (in.ready()) {
+                    response = in.read();
+                    awaiting = false;
+                }
+            }
+
+        } catch (Exception ex) {
+            //ex.printStackTrace();
         }
-        return false;
+        System.out.println(response);
+        return ResponseCode.valueOf(response);
+    }
+
+    public enum ResponseCode {
+        OFFLINE(-1),
+        ONLINE(22),
+        CLOSED(23);
+
+        private int code;
+
+        private ResponseCode(int code) {
+
+            this.code = code;
+        }
+
+        public static ResponseCode valueOf(int code) {
+            for(ResponseCode rc : ResponseCode.values()) {
+                if(rc.code == code) {
+                    return rc;
+                }
+            }
+            return OFFLINE;
+        }
     }
 }

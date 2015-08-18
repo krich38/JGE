@@ -77,7 +77,7 @@ public class GameOptionScreen extends Screen {
         // This will be the start to load a previous saved game for a user
         // GroupA developing save feature
         btnSave.setOnAction(event -> {
-            //Platform.runLater(() -> initGameScreen(primaryStage, 0));
+
         });
 
         // This will be the event that loads the character selection screen

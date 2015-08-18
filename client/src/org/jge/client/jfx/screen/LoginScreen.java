@@ -1,5 +1,6 @@
 package org.jge.client.jfx.screen;
 
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -73,14 +74,16 @@ public class LoginScreen extends Screen {
         Button serverStatus = new Button();
         serverStatus.setMinWidth(65);
         serverStatus.setId("serverStatus");
+
         updateServerStatus(serverStatus);
         serverStatus.setOnAction((event1 -> {
             updateServerStatus(serverStatus);
         }));
 
-        timeline = new Timeline(new KeyFrame(Duration.minutes(1), (event) -> {
+        timeline = new Timeline(new KeyFrame(Duration.minutes(0.2), (event) -> {
             updateServerStatus(serverStatus);
         }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
         gridPane.add(lblUserName, 0, 0);
         gridPane.add(txtUserName, 1, 0);
@@ -132,16 +135,25 @@ txtUserName.setText("blah");
     }
 
     private void updateServerStatus(Button status) {
+System.out.println("server stat");
+        GameClient.ResponseCode rc = getClient().serverOnline();
 
-        if(getClient().serverOnline()) {
-            status.setText("ONLINE");
-            status.setTextFill(Color.GREEN);
-            updateStatus("Server is currently ONLINE");
-        } else {
-            status.setText("OFFLINE");
-            status.setTextFill(Color.RED);
-            updateStatus("Server is currently OFFLINE");
+        switch(rc) {
+
+            case OFFLINE:
+                  status.setTextFill(Color.RED);
+
+                break;
+            case ONLINE:
+
+                status.setTextFill(Color.GREEN);
+                break;
+            case CLOSED:
+                status.setTextFill(Color.ORANGE);
+                break;
         }
+        status.setText(rc.toString());
+        updateStatus("Server is currently " + rc);
     }
 
     private void onRegisterPress(String username, String password) {
@@ -166,6 +178,7 @@ txtUserName.setText("blah");
     }
 
     public void updateStatus(String text) {
+
         Platform.runLater(() -> loginStatus.setText("\t" +text));
     }
 
