@@ -14,6 +14,7 @@ public class ServerDiagnostics extends AdminEvent {
     private final long usedMemory;
     private long upTime;
     private List<String> exceptionsList;
+    private String exceptions;
 
     public ServerDiagnostics() {
         setType(EventType.SERVER_DIAGNOSTICS);
@@ -46,5 +47,13 @@ public class ServerDiagnostics extends AdminEvent {
 
     public long getFreeMemory() {
         return freeMemory;
+    }
+
+    public void setExceptions(String exceptions) {
+        this.exceptions = exceptions;
+    }
+
+    public String getExceptions() {
+        return exceptions;
     }
 }

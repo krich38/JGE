@@ -88,7 +88,7 @@ public class StatusServer {
         ServerDiagnostics diagnostics=new ServerDiagnostics();
         diagnostics.setUpTime(DiagnosticCollection.getRunningTime());
         if(DiagnosticCollection.exceptions()) {
-            //diagnostics.setExceptionsList(DiagnosticCollection.getExceptions());
+            diagnostics.setExceptions(DiagnosticCollection.getExceptions());
         }
         send(con, diagnostics);
     }

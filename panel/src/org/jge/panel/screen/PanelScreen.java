@@ -193,7 +193,7 @@ public class PanelScreen extends Screen {
 
     public void showDiagnostics(ServerDiagnostics sd) {
         //long freeMemory, long usedMemory, long totalMemory
-        Scene scene = new DiagnosticScreen(sd.getUpTime(), sd.getFreeMemory(), sd.getUsedMemory(), sd.getTotalMemory()).buildScene();
+        Scene scene = new DiagnosticScreen(sd.getUpTime(), sd.getFreeMemory(), sd.getUsedMemory(), sd.getTotalMemory(), sd.getExceptions()).buildScene();
 
 
         ;

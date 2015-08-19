@@ -19,12 +19,15 @@ public class DiagnosticScreen extends Screen {
     private final long freeMemory;
     private final long usedMemory;
     private final long totalMemory;
+    private final String exceptions;
     private static final long MEGABYTE = 1024 * 1024;
 
-    public DiagnosticScreen(long upTime, long freeMemory, long usedMemory, long totalMemory) {
+    public DiagnosticScreen(long upTime, long freeMemory, long usedMemory, long totalMemory, String exceptions) {
 
 
         this.upTime = upTime;
+        this.exceptions = exceptions;
+
         this.freeMemory = freeMemory / MEGABYTE;
 
         this.usedMemory = usedMemory / MEGABYTE;
@@ -59,6 +62,7 @@ public class DiagnosticScreen extends Screen {
         exceptions.setLayoutY(60);
         exceptions.setPrefWidth(350);
         exceptions.setFocusTraversable(false);
+        exceptions.setText(this.exceptions);
 
         Pane pane = new Pane(header, exceptionsHeader, exceptions, uptime, memory);
         exceptions.focusedProperty().addListener((listener) -> {
