@@ -44,7 +44,6 @@ public class LoginScreen extends Screen {
         pass.setLayoutY(60);
 
 
-
         TextField username = new TextField();
         username.setLayoutX(75);
         username.setLayoutY(30);

@@ -6,12 +6,15 @@ import akka.actor.Inbox;
 import akka.actor.Props;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import org.jge.model.Id;
 import org.jge.model.server.PlayerEncap;
-import org.jge.protocol.packet.ChatMessage;
-import org.jge.protocol.packet.Packet;
-import org.jge.protocol.packet.Ping;
-import org.jge.protocol.packet.PlayerLoad;
+import org.jge.model.world.Entity;
+import org.jge.protocol.common.ChatMessage;
+import org.jge.protocol.Packet;
+import org.jge.protocol.game.Ping;
+import org.jge.protocol.game.PlayerLoad;
 import org.jge.server.Server;
+import org.jge.server.StatusServer;
 import org.jge.server.actor.ConnectionManagerActor;
 import org.jge.server.io.PlayerLoader;
 
@@ -24,6 +27,7 @@ public class ServerListener extends Listener {
     private final Inbox INBOX;
     private final PlayerLoader playerLoader;
     private final Server server;
+    private final StatusServer status;
 
     public ServerListener() {
         server = Server.getInstance();
@@ -31,7 +35,7 @@ public class ServerListener extends Listener {
         INBOX = Inbox.create(system);
         CONMANAGER = system.actorOf(Props.create(ConnectionManagerActor.class));
         playerLoader = new PlayerLoader();
-
+        status = StatusServer.getInstance();
     }
 
     @Override
@@ -59,6 +63,7 @@ public class ServerListener extends Listener {
                     ChatMessage msgProcessed = new ChatMessage();
                     msgProcessed.setMessage(text);
                     msgProcessed.setUser(msg.getUser());
+                    status.onMessage(msgProcessed);
 
 
                     server.send(msg.getConnection(), msgProcessed);
@@ -69,7 +74,7 @@ public class ServerListener extends Listener {
                     PlayerLoad loadRequest = (PlayerLoad) p;
                     PlayerLoad loadSend = new PlayerLoad();
                     PlayerEncap player = playerLoader.load(loadRequest.getId(), loadSend);
-
+                    player.setUser(loadRequest.getUser());
                     loadSend.setAttachment(player);
                     server.getPlayers().put(loadRequest.getId(), player);
                     server.onConnect(loadRequest.getId(), loadRequest.getConnection());
@@ -93,7 +98,10 @@ public class ServerListener extends Listener {
     @Override
     public void disconnected(Connection c) {
         //if(c.isConnected())
-
+        Id<Entity> id = server.getIdByConnection(c);
+        if(id != null) {
+            server.disconnect(id, null);
+        }
         //super.disconnected(c);
     }
 

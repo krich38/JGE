@@ -1,7 +1,8 @@
-package org.jge.protocol.packet;
+package org.jge.protocol.game;
 
 import org.jge.model.Id;
 import org.jge.model.world.Entity;
+import org.jge.protocol.Packet;
 
 /**
  * @author Kyle Richards

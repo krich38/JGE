@@ -9,13 +9,15 @@ import org.jge.model.User;
 import org.jge.model.server.PlayerEncap;
 import org.jge.model.world.Entity;
 import org.jge.protocol.Protocol;
-import org.jge.protocol.packet.Packet;
-import org.jge.protocol.packet.Ping;
+import org.jge.protocol.Packet;
+import org.jge.protocol.game.Ping;
 import org.jge.server.io.DatabaseAdapter;
 import org.jge.server.io.PlayerLoader;
 import org.jge.server.net.ServerListener;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -33,6 +35,7 @@ public class Server {
     private ServerEngine engine;
     private Map<Id<Entity>, Connection> connectionsEntityMap;
     private Map<Connection, Id<Entity>> connectionIdMap;
+
 
 
     public static Server getInstance() {
@@ -120,7 +123,9 @@ public class Server {
         connectionIdMap.remove(connectionsEntityMap.get(id));
         connectionsEntityMap.remove(id);
         players.remove(id);
-        System.out.println("Disconnected " + id + ": " + reason);
+        if(reason != null) {
+            System.out.println("Disconnected " + id + ": " + reason);
+        }
     }
 
     public ServerEngine getEngine() {
@@ -131,5 +136,6 @@ public class Server {
     public User getUserById(Id<Entity> id) {
         return players.get(id).getUser();
     }
+
 
 }

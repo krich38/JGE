@@ -1,22 +1,15 @@
 package org.jge.client.jfx.screen;
 
 import javafx.application.Platform;
-import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.jge.client.GameClient;
 import org.jge.client.jfx.Game;
 import org.jge.model.User;
-import org.jge.model.world.RenderableEntity;
-import org.jge.protocol.packet.ChatMessage;
+import org.jge.protocol.common.ChatMessage;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.Iterator;
 import java.util.Queue;
 
 /**

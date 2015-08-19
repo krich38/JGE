@@ -22,9 +22,11 @@ public class LoginEventHandler {
     private TextField username;
     @FXML
     private PasswordField password;
+
     public LoginEventHandler() {
         client = Panel.getInstance().getClient();
     }
+
     @FXML
     public void login(ActionEvent actionEvent) {
         User user = new User(username.getText(), password.getText());
@@ -34,7 +36,6 @@ public class LoginEventHandler {
             e.printStackTrace();
         }
     }
-
 
 
 }

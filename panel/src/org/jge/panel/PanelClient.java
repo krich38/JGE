@@ -1,13 +1,13 @@
 package org.jge.panel;
 
 import com.esotericsoftware.kryonet.Client;
-import javafx.event.ActionEvent;
 import org.jge.model.User;
 import org.jge.panel.net.NetworkListener;
 import org.jge.protocol.Protocol;
-import org.jge.protocol.packet.AdminEvent;
-import org.jge.protocol.packet.Connect;
-import org.jge.protocol.packet.Packet;
+import org.jge.protocol.serverstatus.AdminEvent;
+import org.jge.protocol.common.Connect;
+import org.jge.protocol.Packet;
+import org.jge.protocol.serverstatus.Refresh;
 
 import java.io.IOException;
 
@@ -24,10 +24,11 @@ public class PanelClient {
     public PanelClient() {
         client = new Client();
         client.start();
-        Protocol.register(client.getKryo());
+        Protocol.registerStatusServer(client.getKryo());
     }
+
     public void connect(User user) throws IOException {
-        if(
+        if (
                 !client.isConnected()) {
             this.user = user;
 
@@ -54,10 +55,16 @@ public class PanelClient {
         client.close();
     }
 
-    public void kickAll(ActionEvent e) {
+    public void sendEvent(AdminEvent.EventType type) {
         AdminEvent event = new AdminEvent();
-        event.setAttachment(AdminEvent.EventType.KICK_ALL);
+        event.setType(type);
         send(event);
 
     }
+
+    public void sendRefreshRequest(boolean full) {
+        Refresh refresh = new Refresh(full);
+        send(refresh);
+    }
+
 }

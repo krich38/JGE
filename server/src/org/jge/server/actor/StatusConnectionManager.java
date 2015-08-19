@@ -4,9 +4,9 @@ import akka.actor.UntypedActor;
 import org.jge.model.Id;
 import org.jge.model.User;
 import org.jge.model.world.Entity;
-import org.jge.protocol.packet.Connect;
-import org.jge.protocol.packet.ConnectResponse;
-import org.jge.protocol.packet.Packet;
+import org.jge.protocol.common.Connect;
+import org.jge.protocol.common.ConnectResponse;
+import org.jge.protocol.Packet;
 import org.jge.server.Server;
 import org.jge.server.StatusServer;
 import org.jge.server.io.PlayerLoader;
@@ -41,6 +41,7 @@ System.out.println(p.getPacketType());
                     if(User.AccessRights.hasAccess(rights, User.AccessRights.ADMINISTRATOR)) {
                         response.setResponse(ConnectResponse.Response.OK);
                         response.setAttachment(id);
+                        server.register(id, p.getConnection());
 
                     } else {
                         response.setResponse(ConnectResponse.Response.SERVER_CLOSED);

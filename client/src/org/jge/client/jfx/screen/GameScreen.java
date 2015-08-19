@@ -1,29 +1,19 @@
 package org.jge.client.jfx.screen;
 
-import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import org.jge.client.GameClient;
 import org.jge.client.jfx.Game;
-import org.jge.client.GameEngine;
-import org.jge.client.listener.GameClientListener;
-import org.jge.model.server.PlayerEncap;
 import org.jge.model.world.Ground;
 import org.jge.model.world.Player;
 import org.jge.model.world.RenderableEntity;
-import org.jge.model.world.World;
-import org.jge.protocol.packet.Logout;
-import org.jge.protocol.packet.PlayerLoad;
+import org.jge.protocol.game.PlayerLoad;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;

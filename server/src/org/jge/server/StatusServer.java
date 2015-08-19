@@ -1,11 +1,19 @@
 package org.jge.server;
 
 import com.esotericsoftware.kryonet.Connection;
+import org.jge.model.Id;
+import org.jge.model.server.PlayerEncap;
+import org.jge.model.world.Entity;
 import org.jge.protocol.Protocol;
-import org.jge.protocol.packet.Packet;
+import org.jge.protocol.Packet;
+import org.jge.protocol.common.ChatMessage;
+import org.jge.protocol.serverstatus.Refresh;
+import org.jge.protocol.serverstatus.ServerDiagnostics;
 import org.jge.server.net.StatusServerListener;
+import org.jge.server.util.DiagnosticCollection;
 
 import java.io.IOException;
+import java.util.*;
 
 /**
  * @author Kyle Richards
@@ -15,6 +23,8 @@ public class StatusServer {
     private static StatusServer INSTANCE;
     private final Server server;
     private int port;
+    private List<ChatMessage> msgs;
+    private Map<Id<Entity>, Connection> connections;
 
     public StatusServer(int port) {
         this.port = port;
@@ -35,7 +45,7 @@ public class StatusServer {
         com.esotericsoftware.kryonet.Server kryoServer = new com.esotericsoftware.kryonet.Server();
         kryoServer.start();
         Protocol.registerStatusServer(kryoServer.getKryo());
-
+        msgs = new ArrayList<>(2);
         try {
             kryoServer.bind(port);
             kryoServer.addListener(new StatusServerListener());
@@ -48,5 +58,50 @@ public class StatusServer {
     public void send(Connection connection, Packet packet) {
         connection.sendTCP(packet);
         System.out.println("Sending: " + packet);
+    }
+
+    public void onMessage(ChatMessage msg) {
+        msgs.add(msg);
+        if(msgs.size() == 2) {
+            sendRefresh(false);
+            msgs.clear();
+        }
+    }
+
+    public void sendRefresh(boolean full) {
+        Refresh refresh;
+        if(full) {
+            refresh = new Refresh(true);
+            refresh.setMessages(msgs);
+            msgs.clear();
+            refresh.setPlayerList(new ArrayList<PlayerEncap>(server.getPlayers().values()));
+            refresh.setServerStatus(server.isOpen());
+        } else {
+            refresh = new Refresh(false);
+            refresh.setMessages(msgs);
+
+        }
+        sendAll(refresh);
+    }
+
+    public void sendDiagnostics(Connection con) {
+        ServerDiagnostics diagnostics=new ServerDiagnostics();
+        diagnostics.setUpTime(DiagnosticCollection.getRunningTime());
+        if(DiagnosticCollection.exceptions()) {
+            //diagnostics.setExceptionsList(DiagnosticCollection.getExceptions());
+        }
+        send(con, diagnostics);
+    }
+
+    private void sendAll(Packet packet) {
+        for(Connection c : connections.values()) {
+            send(c, packet);
+        }
+    }
+
+    public void register(Id<Entity> id, Connection connection) {
+        if(connections == null) {
+            connections = new HashMap<>();
+        }connections.put(id, connection);
     }
 }

@@ -1,4 +1,4 @@
-package org.jge.protocol.packet;
+package org.jge.protocol;
 
 import com.esotericsoftware.kryonet.Connection;
 import org.jge.model.User;

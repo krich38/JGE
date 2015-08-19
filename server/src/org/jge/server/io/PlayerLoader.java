@@ -4,7 +4,7 @@ import org.jge.model.Id;
 import org.jge.model.User;
 import org.jge.model.server.PlayerEncap;
 import org.jge.model.world.*;
-import org.jge.protocol.packet.PlayerLoad;
+import org.jge.protocol.game.PlayerLoad;
 
 import java.sql.SQLException;
 

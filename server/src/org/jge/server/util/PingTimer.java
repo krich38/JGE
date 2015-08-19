@@ -1,10 +1,9 @@
 package org.jge.server.util;
 
-import com.esotericsoftware.kryonet.Connection;
 import org.jge.model.Id;
 import org.jge.model.server.PlayerEncap;
 import org.jge.model.world.Entity;
-import org.jge.protocol.packet.Ping;
+import org.jge.protocol.game.Ping;
 import org.jge.server.Server;
 
 import java.util.*;

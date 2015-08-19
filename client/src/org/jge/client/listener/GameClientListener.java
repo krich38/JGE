@@ -3,8 +3,9 @@ package org.jge.client.listener;
 import com.esotericsoftware.kryonet.Connection;
 import org.jge.client.GameClient;
 import org.jge.model.world.Player;
-import org.jge.protocol.packet.Packet;
-import org.jge.protocol.packet.*;
+import org.jge.protocol.common.ChatMessage;
+import org.jge.protocol.Packet;
+import org.jge.protocol.game.Ping;
 
 import java.util.List;
 

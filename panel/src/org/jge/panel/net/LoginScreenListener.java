@@ -4,8 +4,8 @@ import com.esotericsoftware.kryonet.Connection;
 import org.jge.panel.Panel;
 import org.jge.panel.screen.LoginScreen;
 import org.jge.panel.screen.PanelScreen;
-import org.jge.protocol.packet.ConnectResponse;
-import org.jge.protocol.packet.Packet;
+import org.jge.protocol.common.ConnectResponse;
+import org.jge.protocol.Packet;
 
 /**
  * @author Kyle Richards
@@ -18,11 +18,12 @@ public class LoginScreenListener extends NetworkListener {
     public LoginScreenListener(LoginScreen screen) {
         this.screen = screen;
         panel = Panel.getInstance();
-}
+    }
+
     @Override
     protected void onReceived(Connection connection, Packet packet) {
         ConnectResponse response = (ConnectResponse) packet;
-        switch(response.getResponse()) {
+        switch (response.getResponse()) {
             case OK:
                 panel.changeScreen(new PanelScreen());
                 break;

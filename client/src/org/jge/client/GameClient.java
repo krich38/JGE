@@ -7,9 +7,12 @@ import org.jge.client.listener.NetworkListener;
 import org.jge.model.User;
 import org.jge.model.server.PlayerEncap;
 import org.jge.model.world.Player;
-import org.jge.protocol.packet.Packet;
+import org.jge.protocol.common.ChatMessage;
+import org.jge.protocol.common.Connect;
+import org.jge.protocol.Packet;
 import org.jge.protocol.Protocol;
-import org.jge.protocol.packet.*;
+import org.jge.protocol.game.Logout;
+import org.jge.protocol.game.Register;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -108,27 +111,7 @@ public class GameClient {
     }
 
     public ResponseCode serverOnline() {int response = -1;
-        try {
-            Socket s = new Socket(IP_ADDRESS, 3741);
 
-            PrintWriter out = new PrintWriter(s.getOutputStream());
-            out.write(1);
-            out.flush();
-
-            InputStreamReader in = new InputStreamReader(s.getInputStream());
-
-            boolean awaiting = true;
-            while (awaiting) {
-                if (in.ready()) {
-                    response = in.read();
-                    awaiting = false;
-                }
-            }
-
-        } catch (Exception ex) {
-            //ex.printStackTrace();
-        }
-        System.out.println(response);
         return ResponseCode.valueOf(response);
     }
 

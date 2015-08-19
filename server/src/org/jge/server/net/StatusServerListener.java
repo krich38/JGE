@@ -6,8 +6,9 @@ import akka.actor.Inbox;
 import akka.actor.Props;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import org.jge.protocol.packet.Packet;
+import org.jge.protocol.Packet;
 import org.jge.server.actor.StatusConnectionManager;
+import org.jge.server.actor.StatusServerActor;
 
 /**
  * @author Kyle Richards
@@ -16,16 +17,18 @@ import org.jge.server.actor.StatusConnectionManager;
 public class StatusServerListener extends Listener {
     private final ActorRef CONMANAGER ;
     private final Inbox INBOX;
+    private final ActorRef statusEventActor;
 
     public StatusServerListener() {
     ActorSystem system = ActorSystem.create("decoworld");
     INBOX = Inbox.create(system);
     CONMANAGER = system.actorOf(Props.create(StatusConnectionManager.class));
+        statusEventActor = system.actorOf(Props.create(StatusServerActor.class));
 }
     @Override
     public void received(Connection conn, Object o) {
         super.received(conn, o);
-        System.out.println(o);
+
         if (o instanceof Packet) {
             Packet p = (Packet) o;
             p.setConnection(conn);
@@ -37,7 +40,8 @@ public class StatusServerListener extends Listener {
                     INBOX.send(CONMANAGER, p);
                     break;
                 case ADMIN_EVENT:
-                    System.out.println(p.getAttachment());
+                    INBOX.send(statusEventActor, p);
+                    break;
             }
         }
     }

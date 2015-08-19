@@ -11,8 +11,8 @@ import org.jge.model.server.PlayerEncap;
 import org.jge.model.world.Entity;
 import org.jge.model.world.Player;
 import org.jge.model.world.Waypoint;
-import org.jge.protocol.packet.ConnectResponse;
-import org.jge.protocol.packet.PlayerLoad;
+import org.jge.protocol.common.ConnectResponse;
+import org.jge.protocol.game.PlayerLoad;
 
 /**
  * @author Kyle Richards

@@ -1,14 +1,11 @@
 package org.jge.client;
 
 import org.jge.client.jfx.Game;
-import org.jge.client.jfx.screen.ChatWindow;
 import org.jge.client.jfx.screen.GameScreen;
 import org.jge.model.world.Player;
 import org.jge.model.world.RenderableEntity;
-import org.jge.model.world.WorldMap;
-import org.jge.protocol.packet.ChatMessage;
+import org.jge.protocol.common.ChatMessage;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Queue;
 

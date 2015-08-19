@@ -1,4 +1,6 @@
-package org.jge.protocol.packet;
+package org.jge.protocol.game;
+
+import org.jge.protocol.Packet;
 
 /**
  * @author Kyle Richards

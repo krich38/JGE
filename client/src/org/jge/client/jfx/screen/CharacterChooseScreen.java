@@ -1,6 +1,5 @@
 package org.jge.client.jfx.screen;
 
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -8,10 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import org.jge.client.GameClient;
-import org.jge.client.listener.GameClientListener;
 import org.jge.model.CharacterSprite;
-import org.jge.protocol.packet.PlayerLoad;
 
 /**
  * @author Kyle Richards
