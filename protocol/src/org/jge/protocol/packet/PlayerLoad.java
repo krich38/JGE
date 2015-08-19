@@ -1,10 +1,7 @@
 package org.jge.protocol.packet;
 
 import org.jge.model.Id;
-import org.jge.model.server.PlayerEncap;
 import org.jge.model.world.Entity;
-import org.jge.model.world.Player;
-import org.jge.model.world.Waypoint;
 
 /**
  * @author Kyle Richards

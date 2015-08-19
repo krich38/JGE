@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
+import org.jge.panel.Panel;
 
 import java.io.IOException;
 
@@ -61,7 +62,7 @@ public class PanelScreen extends Screen {
         kickAll.setLayoutX(15);
         kickAll.setLayoutY(65);
         kickAll.setPrefWidth(75);
-
+        kickAll.setOnAction(Panel.getInstance().getClient()::kickAll);
 
         Button saveAll = new Button("Save All");
         saveAll.setLayoutX(15);

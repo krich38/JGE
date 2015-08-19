@@ -1,7 +1,6 @@
 package org.jge.server.actor;
 
 import akka.actor.UntypedActor;
-import com.esotericsoftware.kryonet.Connection;
 import org.jge.model.Id;
 import org.jge.model.User;
 import org.jge.model.world.Entity;

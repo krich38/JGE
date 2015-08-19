@@ -1,6 +1,5 @@
 package org.jge.panel.net;
 
-import akka.actor.UntypedActor;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import org.jge.protocol.packet.Packet;

@@ -51,7 +51,7 @@ public class Server {
 
             com.esotericsoftware.kryonet.Server kryoServer = new com.esotericsoftware.kryonet.Server();
             kryoServer.start();
-            Protocol.register(kryoServer.getKryo());
+            Protocol.registerClientServer(kryoServer.getKryo());
 
             engine = new ServerEngine();
 

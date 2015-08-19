@@ -3,15 +3,14 @@ package org.jge.client;
 import com.esotericsoftware.kryonet.Client;
 import org.jge.client.jfx.Game;
 import org.jge.client.jfx.screen.LoginScreen;
-import org.jge.client.listener.LoginScreenListener;
 import org.jge.client.listener.NetworkListener;
 import org.jge.model.User;
 import org.jge.model.server.PlayerEncap;
 import org.jge.model.world.Player;
+import org.jge.protocol.packet.Packet;
 import org.jge.protocol.Protocol;
 import org.jge.protocol.packet.*;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -38,7 +37,7 @@ public class GameClient {
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }client = new Client();
-        Protocol.register(client.getKryo());
+        Protocol.registerClientServer(client.getKryo());
         client.start();
 
     }

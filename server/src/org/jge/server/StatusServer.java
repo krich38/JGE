@@ -2,9 +2,7 @@ package org.jge.server;
 
 import com.esotericsoftware.kryonet.Connection;
 import org.jge.protocol.Protocol;
-import org.jge.protocol.packet.ConnectResponse;
 import org.jge.protocol.packet.Packet;
-import org.jge.server.net.ServerListener;
 import org.jge.server.net.StatusServerListener;
 
 import java.io.IOException;
@@ -36,7 +34,7 @@ public class StatusServer {
     public void init() {
         com.esotericsoftware.kryonet.Server kryoServer = new com.esotericsoftware.kryonet.Server();
         kryoServer.start();
-        Protocol.register(kryoServer.getKryo());
+        Protocol.registerStatusServer(kryoServer.getKryo());
 
         try {
             kryoServer.bind(port);

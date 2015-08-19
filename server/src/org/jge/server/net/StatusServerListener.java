@@ -7,7 +7,6 @@ import akka.actor.Props;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import org.jge.protocol.packet.Packet;
-import org.jge.server.actor.ConnectionManagerActor;
 import org.jge.server.actor.StatusConnectionManager;
 
 /**
@@ -37,6 +36,8 @@ public class StatusServerListener extends Listener {
 
                     INBOX.send(CONMANAGER, p);
                     break;
+                case ADMIN_EVENT:
+                    System.out.println(p.getAttachment());
             }
         }
     }

@@ -1,7 +1,5 @@
 package org.jge.protocol.packet;
 
-import org.jge.model.User;
-
 /**
  * @author Kyle Richards
  * @version 1.0

@@ -1,6 +1,5 @@
 package org.jge.panel.net;
 
-import akka.actor.UntypedActor;
 import com.esotericsoftware.kryonet.Connection;
 import org.jge.panel.Panel;
 import org.jge.panel.screen.LoginScreen;

@@ -1,11 +1,11 @@
 package org.jge.panel;
 
-import akka.actor.Actor;
 import com.esotericsoftware.kryonet.Client;
+import javafx.event.ActionEvent;
 import org.jge.model.User;
-import org.jge.panel.net.LoginScreenListener;
 import org.jge.panel.net.NetworkListener;
 import org.jge.protocol.Protocol;
+import org.jge.protocol.packet.AdminEvent;
 import org.jge.protocol.packet.Connect;
 import org.jge.protocol.packet.Packet;
 
@@ -52,5 +52,12 @@ public class PanelClient {
 
     public void disconnect() {
         client.close();
+    }
+
+    public void kickAll(ActionEvent e) {
+        AdminEvent event = new AdminEvent();
+        event.setAttachment(AdminEvent.EventType.KICK_ALL);
+        send(event);
+
     }
 }
