@@ -99,13 +99,13 @@ public class PanelScreen extends Screen {
         broadcast.setLayoutX(15);
         broadcast.setLayoutY(130);
         broadcast.setPrefWidth(75);
-        broadcast.setOnAction((event -> showBroadcast()));
+        broadcast.setOnAction((event -> showWindow(new BroadcastInputScreen().buildScene())));
 
         Button kickPlayer = new Button("Kick Player");
         kickPlayer.setLayoutX(15);
         kickPlayer.setLayoutY(165);
         kickPlayer.setPrefWidth(75);
-        kickPlayer.setOnAction((event -> showKickPlayer()));
+        kickPlayer.setOnAction((event -> showWindow(new KickPlayerInput(playerList).buildScene())));
 
         Button banList = new Button("Ban List");
         banList.setLayoutX(15);
@@ -165,9 +165,6 @@ public class PanelScreen extends Screen {
 
     }
 
-    private void showBroadcast() {
-
-    }
 
     public void appendMessages(List<ChatMessage> msgs) {
         for (ChatMessage m : msgs) {
@@ -197,11 +194,16 @@ public class PanelScreen extends Screen {
 
 
         ;
+        showWindow(scene);
+
+    }
+
+    private void showWindow(Scene scene) {
         Platform.runLater(() -> {
             Stage stage = new Stage();
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
         });
-
     }
 }

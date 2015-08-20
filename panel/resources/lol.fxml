@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="81.0" prefWidth="343.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button layoutX="283.0" layoutY="48.0" mnemonicParsing="false" text="Send" />
+      <Label layoutX="13.0" layoutY="15.0" text="Player" />
+      <TextField layoutX="60.0" layoutY="48.0" prefHeight="25.0" prefWidth="223.0" />
+      <CheckBox layoutX="241.0" layoutY="15.0" mnemonicParsing="false" text="Anonymous" />
+      <Label layoutX="10.0" layoutY="52.0" text="Reason" />
+      <ChoiceBox layoutX="60.0" layoutY="11.0" prefWidth="150.0" />
+   </children>
+</Pane>

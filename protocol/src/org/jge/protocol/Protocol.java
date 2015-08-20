@@ -6,6 +6,7 @@ import org.jge.model.Id;
 import org.jge.model.User;
 import org.jge.model.server.PlayerEncap;
 import org.jge.model.world.Waypoint;
+import org.jge.protocol.common.Broadcast;
 import org.jge.protocol.common.ChatMessage;
 import org.jge.protocol.common.Connect;
 import org.jge.protocol.common.ConnectResponse;
@@ -61,6 +62,7 @@ public class Protocol {
         kryo.register(ArrayList.class);
         kryo.register(ServerDiagnostics.class);
         kryo.register(Exception.class);
+        kryo.register(Broadcast.class);
 
     }
 

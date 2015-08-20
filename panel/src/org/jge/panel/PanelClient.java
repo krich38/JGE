@@ -4,6 +4,7 @@ import com.esotericsoftware.kryonet.Client;
 import org.jge.model.User;
 import org.jge.panel.net.NetworkListener;
 import org.jge.protocol.Protocol;
+import org.jge.protocol.common.Broadcast;
 import org.jge.protocol.serverstatus.AdminEvent;
 import org.jge.protocol.common.Connect;
 import org.jge.protocol.Packet;
@@ -63,8 +64,15 @@ public class PanelClient {
     }
 
     public void sendRefreshRequest(boolean full) {
-        Refresh refresh = new Refresh(full);
+        AdminEvent refresh = new Refresh(full);
         send(refresh);
     }
 
+    public void sendBroadcast(String text, boolean selected) {
+        Broadcast broadcast = new Broadcast();
+        broadcast.setText(text);
+        broadcast.setAnonymous(selected);
+        send(broadcast);
+
+    }
 }

@@ -2,6 +2,7 @@ package org.jge.server.actor;
 
 import akka.actor.UntypedActor;
 import org.jge.protocol.Packet;
+import org.jge.protocol.common.Broadcast;
 import org.jge.protocol.serverstatus.AdminEvent;
 import org.jge.protocol.serverstatus.ServerDiagnostics;
 import org.jge.server.Server;
@@ -37,6 +38,12 @@ public class StatusServerActor extends UntypedActor {
             case DIAGNOSTICS:
                 DiagnosticCollection.addException(new Exception("LOL"));
                 server.sendDiagnostics(ae.getConnection());
+                break;
+            case SERVER_DIAGNOSTICS:
+                break;
+            case BROADCAST:
+                Broadcast b = (Broadcast) ae;
+                System.out.println(b.getText() +" : " + b.isAnonymous());
                 break;
             case REQUEST_REFRESH:
                 server.sendRefresh(true);
