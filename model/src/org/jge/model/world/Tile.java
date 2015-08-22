@@ -17,7 +17,6 @@ public class Tile extends RenderableEntity {
     private static final Image[] tiles = new Image[]{
             new Image("/Assets/Tiles/1.png"), new Image("/Assets/Tiles/2.png"), new Image("/Assets/Tiles/3.png"),
     };
-    private boolean rendered;
 
     public Tile(int tileId, Waypoint waypoint) {
         this.tileId = tileId;
@@ -29,10 +28,6 @@ public class Tile extends RenderableEntity {
     }
 
 
-    public boolean requiresRendering() {
-        return !rendered;
-    }
-
     public boolean isOccupied() {
         return !entities.isEmpty();
     }
@@ -41,16 +36,10 @@ public class Tile extends RenderableEntity {
     @Override
     public void render(GraphicsContext g) {
         //System.out.println(getWaypoint().getX());
-        g.drawImage(getSprite(), getWaypoint().getX() * 32, getWaypoint().getY() * 32);
-        setRendered(true);
     }
 
     @Override
     public void process(long delta) {
 
-    }
-
-    public void setRendered(boolean rendered) {
-        this.rendered = rendered;
     }
 }

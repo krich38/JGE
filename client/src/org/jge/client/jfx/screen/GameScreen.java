@@ -85,7 +85,6 @@ public class GameScreen extends Screen {
         chatWindow = new ChatWindow(canvas.getWidth(), canvas.getHeight(), this);
         group = new Group(vb, canvas, player.getNode(), chatWindow.getWindow());
 
-        renderable.add(ground);
 
         scene = new Scene(group, SCREEN_WIDTH, SCREEN_HEIGHT);
         scene.setOnMouseClicked((event1 -> {
@@ -168,7 +167,6 @@ public class GameScreen extends Screen {
         if (!renderable.isEmpty()) {
 
             for (RenderableEntity e : renderable) {
-
                 if (e.requiresRendering()) {
                     e.render(g);
                 }
@@ -193,5 +191,9 @@ public class GameScreen extends Screen {
 
     public Ground getGround() {
         return ground;
+    }
+
+    public void loaded() {
+        renderable.add(ground);
     }
 }

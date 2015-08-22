@@ -21,18 +21,6 @@ public class Ground extends RenderableEntity {
 
         canvas.setHeight(650);
         canvas.setWidth(900);
-        GraphicsContext g = canvas.getGraphicsContext2D();
-        int x_coor = 0;
-        int y_coor = 0;
-        for (int y = 0; y < 1; y++) {
-            for (int x = 0; x < 5; x++) {
-                g.drawImage(lol, x_coor, y_coor);
-                x_coor = x_coor + 32;
-                System.out.println(x_coor + " : " + y_coor);
-            }
-            x_coor = 0;
-            y_coor = y_coor + 32;
-        }
 
 
     }
@@ -40,35 +28,18 @@ public class Ground extends RenderableEntity {
     @Override
     public void render(GraphicsContext g) {
 
-        setLastTranslateY(getTranslateY());
-        setLastTranslateX(getTranslateX());
-
         Waypoint waypoint = player.getWaypoint();
 
         int xMinTile = (int) player.getWaypoint().getX() - 30;
         int xMaxTile = (int) player.getWaypoint().getX() + 30;
         int yMinTile = (int) player.getWaypoint().getY() - 20;
         int yMaxTile = (int) player.getWaypoint().getY() + 20;
-//            int toLeft = x - 5;
-//            int toRight = x + 5;
-//            int toUp = y + 5;
-//            int toDown = y-5;
-//
-//            for(int i = toLeft; i < x; i++) {
-//                Tile t = tileAt(i, y);
-//                if(!entityList.contains(t))
-//                entityList.add(t);
-//            }
-//
-//            for(int i = x; i < toRight; i++) {
-//                Tile t = tileAt(i, y);if(!entityList.contains(t))
-//                entityList.add(t);
-//            }
 
 
         for (int i = 0; i < 2; ++i) {
             if (i >= xMinTile && i <= xMaxTile) {
                 for (int j = 0; j < 2; ++j) {
+
                     if (j >= yMinTile && j <= yMaxTile) {
                         // draw the map here
                         int x_coor = 0;
@@ -77,6 +48,7 @@ public class Ground extends RenderableEntity {
                             for (int y = 0; y < (canvas.getHeight() / 32) + 10; y++) {
                                 g.drawImage(map.tileAt(x, y).getSprite(), x_coor, y_coor);
                                 x_coor = x_coor + 32;
+
                                 // System.out.println(x_coor + " : " + y_coor);
                             }
                             x_coor = 0;
@@ -97,6 +69,10 @@ public class Ground extends RenderableEntity {
     public void process(long delta) {
         canvas.setTranslateX(player.getTranslateX());
         canvas.setTranslateY(player.getTranslateY());
+        setTranslateX(player.getTranslateX());
+        setTranslateY(player.getTranslateY());
+        setLastTranslateY(player.getTranslateY());
+        setLastTranslateX(player.getTranslateX());
     }
 
     public void setMap(WorldMap map) {

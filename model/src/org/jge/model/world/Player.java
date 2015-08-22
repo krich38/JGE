@@ -19,10 +19,10 @@ public class Player extends RenderableEntity {
     private ImageView imageView = new ImageView();
     private int stepCounter;
     private boolean spriteFlag;
-    private double translateY;
     private boolean footFlag;
     private double distFlag;
     private int playerType;
+
 
     public Player(Id<Entity> id) {
 
@@ -39,7 +39,7 @@ public class Player extends RenderableEntity {
     }
 
 
-    public void loadSprites(int playerType, double w, double h) {
+    public void loadSprites(int playerType, double w, double h, int directionFlag) {
 
         this.playerType = playerType;
         Image img = new Image("Characters/" + characterList[playerType] + ".png");
@@ -66,9 +66,28 @@ public class Player extends RenderableEntity {
             currentX = 0.0;
             currentY += 32;
         }//end height loop
-        imageView.setViewport(spriteArray[1]);
+
+
+        switch (directionFlag) {
+            case 1:
+                setLastStatus(EntityStatus.MOVEMENT_UP);
+
+                break;
+            case 2:
+                setLastStatus(EntityStatus.MOVEMENT_RIGHT);
+                break;
+            case 3:
+                setLastStatus(EntityStatus.MOVEMENT_DOWN);
+                break;
+            default:
+                setLastStatus(EntityStatus.MOVEMENT_LEFT);
+                break;
+        }
+
+        stoppedMoving(getLastStatus());
 
     }
+
 
     @Override
     public void process(long delta) {
@@ -182,18 +201,22 @@ public class Player extends RenderableEntity {
             case MOVEMENT_UP:
                 imageView.setViewport(spriteArray[10]);
                 setStatus(EntityStatus.FACING_UP);
+                setDirectionFlag(FacingDirection.NORTH);
                 break;
             case MOVEMENT_LEFT:
                 imageView.setViewport(spriteArray[4]);
                 setStatus(EntityStatus.FACING_LEFT);
+                setDirectionFlag(FacingDirection.WEST);
                 break;
             case MOVEMENT_RIGHT:
                 imageView.setViewport(spriteArray[7]);
                 setStatus(EntityStatus.FACING_RIGHT);
+                setDirectionFlag(FacingDirection.EAST);
                 break;
             case MOVEMENT_DOWN:
                 imageView.setViewport(spriteArray[1]);
                 setStatus(EntityStatus.FACING_DOWN);
+                setDirectionFlag(FacingDirection.SOUTH);
                 break;
         }
     }
@@ -205,6 +228,9 @@ public class Player extends RenderableEntity {
     public User getUser() {
         return user;
     }
+
+
+
 }
 
 

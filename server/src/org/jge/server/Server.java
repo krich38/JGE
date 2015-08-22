@@ -118,11 +118,14 @@ public class Server {
     }
 
     public void disconnect(Id<Entity> id, String reason) {
-        connectionsEntityMap.get(id).close();
+        Connection c = connectionsEntityMap.remove(id);
 
-        connectionIdMap.remove(connectionsEntityMap.get(id));
         connectionsEntityMap.remove(id);
+        connectionIdMap.remove(c);
+        c.close();
+        players.get(id).setPonged(true); // have we since pinged the connection while disconnecting?
         players.remove(id);
+
         if(reason != null) {
             System.out.println("Disconnected " + id + ": " + reason);
         }

@@ -6,7 +6,9 @@ import org.jge.client.jfx.screen.LoginScreen;
 import org.jge.client.listener.NetworkListener;
 import org.jge.model.User;
 import org.jge.model.server.PlayerEncap;
+import org.jge.model.world.Entity;
 import org.jge.model.world.Player;
+import org.jge.model.world.RenderableEntity;
 import org.jge.protocol.common.ChatMessage;
 import org.jge.protocol.common.Connect;
 import org.jge.protocol.Packet;
@@ -105,7 +107,11 @@ public class GameClient {
         Logout logout = new Logout();
         //(Id<Entity> id, int playerType, Waypoint waypoint, User user)
         System.out.println(player.getUser());
-        PlayerEncap pe = new PlayerEncap(player.getId(), player.getPlayerType(), player.getWaypoint(), player.getUser());
+        int directionFlag;
+System.out.println(player.getLastStatus());
+        RenderableEntity.FacingDirection status = player.getDirectionFlag();
+        directionFlag = status.ordinal()+1;
+        PlayerEncap pe = new PlayerEncap(player.getId(), player.getPlayerType(), player.getWaypoint(), player.getUser(), directionFlag);
         logout.setAttachment(pe);
         send(logout);
     }

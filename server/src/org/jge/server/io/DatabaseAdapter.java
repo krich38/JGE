@@ -62,6 +62,8 @@ public class DatabaseAdapter {
             if (rs.next()) {
                 int x = rs.getInt("pos_x");
                 int y = rs.getInt("pos_y");
+                int directionFlag = rs.getInt("direction_flag");
+                pe.setDirectionFlag(directionFlag);
                 Waypoint w = new Waypoint(x, y);
                 pe.setWaypoint(w);
             }
@@ -72,7 +74,7 @@ public class DatabaseAdapter {
     }
 
     public static void updatePlayer(PlayerEncap pe) throws SQLException {
-        String query = "update players SET pos_x = " + pe.getWaypoint().getX() + ", pos_y = " + pe.getWaypoint().getY() + " WHERE id=\"" + pe.getId().getValue() + "\"";
+        String query = "update players SET pos_x = " + pe.getWaypoint().getX() + ", pos_y = " + pe.getWaypoint().getY() + ", direction_flag = " + pe.getDirectionFlag() + " WHERE id=\"" + pe.getId().getValue() + "\"";
         statement.execute(query);
 
     }

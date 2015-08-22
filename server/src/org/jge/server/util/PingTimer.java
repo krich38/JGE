@@ -19,6 +19,7 @@ public class PingTimer {
     private final List<Ping.Pong> replies;
     private long lastTime;
     private List<Id<Entity>> expectingReplies;
+    private boolean timingOut;
 
 
     public PingTimer() {
@@ -40,6 +41,7 @@ public class PingTimer {
     }
 
     public void timeout() {
+        timingOut = true;
         for (Ping.Pong p : replies) {
             Id<Entity> id = server.getIdByConnection(p.getConnection());
             if ((long) p.getAttachment() == lastTime) {
@@ -50,8 +52,10 @@ public class PingTimer {
 
         }
         for (Id<Entity> id : expectingReplies) {
-            if (!players.get(id).getPonged()) {
-                server.disconnect(id, "Ping timeout");
+            if(players.containsKey(id)) { // still an active connection?
+                if (!players.get(id).getPonged()) {
+                    server.disconnect(id, "Ping timeout");
+                }
             }
         }
         for (Ping.Pong p : replies) {
@@ -60,6 +64,7 @@ public class PingTimer {
         }
         replies.clear();
         expectingReplies.clear();
+        timingOut = false;
 
 
     }
@@ -67,4 +72,5 @@ public class PingTimer {
     public void addReply(Ping.Pong pong) {
         replies.add(pong);
     }
+
 }

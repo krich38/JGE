@@ -45,6 +45,8 @@ public class GameView {
         for (RenderableEntity e : renderable) {
             e.process(delta);
 
+
+
         }
     }
 }

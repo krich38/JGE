@@ -5,6 +5,7 @@ import com.esotericsoftware.kryonet.Connection;
 import org.jge.model.Id;
 import org.jge.model.User;
 import org.jge.model.server.PlayerEncap;
+import org.jge.model.world.Entity;
 import org.jge.model.world.Waypoint;
 import org.jge.protocol.common.Broadcast;
 import org.jge.protocol.common.ChatMessage;
@@ -32,7 +33,6 @@ public class Protocol {
         kryo.register(Register.class);
 
         kryo.register(PlayerLoad.class);
-
 
 
 

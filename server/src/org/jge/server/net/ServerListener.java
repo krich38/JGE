@@ -90,6 +90,7 @@ public class ServerListener extends Listener {
                     if (playerLoader.savePlayer(pe)) {
                         System.out.println("Player saved: " + pe.getUser().getUsername());
                     }
+                    server.disconnect(pe.getId(), null);
                     break;
             }
         }

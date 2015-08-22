@@ -11,8 +11,20 @@ import javafx.scene.image.Image;
 public abstract class RenderableEntity extends Entity {
     protected Node node;
     private Image sprite;
-    private double translateY, translateX, lastTranslateY, lastTranslateX;
+    private double lastTranslateY, lastTranslateX, translateX, translateY;
     private boolean rendered;
+
+    public void setDirectionFlag(FacingDirection directionFlag) {
+        this.directionFlag = directionFlag;
+    }
+
+    public enum FacingDirection {
+        NORTH,
+        EAST,
+        SOUTH,
+        WEST
+    }
+    private FacingDirection directionFlag;
 
     public Node getNode() {
         return node;
@@ -29,24 +41,10 @@ public abstract class RenderableEntity extends Entity {
     public abstract void render(GraphicsContext g);
 
 
-    public double getTranslateX() {
-        return translateX;
-    }
 
-    public void setTranslateX(double translateX) {
-        this.translateX = translateX;
-    }
-
-    public double getTranslateY() {
-        return translateY;
-    }
-
-    public void setTranslateY(double translateY) {
-        this.translateY = translateY;
-    }
 
     public boolean requiresRendering() {
-        return translateX != lastTranslateX || translateY != lastTranslateY || !rendered;
+        return !rendered || getTranslateX() != lastTranslateX || getTranslateY() != lastTranslateY;
     }
 
     public void setLastTranslateY(double lastTranslateY) {
@@ -62,5 +60,25 @@ public abstract class RenderableEntity extends Entity {
 
     public void setRendered(boolean rendered) {
         this.rendered = rendered;
+    }
+
+    public double getTranslateY() {
+        return translateY;
+    }
+
+    public void setTranslateY(double translateY) {
+        this.translateY = translateY;
+    }
+
+    public double getTranslateX() {
+        return translateX;
+    }
+
+    public void setTranslateX(double translateX) {
+        this.translateX = translateX;
+    }
+
+    public FacingDirection getDirectionFlag() {
+        return directionFlag;
     }
 }

@@ -12,6 +12,7 @@ public class Waypoint {
     public Waypoint(int x, int y) {
         this.x = x;
         this.y = y;
+
         long key = x << 16 | y;
         this.key = key;
     }
@@ -40,4 +41,5 @@ public class Waypoint {
     public void setX(int x) {
         this.x = x;
     }
+
 }

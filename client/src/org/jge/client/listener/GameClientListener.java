@@ -12,8 +12,6 @@ import java.util.List;
 /**
  * @author Kyle James Richards
  * @version 1.0
- *          Department of Computer Science and Electrical Engineering
- *          Google Inc.
  */
 public class GameClientListener extends NetworkListener {
 
