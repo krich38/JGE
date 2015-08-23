@@ -1,5 +1,6 @@
 package org.jge.client.jfx;
 
+import com.esotericsoftware.minlog.Log;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -40,7 +41,7 @@ public class Game extends Application {
         client = new GameClient();
         currentScreen = new LoginScreen();
         stage.setScene(currentScreen.buildScreen());
-
+Log.set(Log.LEVEL_ERROR);
         stage.show();
     }
 

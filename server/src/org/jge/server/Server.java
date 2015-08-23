@@ -63,7 +63,7 @@ public class Server {
             try {
                 kryoServer.bind(3744, 3476);
                 kryoServer.addListener(new ServerListener());
-
+                System.out.println("Game server opened.");
             } catch (IOException e) {
                 e.printStackTrace();
             }

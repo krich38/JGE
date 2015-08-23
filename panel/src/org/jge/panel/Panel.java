@@ -1,5 +1,6 @@
 package org.jge.panel;
 
+import com.esotericsoftware.minlog.Log;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -31,6 +32,7 @@ public class Panel extends Application {
         changeScreen(new LoginScreen());
         primaryStage.setOnCloseRequest((event) -> destroy());
         primaryStage.show();
+        Log.set(Log.LEVEL_ERROR);
 
     }
 
