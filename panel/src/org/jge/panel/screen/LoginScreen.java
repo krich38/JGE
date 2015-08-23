@@ -73,6 +73,7 @@ public class LoginScreen extends Screen {
 
     public LoginScreen() {
         Panel.getInstance().getClient().setListener(new LoginScreenListener(this));
+        setTitle("JGE Panel Login");
     }
 
     public void updateStatus(String text) {

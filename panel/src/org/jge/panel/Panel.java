@@ -16,6 +16,7 @@ public class Panel extends Application {
     private Stage primaryStage;
     private PanelEngine engine;
     private PanelClient client;
+    private Screen screen;
 
     public static Panel getInstance() {
         return INSTANCE;
@@ -27,17 +28,36 @@ public class Panel extends Application {
         engine = new PanelEngine();
         engine.start();
         client = new PanelClient();
-        primaryStage.setScene(new LoginScreen().getScene());
+        changeScreen(new LoginScreen());
+        primaryStage.setOnCloseRequest((event) -> destroy());
         primaryStage.show();
-        primaryStage.setOnCloseRequest((event) -> System.exit(0));
+
+    }
+
+    private void destroy() {
+        client.disconnect();
+        engine.stop();
+        primaryStage.setScene(null);
 
     }
 
     public void changeScreen(Screen screen) {
-        Platform.runLater(() -> {
+        this.screen = screen;
+        if(Platform.isFxApplicationThread()) {
             primaryStage.setScene(screen.getScene());
+            if(screen.getTitle() != null) {
+                primaryStage.setTitle(screen.getTitle());
+            }
             primaryStage.centerOnScreen();
-        });
+        } else {
+            Platform.runLater(() -> {
+                primaryStage.setScene(screen.getScene());
+                if (screen.getTitle() != null) {
+                    primaryStage.setTitle(screen.getTitle());
+                }
+                primaryStage.centerOnScreen();
+            });
+        }
 
     }
 
@@ -62,4 +82,7 @@ public class Panel extends Application {
         return client;
     }
 
+    public Screen getScreen() {
+        return screen;
+    }
 }

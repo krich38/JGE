@@ -36,12 +36,21 @@ public class Game extends Application {
 
         this.stage = stage;
         //stage.setResizable(false);
-        stage.setOnCloseRequest((event) -> System.exit(0));
+        stage.setOnCloseRequest((event) -> destroy());
         client = new GameClient();
         currentScreen = new LoginScreen();
         stage.setScene(currentScreen.buildScreen());
 
         stage.show();
+    }
+
+    private void destroy() {
+        if(client.isConnected()) {
+           client.logout();
+        }
+        engine.stop();
+        currentScreen.destroy();
+        stage.setScene(null);
     }
 
 

@@ -100,7 +100,7 @@ public class ServerListener extends Listener {
     public void disconnected(Connection c) {
         //if(c.isConnected())
         Id<Entity> id = server.getIdByConnection(c);
-        if(id != null) {
+        if (id != null) {
             server.disconnect(id, null);
         }
         //super.disconnected(c);

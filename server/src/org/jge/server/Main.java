@@ -14,6 +14,7 @@ public class Main {
         server.init();
 
         StatusServer status = StatusServer.getInstance();
+        status.setRunning(true);
         status.init();
 
     }

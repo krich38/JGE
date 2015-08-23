@@ -18,21 +18,28 @@ public class PanelEngine {
     }
 
     public void start() {
-        //ticker = new Timer();
-        PanelClient client = Panel.getInstance().getClient();
+
         ticker.schedule(new TimerTask() {
             @Override
-            public void run() {
-                Panel.getInstance().getClient().sendRefreshRequest(true);
+            public void run() {PanelClient client = Panel.getInstance().getClient();
+                if(client.isConnected()) {
+                    client.sendRefreshRequest(true);
+                }
             }
         }, 500, 30 * 1000L);
 
         ticker.schedule(new TimerTask() {
 
             @Override
-            public void run() {
-                Panel.getInstance().getClient().sendRefreshRequest(false);
+            public void run() {PanelClient client = Panel.getInstance().getClient();
+                if(client.isConnected()) {
+                    client.sendRefreshRequest(false);
+                }
             }
         }, 500, 15 * 1000L);
+    }
+
+    public void stop() {
+        ticker.cancel();
     }
 }

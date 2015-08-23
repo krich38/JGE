@@ -13,11 +13,10 @@ public class ServerDiagnostics extends AdminEvent {
     private final long freeMemory;
     private final long usedMemory;
     private long upTime;
-    private List<String> exceptionsList;
     private String exceptions;
 
     public ServerDiagnostics() {
-        setType(EventType.SERVER_DIAGNOSTICS);
+        setType(EventType.DIAGNOSTICS);
 
 
         Runtime runtime = Runtime.getRuntime();

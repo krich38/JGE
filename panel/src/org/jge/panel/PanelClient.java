@@ -21,6 +21,7 @@ public class PanelClient {
     private final Client client;
     private User user;
     private NetworkListener listener;
+    private boolean connected;
 
     public PanelClient() {
         client = new Client();
@@ -42,6 +43,7 @@ public class PanelClient {
     public void send(Packet p) {
         p.setUser(user);
         client.sendTCP(p);
+        System.out.println("sending " + p);
     }
 
     public void setListener(NetworkListener listener) {
@@ -74,5 +76,13 @@ public class PanelClient {
         broadcast.setAnonymous(selected);
         send(broadcast);
 
+    }
+
+    public boolean isConnected() {
+        return connected;
+    }
+
+    public void setConnected(boolean connected) {
+        this.connected = connected;
     }
 }

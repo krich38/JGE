@@ -24,6 +24,7 @@ public abstract class RenderableEntity extends Entity {
         SOUTH,
         WEST
     }
+
     private FacingDirection directionFlag;
 
     public Node getNode() {
@@ -39,8 +40,6 @@ public abstract class RenderableEntity extends Entity {
     }
 
     public abstract void render(GraphicsContext g);
-
-
 
 
     public boolean requiresRendering() {

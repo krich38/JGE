@@ -25,14 +25,15 @@ public class User {
     }
 
     public enum AccessRights {
-    ADMINISTRATOR,
-    MODERATOR,
-    PLAYER;
+        ADMINISTRATOR,
+        MODERATOR,
+        PLAYER;
 
         public static boolean hasAccess(AccessRights rights, AccessRights required) {
             return rights.ordinal() >= required.ordinal();
         }
     }
+
     public User(String username, String password) {
         this(null, username, password);
     }
@@ -83,7 +84,7 @@ public class User {
 
     static {
         try {
-            User.md  = MessageDigest.getInstance("MD5");
+            User.md = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }

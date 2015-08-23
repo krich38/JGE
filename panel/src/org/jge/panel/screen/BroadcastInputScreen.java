@@ -35,7 +35,7 @@ public class BroadcastInputScreen extends Screen {
         send.setOnAction((event) -> {
             Panel.getInstance().getClient().sendBroadcast(message.getText(), anonymous.isSelected());
         });
-        Pane pane = new Pane(send,broadcast,message,anonymous);
+        Pane pane = new Pane(send, broadcast, message, anonymous);
         Scene scene = new Scene(pane, 355, 65);
         return scene;
 

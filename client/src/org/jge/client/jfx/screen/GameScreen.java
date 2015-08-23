@@ -99,7 +99,7 @@ public class GameScreen extends Screen {
                     canvas.requestFocus();
                 }
             } else {
-                if(event.isControlDown() && code.equals(KeyCode.L)) {
+                if (event.isControlDown() && code.equals(KeyCode.L)) {
 
 
                     changeScreen(new LoginScreen());

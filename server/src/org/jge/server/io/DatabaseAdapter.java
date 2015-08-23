@@ -80,7 +80,7 @@ public class DatabaseAdapter {
     }
 
     public static User.AccessRights getRightsById(Id<Entity> id) {
-        String query = "select access from players where players.id=\"" +id.getValue() + "\"";
+        String query = "select access from players where players.id=\"" + id.getValue() + "\"";
         try {
             statement.execute(query);
             ResultSet rs = statement.getResultSet();

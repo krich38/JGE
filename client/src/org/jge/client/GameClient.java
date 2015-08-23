@@ -33,6 +33,7 @@ public class GameClient {
     private Player player;
     private User user;
     private InetAddress address;
+    private boolean connected;
 
     public GameClient() {
         try {
@@ -41,7 +42,8 @@ public class GameClient {
 
         } catch (UnknownHostException e) {
             e.printStackTrace();
-        }client = new Client();
+        }
+        client = new Client();
         Protocol.registerClientServer(client.getKryo());
         client.start();
 
@@ -50,7 +52,7 @@ public class GameClient {
     public void connect(User user) throws IOException {
         if (!client.isConnected()) {
             // are we reconnecting?
-            if(address.isReachable(2000)) {
+            if (address.isReachable(2000)) {
                 this.user = user;
 
                 client.connect(TIMEOUT, "127.0.0.1", 3744, 3476);
@@ -58,8 +60,8 @@ public class GameClient {
                 Connect connect = new Connect();
                 connect.setUser(user);
                 client.sendTCP(connect);
-            }else {
-                ((LoginScreen)Game.getGame().getScreen()).updateStatus("Server is offline!");
+            } else {
+                ((LoginScreen) Game.getGame().getScreen()).updateStatus("Server is offline!");
             }
         }
 
@@ -108,38 +110,47 @@ public class GameClient {
         //(Id<Entity> id, int playerType, Waypoint waypoint, User user)
         System.out.println(player.getUser());
         int directionFlag;
-System.out.println(player.getLastStatus());
         RenderableEntity.FacingDirection status = player.getDirectionFlag();
-        directionFlag = status.ordinal()+1;
+        directionFlag = status.ordinal() + 1;
         PlayerEncap pe = new PlayerEncap(player.getId(), player.getPlayerType(), player.getWaypoint(), player.getUser(), directionFlag);
         logout.setAttachment(pe);
         send(logout);
     }
 
-    public ResponseCode serverOnline() {int response = -1;
 
-        return ResponseCode.valueOf(response);
+    public int probeResponse() {
+        try {
+            Socket s = new Socket("127.0.0.1", 3740);
+            PrintWriter out = new PrintWriter(s.getOutputStream());
+            out.write(23123);
+            out.flush();
+            InputStreamReader in = new InputStreamReader(s.getInputStream());
+            int response = 0;
+            boolean awaiting = true;
+
+            while (awaiting) {
+                response = in.read();
+                if (response != -1) {
+                    awaiting = false;
+
+                }
+
+            }
+            s.close();
+            return response;
+
+
+        } catch (IOException ignored) {
+            return 0;
+        }
+
     }
 
-    public enum ResponseCode {
-        OFFLINE(-1),
-        ONLINE(22),
-        CLOSED(23);
+    public boolean isConnected() {
+        return connected;
+    }
 
-        private int code;
-
-        private ResponseCode(int code) {
-
-            this.code = code;
-        }
-
-        public static ResponseCode valueOf(int code) {
-            for(ResponseCode rc : ResponseCode.values()) {
-                if(rc.code == code) {
-                    return rc;
-                }
-            }
-            return OFFLINE;
-        }
+    public void setConnected(boolean connected) {
+        this.connected = connected;
     }
 }

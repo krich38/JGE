@@ -22,14 +22,15 @@ public class StatusConnectionManager extends UntypedActor {
     private final StatusServer server;
 
     public StatusConnectionManager() {
-loader = Server.getInstance().getPlayerLoader();
+        loader = Server.getInstance().getPlayerLoader();
         server = StatusServer.getInstance();
-}
+    }
+
     @Override
     public void onReceive(Object message) throws Exception {
         Packet p = (Packet) message;
-System.out.println(p.getPacketType());
-        switch(p.getPacketType()) {
+        System.out.println(p.getPacketType());
+        switch (p.getPacketType()) {
             case CONNECT:
                 Connect connect = (Connect) p;
                 User user = connect.getUser();
@@ -38,7 +39,7 @@ System.out.println(p.getPacketType());
                 if (id != null) {
 
                     User.AccessRights rights = loader.getRightsFor(id);
-                    if(User.AccessRights.hasAccess(rights, User.AccessRights.ADMINISTRATOR)) {
+                    if (User.AccessRights.hasAccess(rights, User.AccessRights.ADMINISTRATOR)) {
                         response.setResponse(ConnectResponse.Response.OK);
                         response.setAttachment(id);
                         server.register(id, p.getConnection());
@@ -49,7 +50,7 @@ System.out.println(p.getPacketType());
 
 
                 } else {
-                  response.setResponse(ConnectResponse.Response.INCORRECT_DETAILS);
+                    response.setResponse(ConnectResponse.Response.INCORRECT_DETAILS);
                 }
                 server.send(p.getConnection(), response);
                 break;

@@ -9,6 +9,7 @@ import org.jge.protocol.serverstatus.AdminEvent;
 public class Broadcast extends AdminEvent {
     private String text;
     private boolean anonymous;
+
     public Broadcast() {
         setType(EventType.BROADCAST);
     }

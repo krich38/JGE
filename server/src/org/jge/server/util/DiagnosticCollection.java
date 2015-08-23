@@ -21,7 +21,7 @@ public class DiagnosticCollection {
 
     public static String getExceptions() {
         StringBuilder sb = new StringBuilder();
-        for(String s : EXCEPTIONS) {
+        for (String s : EXCEPTIONS) {
             sb.append(s).append("\n");
         }
         return sb.toString();

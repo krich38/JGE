@@ -7,7 +7,7 @@ import javafx.stage.Stage;
  * @author Kyle Richards
  * @version 1.0
  */
-public class MapEditor extends Application{
+public class MapEditor extends Application {
     private static MapEditor INSTANCE;
 
     public static void main(String[] args) {

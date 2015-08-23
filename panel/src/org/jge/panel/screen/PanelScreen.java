@@ -38,6 +38,7 @@ public class PanelScreen extends Screen {
     public PanelScreen() {
         client.setListener(new PanelScreenListener(this));
         client.sendRefreshRequest(true);
+        setTitle("JGE Control Panel");
     }
 
     @Override
@@ -99,13 +100,13 @@ public class PanelScreen extends Screen {
         broadcast.setLayoutX(15);
         broadcast.setLayoutY(130);
         broadcast.setPrefWidth(75);
-        broadcast.setOnAction((event -> showWindow(new BroadcastInputScreen().buildScene())));
+        broadcast.setOnAction((event -> showWindow(new BroadcastInputScreen().getScene())));
 
         Button kickPlayer = new Button("Kick Player");
         kickPlayer.setLayoutX(15);
         kickPlayer.setLayoutY(165);
         kickPlayer.setPrefWidth(75);
-        kickPlayer.setOnAction((event -> showWindow(new KickPlayerInput(playerList).buildScene())));
+        kickPlayer.setOnAction((event -> showWindow(new KickPlayerInput(playerList).getScene())));
 
         Button banList = new Button("Ban List");
         banList.setLayoutX(15);
@@ -134,7 +135,11 @@ public class PanelScreen extends Screen {
         banPlayer.setLayoutX(105);
         banPlayer.setLayoutY(165);
         banPlayer.setPrefWidth(81);
-        banPlayer.setOnAction(event -> showBanPrompt());
+        banPlayer.setOnAction(event -> {
+
+            showWindow(new BanPlayerInputScreen().getScene());
+        }
+        );
 
         Button diagnostic = new Button("Diagnostics");
         diagnostic.setLayoutX(105);
@@ -145,7 +150,7 @@ public class PanelScreen extends Screen {
         Button refreshPanel = new Button("Refresh");
         refreshPanel.setLayoutX(275);
         refreshPanel.setLayoutY(125);
-        refreshPanel.setOnAction(event -> client.sendEvent(AdminEvent.EventType.REQUEST_REFRESH));
+        refreshPanel.setOnAction(event -> client.sendRefreshRequest(true));
 
         pane = new Pane(header, players, recent, messages, status, playerList, admin, kickAll, saveAll, broadcast, kickPlayer, banList, closeServer, shutdown, openServer, banPlayer, diagnostic, refreshPanel);
         Scene scene =
@@ -199,11 +204,22 @@ public class PanelScreen extends Screen {
     }
 
     private void showWindow(Scene scene) {
-        Platform.runLater(() -> {
+        if(Platform.isFxApplicationThread()) {
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setResizable(false);
             stage.show();
-        });
+        } else {
+            Platform.runLater(() -> {
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                stage.setResizable(false);
+                stage.show();
+            });
+        }
+    }
+
+    public ListView<String> getPlayerList() {
+        return playerList;
     }
 }

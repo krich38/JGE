@@ -42,14 +42,14 @@ public class KickPlayerInput extends Screen {
         playersList.setLayoutX(60);
         playersList.setLayoutY(11);
         playersList.setPrefWidth(150);
-        if(this.playerList != null) {
+        if (this.playerList != null) {
             playersList.setItems(this.playerList.getItems());
         }
         Button send = new Button("Send");
         send
                 .setLayoutX(283);
         send.setLayoutY(50);
-        Pane pane = new Pane(players,reason,anonymous,reasonLabel,playersList,send);
+        Pane pane = new Pane(players, reason, anonymous, reasonLabel, playersList, send);
         Scene scene = new Scene(pane, 345, 80);
         return scene;
     }

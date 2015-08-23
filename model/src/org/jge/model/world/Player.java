@@ -26,7 +26,8 @@ public class Player extends RenderableEntity {
 
     public Player(Id<Entity> id) {
 
-        super.id = id;node = imageView;
+        super.id = id;
+        node = imageView;
     }
 
     public void setUser(User user) {
@@ -228,7 +229,6 @@ public class Player extends RenderableEntity {
     public User getUser() {
         return user;
     }
-
 
 
 }

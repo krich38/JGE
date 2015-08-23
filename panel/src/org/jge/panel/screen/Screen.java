@@ -8,14 +8,24 @@ import javafx.scene.Scene;
  */
 public abstract class Screen {
     private final Scene scene;
+    private String title;
 
     public Screen() {
         scene = buildScene();
+
     }
 
     protected abstract Scene buildScene();
 
     public Scene getScene() {
         return scene;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

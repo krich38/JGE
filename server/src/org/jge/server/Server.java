@@ -24,6 +24,8 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Kyle Richards
  * @version 1.0
+ *
+ * TODO: Perhaps consider implementing a cleaner player storage rather than using a bunch of maps.
  */
 public class Server {
     private static Server INSTANCE;
@@ -35,7 +37,7 @@ public class Server {
     private ServerEngine engine;
     private Map<Id<Entity>, Connection> connectionsEntityMap;
     private Map<Connection, Id<Entity>> connectionIdMap;
-
+    private com.esotericsoftware.kryonet.Server kryoServer;
 
 
     public static Server getInstance() {
@@ -52,7 +54,7 @@ public class Server {
             connectionIdMap = new ConcurrentHashMap<>();
             playerLoader = new PlayerLoader();
 
-            com.esotericsoftware.kryonet.Server kryoServer = new com.esotericsoftware.kryonet.Server();
+            kryoServer = new com.esotericsoftware.kryonet.Server();
             kryoServer.start();
             Protocol.registerClientServer(kryoServer.getKryo());
 
@@ -126,7 +128,7 @@ public class Server {
         players.get(id).setPonged(true); // have we since pinged the connection while disconnecting?
         players.remove(id);
 
-        if(reason != null) {
+        if (reason != null) {
             System.out.println("Disconnected " + id + ": " + reason);
         }
     }
@@ -140,5 +142,23 @@ public class Server {
         return players.get(id).getUser();
     }
 
+    public void destroy() {
+        engine.stop();
+        logoutAll();
+        kryoServer.close();
 
+    }
+
+    public void logoutAll() {
+        for(Id<Entity> id : players.keySet()) {
+            disconnect(id, "");
+        }
+    }
+
+
+    public void saveAll() {
+        for(PlayerEncap pe : players.values()) {
+            playerLoader.savePlayer(pe);
+        }
+    }
 }

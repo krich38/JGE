@@ -9,7 +9,7 @@ import org.jge.protocol.Packet;
  * @version 1.0
  */
 public class PlayerLoad extends Packet {
-      private Id<Entity> id;
+    private Id<Entity> id;
     private int playerType;
 
     public PlayerLoad() {
@@ -17,12 +17,9 @@ public class PlayerLoad extends Packet {
     }
 
 
-
-
     public Id<Entity> getId() {
         return id;
     }
-
 
 
     public void setId(Id<Entity> id) {

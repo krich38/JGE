@@ -35,7 +35,6 @@ public class Protocol {
         kryo.register(PlayerLoad.class);
 
 
-
         kryo.register(Ping.class);
         kryo.register(Ping.Pong.class);
 
@@ -44,13 +43,19 @@ public class Protocol {
 
     }
 
-    private static void registerCommons(Kryo kryo) {kryo.register(ChatMessage.class);
+    private static void registerCommons(Kryo kryo) {
+        kryo.register(ChatMessage.class);
         kryo.register(User.class);
-        kryo.register(Id.class);kryo.register(PlayerEncap.class);
-        kryo.register(Connect.class);kryo.register(Waypoint.class);
+        kryo.register(Id.class);
+        kryo.register(PlayerEncap.class);
+        kryo.register(Connect.class);
+        kryo.register(Waypoint.class);
         kryo.register(Packet.class);
-        kryo.register(Packet.PacketType.class);        kryo.register(ConnectResponse.class);
-        kryo.register(ConnectResponse.Response.class);kryo.register(Connection.class);kryo.register(User.AccessRights.class);
+        kryo.register(Packet.PacketType.class);
+        kryo.register(ConnectResponse.class);
+        kryo.register(ConnectResponse.Response.class);
+        kryo.register(Connection.class);
+        kryo.register(User.AccessRights.class);
 
     }
 

@@ -17,6 +17,7 @@ public class PanelScreenListener extends NetworkListener {
     public PanelScreenListener(PanelScreen screen) {
 
         this.screen = screen;
+
     }
 
     @Override
@@ -26,8 +27,8 @@ public class PanelScreenListener extends NetworkListener {
         switch (ae.getType()) {
 
 
-            case SERVER_DIAGNOSTICS:
-                System.out.println("wassup");
+            case DIAGNOSTICS:
+
                 ServerDiagnostics sd = (ServerDiagnostics) ae;
 
                 screen.showDiagnostics(sd);
@@ -40,6 +41,8 @@ public class PanelScreenListener extends NetworkListener {
                 }
                 screen.appendMessages(refresh.getMessages());
                 break;
+
+
         }
 
     }

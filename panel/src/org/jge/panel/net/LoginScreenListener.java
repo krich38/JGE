@@ -26,6 +26,7 @@ public class LoginScreenListener extends NetworkListener {
         switch (response.getResponse()) {
             case OK:
                 panel.changeScreen(new PanelScreen());
+                panel.getClient().setConnected(true);
                 break;
             case SERVER_CLOSED:
                 screen.updateStatus("Insufficient access!");

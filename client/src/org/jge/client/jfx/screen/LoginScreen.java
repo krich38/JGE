@@ -80,7 +80,7 @@ public class LoginScreen extends Screen {
             updateServerStatus(serverStatus);
         }));
 
-        timeline = new Timeline(new KeyFrame(Duration.minutes(0.2), (event) -> {
+        timeline = new Timeline(new KeyFrame(Duration.minutes(1), (event) -> {
             updateServerStatus(serverStatus);
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -92,7 +92,7 @@ public class LoginScreen extends Screen {
         gridPane.add(btnLogin, 2, 1);
         gridPane.add(btnRego, 2, 0);
         gridPane.add(loginStatus, 1, 2);
-        gridPane.add(serverStatus,0,2);
+        gridPane.add(serverStatus, 0, 2);
 
         DropShadow dropShadow = new DropShadow();
         dropShadow.setOffsetX(5);
@@ -117,7 +117,7 @@ public class LoginScreen extends Screen {
 
         bp.setCenter(gridPane);
         bp.setTop(login);
-txtUserName.setText("blah");
+        txtUserName.setText("blah");
         pf.setText("lol");
 
         Scene scene = new Scene(bp, 500, 270);
@@ -128,32 +128,38 @@ txtUserName.setText("blah");
         return scene;
     }
 
+    private void updateServerStatus(Button serverStatus) {
+        serverStatus.setTextFill(Color.RED);
+        serverStatus.setText("Wait..");
+        new Thread(() -> {
+            int response = getClient().probeResponse();
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Platform.runLater(() -> {
+                if (response == 21) {
+
+                    serverStatus.setTextFill(Color.GREEN);
+                    serverStatus.setText("ONLINE");
+                } else if (response == 20) {
+                    serverStatus.setTextFill(Color.PURPLE);
+                    serverStatus.setText("CLOSED");
+                } else if (response == 0) {
+
+                    serverStatus.setText("OFFLINE");
+                }
+            });
+
+        }).start();
+
+    }
+
     @Override
     public void destroy() {
         timeline.stop();
 
-    }
-
-    private void updateServerStatus(Button status) {
-System.out.println("server stat");
-        GameClient.ResponseCode rc = getClient().serverOnline();
-
-        switch(rc) {
-
-            case OFFLINE:
-                  status.setTextFill(Color.RED);
-
-                break;
-            case ONLINE:
-
-                status.setTextFill(Color.GREEN);
-                break;
-            case CLOSED:
-                status.setTextFill(Color.ORANGE);
-                break;
-        }
-        status.setText(rc.toString());
-        updateStatus("Server is currently " + rc);
     }
 
     private void onRegisterPress(String username, String password) {
@@ -179,7 +185,7 @@ System.out.println("server stat");
 
     public void updateStatus(String text) {
 
-        Platform.runLater(() -> loginStatus.setText("\t" +text));
+        Platform.runLater(() -> loginStatus.setText("\t" + text));
     }
 
 }

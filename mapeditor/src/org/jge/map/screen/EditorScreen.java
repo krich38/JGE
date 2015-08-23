@@ -17,6 +17,7 @@ public class EditorScreen extends Screen {
     public EditorScreen() {
         this.editor = getEditor();
     }
+
     @Override
     protected Scene buildScene() {
         MenuBar menu = new MenuBar();

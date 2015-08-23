@@ -22,24 +22,26 @@ import java.util.*;
 public class StatusServer {
     private static StatusServer INSTANCE;
     private final Server server;
+    private int probePort;
     private int port;
     private List<ChatMessage> msgs;
     private Map<Id<Entity>, Connection> connections;
+    private boolean running;
 
-    public StatusServer(int port) {
+    public StatusServer(int probePort, int port) {
+        this.probePort = probePort;
         this.port = port;
-
-        System.out.println("Server status and remote admin server opened");
+        System.out.println("Remote admin server opened");
         server = Server.getInstance();
     }
 
 
     public static StatusServer getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new StatusServer(3741);
+            INSTANCE = new StatusServer(3740, 3741);
         }
         return INSTANCE;
-        }
+    }
 
     public void init() {
         com.esotericsoftware.kryonet.Server kryoServer = new com.esotericsoftware.kryonet.Server();
@@ -48,7 +50,10 @@ public class StatusServer {
         msgs = new ArrayList<>(2);
         try {
             kryoServer.bind(port);
-            kryoServer.addListener(new StatusServerListener());
+            System.out.println(port);
+            StatusServerListener status = new StatusServerListener(probePort);
+            new Thread(status).start();
+            kryoServer.addListener(status);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -62,7 +67,7 @@ public class StatusServer {
 
     public void onMessage(ChatMessage msg) {
         msgs.add(msg);
-        if(msgs.size() == 2) {
+        if (msgs.size() == 2) {
             sendRefresh(false);
             msgs.clear();
         }
@@ -70,7 +75,7 @@ public class StatusServer {
 
     public void sendRefresh(boolean full) {
         Refresh refresh;
-        if(full) {
+        if (full) {
             refresh = new Refresh(true);
             refresh.setMessages(msgs);
             msgs.clear();
@@ -85,23 +90,32 @@ public class StatusServer {
     }
 
     public void sendDiagnostics(Connection con) {
-        ServerDiagnostics diagnostics=new ServerDiagnostics();
+        ServerDiagnostics diagnostics = new ServerDiagnostics();
         diagnostics.setUpTime(DiagnosticCollection.getRunningTime());
-        if(DiagnosticCollection.exceptions()) {
+        if (DiagnosticCollection.exceptions()) {
             diagnostics.setExceptions(DiagnosticCollection.getExceptions());
         }
         send(con, diagnostics);
     }
 
     private void sendAll(Packet packet) {
-        for(Connection c : connections.values()) {
+        for (Connection c : connections.values()) {
             send(c, packet);
         }
     }
 
     public void register(Id<Entity> id, Connection connection) {
-        if(connections == null) {
+        if (connections == null) {
             connections = new HashMap<>();
-        }connections.put(id, connection);
+        }
+        connections.put(id, connection);
+    }
+
+    public boolean isRunning() {
+        return running;
+    }
+
+    public void setRunning(boolean running) {
+        this.running = running;
     }
 }

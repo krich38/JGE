@@ -38,4 +38,9 @@ public class ServerEngine {
     public PingTimer getPinger() {
         return pinger;
     }
+
+    public void stop() {
+        ticker.cancel();
+
+    }
 }

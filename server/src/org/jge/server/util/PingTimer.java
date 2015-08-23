@@ -52,7 +52,7 @@ public class PingTimer {
 
         }
         for (Id<Entity> id : expectingReplies) {
-            if(players.containsKey(id)) { // still an active connection?
+            if (players.containsKey(id)) { // still an active connection?
                 if (!players.get(id).getPonged()) {
                     server.disconnect(id, "Ping timeout");
                 }
@@ -72,5 +72,6 @@ public class PingTimer {
     public void addReply(Ping.Pong pong) {
         replies.add(pong);
     }
+
 
 }
