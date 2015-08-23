@@ -43,9 +43,9 @@ public class Panel extends Application {
 
     public void changeScreen(Screen screen) {
         this.screen = screen;
-        if(Platform.isFxApplicationThread()) {
+        if (Platform.isFxApplicationThread()) {
             primaryStage.setScene(screen.getScene());
-            if(screen.getTitle() != null) {
+            if (screen.getTitle() != null) {
                 primaryStage.setTitle(screen.getTitle());
             }
             primaryStage.centerOnScreen();

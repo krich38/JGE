@@ -24,8 +24,8 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Kyle Richards
  * @version 1.0
- *
- * TODO: Perhaps consider implementing a cleaner player storage rather than using a bunch of maps.
+ *          <p>
+ *          TODO: Perhaps consider implementing a cleaner player storage rather than using a bunch of maps.
  */
 public class Server {
     private static Server INSTANCE;
@@ -150,14 +150,14 @@ public class Server {
     }
 
     public void logoutAll() {
-        for(Id<Entity> id : players.keySet()) {
+        for (Id<Entity> id : players.keySet()) {
             disconnect(id, "");
         }
     }
 
 
     public void saveAll() {
-        for(PlayerEncap pe : players.values()) {
+        for (PlayerEncap pe : players.values()) {
             playerLoader.savePlayer(pe);
         }
     }

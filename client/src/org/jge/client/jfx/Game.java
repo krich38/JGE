@@ -45,8 +45,8 @@ public class Game extends Application {
     }
 
     private void destroy() {
-        if(client.isConnected()) {
-           client.logout();
+        if (client.isConnected()) {
+            client.logout();
         }
         engine.stop();
         currentScreen.destroy();

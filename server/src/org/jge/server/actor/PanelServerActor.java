@@ -30,12 +30,12 @@ public class PanelServerActor extends UntypedActor {
         switch (ae.getType()) {
 
             case KICK_ALL:
-server.logoutAll();
+                server.logoutAll();
                 ae.setAttachment(true);
                 needReply = true;
                 break;
             case CLOSE_SERVER:
-                if(server.isOpen()) {
+                if (server.isOpen()) {
                     server.setOpen(false);
                     ae.setAttachment(true);
                 } else {
@@ -50,11 +50,10 @@ server.logoutAll();
                 needReply = true;
                 break;
             case OPEN_SERVER:
-                if(!server.isOpen()) {
+                if (!server.isOpen()) {
                     server.setOpen(true);
                     ae.setAttachment(true);
-                }
-                else {
+                } else {
                     ae.setAttachment(false);
                 }
                 needReply = true;
@@ -78,10 +77,9 @@ server.logoutAll();
                 break;
 
 
-
         }
 
-        if(needReply) {
+        if (needReply) {
             statusServer.send(ae.getConnection(), ae);
         }
 

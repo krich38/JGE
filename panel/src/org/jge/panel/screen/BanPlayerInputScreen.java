@@ -19,14 +19,14 @@ public class BanPlayerInputScreen extends Screen {
     private ChoiceBox<Integer> hours;
     private ChoiceBox<Integer> minutes;
     private CheckBox indefinite;
-    private static final int PADDING =10;
+    private static final int PADDING = 10;
 
 
     @Override
-    protected Scene buildScene() {Label header = new Label("Ban Player");
+    protected Scene buildScene() {
+        Label header = new Label("Ban Player");
         header.setLayoutY(7);
         header.setLayoutX(147);
-
 
 
         Label playerLabel = new Label("Player");
@@ -35,8 +35,8 @@ public class BanPlayerInputScreen extends Screen {
 
         ChoiceBox<String> players = new ChoiceBox<>();
         //players.setItems(this.players);
-        players.setItems(((PanelScreen)Panel.getInstance().getScreen()).getPlayerList().getItems());
-                players.setLayoutX(60);
+        players.setItems(((PanelScreen) Panel.getInstance().getScreen()).getPlayerList().getItems());
+        players.setLayoutX(60);
         players.setLayoutY(30);
         players.setPrefWidth(150);
         reason = new TextField();
@@ -58,7 +58,7 @@ public class BanPlayerInputScreen extends Screen {
 
         months = new ChoiceBox<>();
         ObservableList<Integer> options = FXCollections.observableArrayList();
-        for(int i = 1; i < 13; i++) {
+        for (int i = 1; i < 13; i++) {
             options.add(i);
         }
         months.setItems(options);
@@ -71,7 +71,7 @@ public class BanPlayerInputScreen extends Screen {
 
         days = new ChoiceBox<Integer>();
         options = FXCollections.observableArrayList();
-        for(int i = 1; i < 31; i++) {
+        for (int i = 1; i < 31; i++) {
             options.add(i);
         }
         days.setItems(options);
@@ -84,7 +84,7 @@ public class BanPlayerInputScreen extends Screen {
 
         hours = new ChoiceBox<Integer>();
         options = FXCollections.observableArrayList();
-        for(int i = 1; i < 25; i++) {
+        for (int i = 1; i < 25; i++) {
             options.add(i);
         }
         hours.setItems(options);
@@ -96,8 +96,8 @@ public class BanPlayerInputScreen extends Screen {
         hoursLabel.setLayoutY(115);
 
         minutes = new ChoiceBox<Integer>();
-options = FXCollections.observableArrayList();
-        for(int i = 1; i < 61; i++) {
+        options = FXCollections.observableArrayList();
+        for (int i = 1; i < 61; i++) {
             options.add(i);
         }
         minutes.setItems(options);
@@ -115,7 +115,7 @@ options = FXCollections.observableArrayList();
         Button send = new Button("Ban");
         send.setLayoutY(135);
         send.setLayoutX(155);
-        Pane pane = new Pane(playerLabel, reason, anonymous, reasonLabel, length, this.months, monthsLabel, days, dayLabel, hours, hoursLabel, minutes, minutesLabel,indefinite, header, players, send);
+        Pane pane = new Pane(playerLabel, reason, anonymous, reasonLabel, length, this.months, monthsLabel, days, dayLabel, hours, hoursLabel, minutes, minutesLabel, indefinite, header, players, send);
 
         Scene scene = new Scene(pane, 345, 165);
         return scene;

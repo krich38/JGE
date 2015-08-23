@@ -137,8 +137,8 @@ public class PanelScreen extends Screen {
         banPlayer.setPrefWidth(81);
         banPlayer.setOnAction(event -> {
 
-            showWindow(new BanPlayerInputScreen().getScene());
-        }
+                    showWindow(new BanPlayerInputScreen().getScene());
+                }
         );
 
         Button diagnostic = new Button("Diagnostics");
@@ -204,7 +204,7 @@ public class PanelScreen extends Screen {
     }
 
     private void showWindow(Scene scene) {
-        if(Platform.isFxApplicationThread()) {
+        if (Platform.isFxApplicationThread()) {
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setResizable(false);

@@ -54,7 +54,7 @@ public class GameEngine {
         uiTicker = new Timeline(new KeyFrame(Duration.millis(20), (event) -> {
             if (client.isConnected()) {
                 screen.repaint();
-        }
+            }
         }));
         uiTicker.setCycleCount(Timeline.INDEFINITE);
         uiTicker.play();

@@ -21,8 +21,9 @@ public class PanelEngine {
 
         ticker.schedule(new TimerTask() {
             @Override
-            public void run() {PanelClient client = Panel.getInstance().getClient();
-                if(client.isConnected()) {
+            public void run() {
+                PanelClient client = Panel.getInstance().getClient();
+                if (client.isConnected()) {
                     client.sendRefreshRequest(true);
                 }
             }
@@ -31,8 +32,9 @@ public class PanelEngine {
         ticker.schedule(new TimerTask() {
 
             @Override
-            public void run() {PanelClient client = Panel.getInstance().getClient();
-                if(client.isConnected()) {
+            public void run() {
+                PanelClient client = Panel.getInstance().getClient();
+                if (client.isConnected()) {
                     client.sendRefreshRequest(false);
                 }
             }
