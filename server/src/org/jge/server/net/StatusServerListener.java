@@ -103,6 +103,8 @@ public class StatusServerListener extends Listener implements Runnable {
                 }
 
             }
+            probeServer.close();
+            System.out.println("Probe server closed.");
         } catch (IOException e) {
             e.printStackTrace();
         }

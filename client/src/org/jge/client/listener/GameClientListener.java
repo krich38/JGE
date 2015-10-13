@@ -2,6 +2,7 @@ package org.jge.client.listener;
 
 import com.esotericsoftware.kryonet.Connection;
 import org.jge.client.GameClient;
+import org.jge.client.jfx.screen.LoginScreen;
 import org.jge.model.world.Player;
 import org.jge.protocol.common.ChatMessage;
 import org.jge.protocol.Packet;
@@ -42,6 +43,10 @@ public class GameClientListener extends NetworkListener {
                 case CHAT:
                     ChatMessage msg = (ChatMessage) p;
                     game.addChatMessage(msg);
+                    break;
+                case DISCONNECT:
+                    game.getScreen().showPopup("You were disconnected!");
+                    game.updateScreen(new LoginScreen());
 
 
             }

@@ -45,9 +45,10 @@ public class PanelServerActor extends UntypedActor {
                 break;
             case SHUT_DOWN:
                 server.destroy();
-                statusServer.setRunning(false);
+                statusServer.destroy();
+
                 ae.setAttachment(true);
-                needReply = true;
+                //needReply = true;
                 break;
             case OPEN_SERVER:
                 if (!server.isOpen()) {

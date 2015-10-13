@@ -118,4 +118,8 @@ public class StatusServer {
     public void setRunning(boolean running) {
         this.running = running;
     }
+
+    public void destroy() {
+        setRunning(false);
+    }
 }

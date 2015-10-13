@@ -11,10 +11,7 @@ import org.jge.protocol.common.Broadcast;
 import org.jge.protocol.common.ChatMessage;
 import org.jge.protocol.common.Connect;
 import org.jge.protocol.common.ConnectResponse;
-import org.jge.protocol.game.Logout;
-import org.jge.protocol.game.Ping;
-import org.jge.protocol.game.PlayerLoad;
-import org.jge.protocol.game.Register;
+import org.jge.protocol.game.*;
 import org.jge.protocol.serverstatus.AdminEvent;
 import org.jge.protocol.serverstatus.Refresh;
 import org.jge.protocol.serverstatus.ServerDiagnostics;
@@ -56,6 +53,7 @@ public class Protocol {
         kryo.register(ConnectResponse.Response.class);
         kryo.register(Connection.class);
         kryo.register(User.AccessRights.class);
+        kryo.register(Update.class);
 
     }
 

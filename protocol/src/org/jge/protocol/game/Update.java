@@ -10,4 +10,8 @@ public class Update extends Packet {
     public Update() {
         super(PacketType.UPDATE);
     }
+
+    public Update(PacketType type) {
+        super(type);
+    }
 }

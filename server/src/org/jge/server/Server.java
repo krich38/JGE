@@ -10,7 +10,9 @@ import org.jge.model.server.PlayerEncap;
 import org.jge.model.world.Entity;
 import org.jge.protocol.Protocol;
 import org.jge.protocol.Packet;
+import org.jge.protocol.common.Connect;
 import org.jge.protocol.game.Ping;
+import org.jge.protocol.game.Update;
 import org.jge.server.io.DatabaseAdapter;
 import org.jge.server.io.PlayerLoader;
 import org.jge.server.net.ServerListener;
@@ -121,6 +123,8 @@ public class Server {
 
     public void disconnect(Id<Entity> id, String reason) {
         Connection c = connectionsEntityMap.remove(id);
+        Packet disconnect = new Update(Packet.PacketType.DISCONNECT);
+        send(c, disconnect);
 
         connectionsEntityMap.remove(id);
         connectionIdMap.remove(c);
@@ -143,14 +147,21 @@ public class Server {
     }
 
     public void destroy() {
+
         engine.stop();
-        logoutAll();
-        kryoServer.close();
+        saveAll();
+            logoutAll();
+
+            kryoServer.close();
+            System.exit(0); // perhaps maybe a better way, but we've saved all players etc
+
+
 
     }
 
     public void logoutAll() {
         for (Id<Entity> id : players.keySet()) {
+
             disconnect(id, "");
         }
     }

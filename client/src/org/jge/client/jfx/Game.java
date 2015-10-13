@@ -41,15 +41,15 @@ public class Game extends Application {
         client = new GameClient();
         currentScreen = new LoginScreen();
         stage.setScene(currentScreen.buildScreen());
-Log.set(Log.LEVEL_ERROR);
+        Log.set(Log.LEVEL_ERROR);
         stage.show();
     }
 
     private void destroy() {
         if (client.isConnected()) {
-            client.logout();
+            client.logout();engine.stop();
         }
-        engine.stop();
+
         currentScreen.destroy();
         stage.setScene(null);
     }

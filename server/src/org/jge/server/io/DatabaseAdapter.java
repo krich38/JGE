@@ -1,5 +1,7 @@
 package org.jge.server.io;
 
+import com.mongodb.DB;
+import com.mongodb.MongoClient;
 import org.jge.model.Id;
 import org.jge.model.User;
 import org.jge.model.server.PlayerEncap;
@@ -15,20 +17,18 @@ import java.sql.*;
 public class DatabaseAdapter {
 
 
+    private static MongoClient CLIENT;
     private static Connection connection;
     private static Statement statement;
+    private static com.mongodb.DB DB;
 
     public static boolean establishConnect() {
-        try {
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:jge.db");
-            statement = connection.createStatement();
+
+            CLIENT = new MongoClient("127.0.0.1", 27017);
+            DB = CLIENT.getDB("comp391_kricha35");
 
             return true;
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+
 
 
     }

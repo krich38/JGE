@@ -1,6 +1,8 @@
 package org.jge.client.jfx.screen;
 
+import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 import org.jge.client.GameClient;
 import org.jge.client.jfx.Game;
 
@@ -36,4 +38,12 @@ public abstract class Screen {
     }
 
     public abstract void destroy();
+
+    public void showPopup(String text) {
+        Platform.runLater(() -> {
+            Stage stage = new Stage();
+            stage.setScene(new PopupAlert(text).buildScreen());
+            stage.show();
+        });
+    }
 }
